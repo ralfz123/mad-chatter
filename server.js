@@ -10,10 +10,15 @@ app.use(express.static(path.resolve('public')));
 io.on('connection', (socket) => {
   console.log('user connected');
 
+  // rule:
+  // io.emit('message', "this is a test"); --> sending to all clients, include sender
+  // socket.emit('message', "this is a test"); --> sending to sender-client only
+
   //  Receiving message, emit it
-  socket.on('message', (messageText) => {
-    console.log('message: ', messageText);
-    io.emit('message', messageText);
+  socket.on('message', (messageInfo) => {
+    console.log('message: ', messageInfo);
+    io.emit('message', messageInfo);
+    // socket.emit('message', messageInfo.name);
   });
 
   // Detects when user has disconnected
