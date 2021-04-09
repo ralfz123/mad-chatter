@@ -12,7 +12,7 @@ _Real-Time Web, a course of the minor Web Design & Development. It is a minor of
     <tr>
         <td align="center"><a href="#rocket-purpose-of-project">🚀 Purpose of Project<a></td>
         <td align="center"><a href="#heart_eyes-concept">😍 Concept<a></td>
-        <!-- <td align="center"><a href="#1234-data">🔢 Data<a></td> -->
+        <td align="center"><a href="#1234-data">🔢 Data<a></td>
         <td align="center"><a href="#nerd_face-technical-summary">🤓  Technical summary<a></td>
         <td align="center"><a href="#gear-installation">⚙️ Installation<a></td>
         <td align="center"><a href="#file_folder-sources">📁 Sources<a></td>
@@ -48,6 +48,8 @@ This app is built, using:
 - [Express router](https://expressjs.com/)
 - [EJS Templating engine](https://ejs.co/)
 - [Heroku deployment](https://www.heroku.com/nodejs)
+
+# "1234: Data
 
 ## Challenges / Inventions:
 Learned:  
