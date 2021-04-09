@@ -1,0 +1,27 @@
+{
+  "name": "real-time-web-2021",
+  "version": "1.0.0",
+  "description": "a real time web app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ralfz123/real-time-web-2021.git"
+  },
+  "author": "Ralf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ralfz123/real-time-web-2021/issues"
+  },
+  "homepage": "https://github.com/ralfz123/real-time-web-2021#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
