@@ -11,8 +11,8 @@ form.addEventListener('submit', function (e) {
   }
 });
 
-socket.on('message', (messageText) => {
-    addMessage(messageText)
+socket.on('message', (emitted) => {
+    addMessage(emitted)
 });
 
 function addMessage(message) {

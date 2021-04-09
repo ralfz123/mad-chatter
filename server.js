@@ -11,9 +11,9 @@ io.on('connection', (socket) => {
   console.log('user connected');
 
   //  Receiving message, emit it
-  socket.on('message', (message) => {
-    console.log('message: ', message);
-    socket.broadcast.emit('message', message);
+  socket.on('message', (messageText) => {
+    console.log('message: ', messageText);
+    io.emit('message', messageText);
   });
 
   // Detects when user has disconnected
