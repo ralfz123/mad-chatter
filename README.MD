@@ -5,7 +5,7 @@
 
 _Real-Time Web, a course of the minor Web Design & Development. It is a minor of the third year from the study [CMD](https://www.cmd-amsterdam.nl/)._
 
-[Link to live version :rocket:](https://rtw-2021.herokuapp.com/)
+[Link to live version :rocket:](https://peaceful-fortress-63145.herokuapp.com/)
 
 ### Table of Contents
 <table style="margin-left: auto; margin-right: auto;">
@@ -14,6 +14,7 @@ _Real-Time Web, a course of the minor Web Design & Development. It is a minor of
         <td align="center"><a href="#heart_eyes-concept">😍 Concept<a></td>
         <td align="center"><a href="#1234-data">🔢 Data<a></td>
         <td align="center"><a href="#nerd_face-technical-summary">🤓  Technical summary<a></td>
+        <td align="center"><a href="#nerd_face-code-conventions">🤓  Code Conventions<a></td>
         <td align="center"><a href="#gear-installation">⚙️ Installation<a></td>
         <td align="center"><a href="#file_folder-sources">📁 Sources<a></td>
         <td align="center"><a href="#cop-license">👮 License<a></td>
@@ -21,7 +22,7 @@ _Real-Time Web, a course of the minor Web Design & Development. It is a minor of
 </table>
 
 #### Team exercise: build a chat app with socket.io
-[Repo link](https://github.com/sjagoori/real-time-web-2021)  
+[Repo link (`team-page` branche)](https://github.com/ralfz123/real-time-web-2021/tree/team-page)    
 
 [Live link :rocket:](https://real-time-web-2021.herokuapp.com/)
 
@@ -49,7 +50,36 @@ This app is built, using:
 - [EJS Templating engine](https://ejs.co/)
 - [Heroku deployment](https://www.heroku.com/nodejs)
 
-# "1234: Data
+## :nerd_face: Code Conventions
+I prefer to work with these dev-rules for myself:
+- Use of semicolon at the end of the line
+- Tabs/spaces 2/4?
+- Code comments
+    - param explanation of functions
+    - inline code comments after variable declaration
+- naming of variables and functions has to be descriptive
+- ES6 modules
+
+# :1234: Data
+### APIs are:
+1. Lorem ipsum - google.com
+
+The data variables I used, are:
+#### 1. Lorem ispum
+- `id`
+- `lorem`  
+
+
+### Dataset structure
+#### 1. Lorem ispum
+
+```js
+{
+    id: 123,
+    lorem: "lorem"
+}
+```
+
 
 ## Challenges / Inventions:
 Learned:  
