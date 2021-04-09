@@ -23,20 +23,18 @@ socket.on('message', (emitted) => {
 
 function addMessage(name, message) {
   var item = document.createElement('li');
-  //   convertNameSelf(name);
-  console.log('input: ', inputName.value);
-  if ((name = inputName)) {
-    name = '(You)';
-  }
+  name = convertNameSelf(name);
   item.textContent = `${name}: ${message}`;
   item.setAttribute('class', 'chat-message');
   messages.appendChild(item);
 }
 
-// isue: somebody else can have the same name
-// function convertNameSelf(name) {
-//   if ((name = inputName)) {
-//     name = '(You)';
-//     return name;
-//   }
-// }
+// issue: somebody else can have the same name
+// Checks if name of the messager is the same as the client
+function convertNameSelf(name) {
+  if (name === inputName.value) {
+    return (name = '(You)');
+  } else {
+    return name;
+  }
+}
