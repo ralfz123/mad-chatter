@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
-</head>
-<body>
-    <h1>Hi</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>realtime webapp</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+
+  <body>
+    <header><h1>Chatchit</h1></header>
+
+    <main>
+      <section>
+        <h2>Go!</h2>
+        <ul></ul>
+        <form id="form">
+          <input type="text" autocomplete="off" />
+          <button type="submit">Send</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>Made with love</footer>
+    <script src="js/main.js"></script>
+  </body>
 </html>

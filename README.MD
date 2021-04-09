@@ -80,6 +80,9 @@ The data variables I used, are:
 }
 ```
 
+### Data-flow diagram
+lorem
+
 
 ## Challenges / Inventions:
 Learned:  
