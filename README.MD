@@ -32,6 +32,14 @@ During this course you will learn how to build a real-time application. You will
 The course Real-Time Web is about learning how to build a real-time application. Real-Time Web is part of the half year minor programme about Web Design and Development in Amsterdam. Bachelor Communication and Multimedia Design, Amsterdam University of Applied Science.
 
 ## :heart_eyes: Concept
+First I rebuild the chat app, and now I got a better understanding how socket.io works.
+
+features:
+- send chat to every client
+- Display name of other client
+- Client name is equal to "Yourself"
+
+
 This application is a...
 <figure>
     <img alt="Screenshot of the application" width=700px /> 

@@ -33,7 +33,7 @@ function addMessage(name, message) {
 // Checks if name of the messager is the same as the client
 function convertNameSelf(name) {
   if (name === inputName.value) {
-    return (name = '(You)');
+    return (name = '(Yourself)');
   } else {
     return name;
   }
