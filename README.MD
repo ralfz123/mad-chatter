@@ -132,15 +132,17 @@ http://localhost:5000/
 
 #### App:
 
-- [ ] lorem
-
+- [ ] Sign in as name and send messages
+- [ ] Put words as queries for the recipes
+- [ ] Create room
+- [ ] 
 
 #### Code:
-- [ ] lorem
+- [ ] Render data from querie data
 
 
 #### Readme:
-- [ ] lorem
+- [ ] Data model flow
 
 #### Backlog
 - [ ] lorem

@@ -1,32 +1,42 @@
 /**
  * Makes new array with needed data variables
  *
- * @param {string} jsonData - Dirty cat data
- * @return {string} jsonData - Clean cat data
+ * @param {string} jsonData - Dirty data
+ * @return {string} jsonData - Clean data
  *
  */
 
-function filterCatData(rawCatData) {
+function filterData(rawData) {
+  const dataObject = rawData.map((el) => {
     return {
-      id: rawCatData[0].id,
-      url: rawCatData[0].url,
+      id: el.idMeal,
+      title: el.strMeal,
+      category: el.strCategory,
+      ingredients: [
+        el.strIngredient1,
+        el.strIngredient2,
+        el.strIngredient3,
+        el.strIngredient4,
+        el.strIngredient5,
+        el.strIngredient6,
+        el.strIngredient7,
+        el.strIngredient9,
+        el.strIngredient9,
+        el.strIngredient10,
+        el.strIngredient11,
+        el.strIngredient12,
+        el.strIngredient13,
+        el.strIngredient14,
+        el.strIngredient15,
+        el.strIngredient16,
+      ],
+      instructions: el.strInstructions,
+      preview: el.strMealThumb,
+      video: el.strYoutube,
     };
-  }
-  
-  /**
-   * Makes new object with needed data variables (this is another way to "map" an object, because this data consists of an object)
-   *
-   * @param {string} jsonData - Dirty joke data
-   * @return {string} jsonData - Clean joke data
-   *
-   */
-  
-  function filterJokeData(rawJokeData) {
-    return {
-      id: rawJokeData.id,
-      setup: rawJokeData.setup,
-      punchline: rawJokeData.punchline,
-    };
-  }
-  
-  module.exports = { filterCatData, filterJokeData };
+  });
+
+  return dataObject;
+}
+
+module.exports = filterData;

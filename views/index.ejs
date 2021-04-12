@@ -24,18 +24,24 @@
 
       <article>
         <h3>Chat/Discuss</h3>
-        <ol>
-          <li>hi</li>
-        </ol>
+        <p>Discuss here the recipes</p>
+        <ol></ol>
       </article>
     </section>
 
     <section>
       <h2>Recipes</h2>
+      <ol>
+        <% if (data.length > 0) { data.forEach(({title,id}) => { %>
 
-      <% data.forEach(({strMeal}) => { %>
-      <p><%= strMeal%></p>
-      <%}) %>
+        <li>
+          <p><%= title%></p>
+        </li>
+
+        <%}) } else{ %>
+        <p>Find recipes by entering a ingredient in the input field</p>
+        <%} %>
+      </ol>
     </section>
     <script src="js/main.js"></script>
   </body>

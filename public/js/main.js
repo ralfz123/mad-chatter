@@ -21,6 +21,7 @@ socket.on('message', (emitted) => {
   addMessage(emitted.name, emitted.query);
 });
 
+// Add message to chatbox
 function addMessage(name, message) {
   var item = document.createElement('li');
   name = convertNameSelf(name);
