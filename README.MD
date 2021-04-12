@@ -5,7 +5,7 @@
 
 _Real-Time Web, a course of the minor Web Design & Development. It is a minor of the third year from the study [CMD](https://www.cmd-amsterdam.nl/)._
 
-[Link to live version :rocket:](https://peaceful-fortress-63145.herokuapp.com/)
+[Link to live version :rocket:](https://rtw-2021.herokuapp.com/)
 
 ### Table of Contents
 <table style="margin-left: auto; margin-right: auto;">

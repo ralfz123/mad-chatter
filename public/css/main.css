@@ -8,6 +8,7 @@ html {
   --color-black-light: #202026;
   --color-text: var(--color-white);
   --color-background: #120928;
+  --color-background-2: linear-gradient(150deg, #121522, #063358 50%);
 
   --max-content-width: 70rem;
 
@@ -17,7 +18,7 @@ html {
 }
 
 :root {
-  background-color: var(--color-background);
+  background: var(--color-background-2);
 }
 
 * {
@@ -27,7 +28,7 @@ html {
   font-size: 1rem;
   font-weight: 300;
   font-family: 'Lexend Zetta', sans-serif;
-  color: var(--color-text);
+  color: var(--color-white);
 }
 
 /* ------------------------------------------- */
@@ -57,15 +58,18 @@ main > * {
   margin: 1rem;
 }
 
-
 h1 {
-    font-size: 2.6rem;
-  }
-  
-  h2 {
-    font-size: 2rem;
-  }
-  
-  h3 {
-    font-size: 1.4rem;
-  }
+  font-size: 2.6rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+input {
+  color: var(--color-black);
+}
