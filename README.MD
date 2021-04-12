@@ -34,13 +34,17 @@ The course Real-Time Web is about learning how to build a real-time application.
 ## :heart_eyes: Concept
 First I rebuild the chat app, and now I got a better understanding how socket.io works.
 
-features:
+Features:
 - send chat to every client
 - Display name of other client
 - Client name is equal to "Yourself"
 
+Now, I have an good concept about cooking, because I like cooking a lot! Here's the concept:
 
-This application is a...
+This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can both search on recipes by entering some food ingredients that you have in house. When you both are agree with one recipe, you click on that recipe and you can start cooking. You can play the timer OR you can follow both the instructions of the recipe. The solution for cooking in this period.
+
+Sketches
+
 <figure>
     <img alt="Screenshot of the application" width=700px /> 
     <figcaption>UI screenshot</figcaption>
@@ -70,7 +74,8 @@ I prefer to work with these dev-rules for myself:
 
 # :1234: Data
 ### APIs are:
-1. Lorem ipsum - google.com
+1. (x) [spoonacular](https://spoonacular.com/food-api/docs#Analyze-Recipe)
+2. [mealDB](https://www.themealdb.com/api.php)
 
 The data variables I used, are:
 #### 1. Lorem ispum

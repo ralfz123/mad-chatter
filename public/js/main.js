@@ -1,24 +1,24 @@
 var socket = io();
-var messages = document.querySelector('ol');
+var chatPart = document.querySelector('ol');
 var form = document.querySelector('form');
 var inputName = document.querySelector('#name');
-var inputMessage = document.querySelector('#message');
+var inputQuery = document.querySelector('#query-ingredient');
 var message = document.querySelector('.chat-message');
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  if (inputMessage.value) {
+  if (inputQuery.value) {
     socket.emit('message', {
       name: inputName.value,
-      message: inputMessage.value,
+      query: inputQuery.value,
     });
     inputName.setAttribute('disabled', 'disabled');
-    inputMessage.value = '';
+    inputQuery.value = '';
   }
 });
 
 socket.on('message', (emitted) => {
-  addMessage(emitted.name, emitted.message);
+  addMessage(emitted.name, emitted.query);
 });
 
 function addMessage(name, message) {
@@ -26,7 +26,7 @@ function addMessage(name, message) {
   name = convertNameSelf(name);
   item.textContent = `${name}: ${message}`;
   item.setAttribute('class', 'chat-message');
-  messages.appendChild(item);
+  chatPart.appendChild(item);
 }
 
 // issue: somebody else can have the same name
