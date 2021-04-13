@@ -15,22 +15,10 @@ app.get('/', async function getHome(req, res) {
   // let data = dataRecipes;
 
   // // Render data
-  // res.render('index.ejs', {data});
-  let data = [{ title: 'Fill in ingredient in the input' }];
-  res.render('index.ejs', { data });
+  res.render('index.ejs');
+//   let data = [{ title: 'Fill in ingredient in the input' }];
+//   res.render('index.ejs', { data, rerender: false });
 });
-
-async function getQueryData(query) {
-  // Get data by query
-  let dataQuery = await getData(query);
-  console.log('query data: ', dataQuery);
-
-  // Declare data variables for better use in .ejs files
-  let data = dataQuery;
-
-  // Render data
-  res.render('index.ejs', { data });
-}
 
 io.on('connection', (socket) => {
   console.log('user connected');
@@ -42,8 +30,7 @@ io.on('connection', (socket) => {
   // Ingredient query handler
   socket.on('query', (queryInfo) => {
     io.emit('query', queryInfo);
-    console.log('query: ', queryInfo);
-    getQueryData(queryInfo);
+    getQueryData(queryInfo.query);
   });
 
   // Message handler
@@ -56,6 +43,13 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+
+  async function getQueryData(query) {
+    // Get data by query
+    let dataQuery = await getData(query);
+
+    return io.emit('data', dataQuery);
+  }
 });
 
 http.listen(port, () => {

@@ -12,6 +12,9 @@ var inputName = document.querySelector('#name');
 var inputMessage = document.querySelector('#message');
 var message = document.querySelector('.chat-message');
 
+// List
+const list = document.querySelector('#recipes ol');
+
 ingredientsForm.addEventListener('submit', function (e) {
   e.preventDefault();
   if (inputQuery.value) {
@@ -42,10 +45,14 @@ socket.on('message', (emitted) => {
 
 // Add ingredient to box
 function addIngredient(ingredient) {
-  var item = document.createElement('li');
-  item.textContent = ingredient;
-  item.setAttribute('class', 'ingredient');
-  ingredientsBox.appendChild(item);
+  if (ingredient !== null) {
+    var item = document.createElement('li');
+    item.textContent = ingredient;
+    item.setAttribute('class', 'ingredient');
+    ingredientsBox.appendChild(item);
+  } else {
+    null;
+  }
 }
 
 // Add message to chatbox
@@ -59,6 +66,58 @@ function addMessage(name, message) {
     item.removeAttribute('class', 'newMsg');
   }, 1500);
 }
+
+// Show recipes result
+socket.on('data', (data) => {
+  if (data !== null) {
+    let stateText = document.querySelector('#recipes ol p');
+    stateText.style.display = 'none';
+
+    for (let i in data) {
+      let item = document.createElement('li');
+      item.setAttribute('class', 'recipes-response');
+      list.appendChild(item);
+
+      let label = document.createElement('label');
+      label.setAttribute('for', data[i].title);
+      item.appendChild(label);
+
+      let image = document.createElement('img');
+      image.setAttribute('src', data[i].preview);
+      image.setAttribute('alt', data[i].title);
+      label.appendChild(image);
+
+      let title = document.createElement('p');
+      title.textContent = data[i].title;
+      label.appendChild(title);
+
+      // let input = document.createElement('input');
+      // input.setAttribute('type', 'checkbox');
+      // input.setAttribute('id', data[i].title);
+      // input.setAttribute('value', data[i].title);
+      // input.setAttribute('name', 'selectedRecipe');
+      // item.appendChild(input);
+    }
+  } else {
+    let stateText = document.querySelector('#recipes ol p');
+    stateText.textContent = 'No correct ingredient';
+  }
+});
+
+// Get value of selected recipe
+// function selecRec() {
+//   let recipes = document.getElementsByName('selectedRecipe');
+
+//   let selected;
+
+//   for (let i in recipes) {
+//     console.log(recipes[i].checked);
+//     if (recipes[i].checked) {
+//       selected = recipes[i].value;
+//       console.log(selected);
+//     }
+//   }
+// }
 
 // // issue: somebody else can have the same name
 // // Checks if name of the messager is the same as the client

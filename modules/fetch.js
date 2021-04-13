@@ -12,7 +12,7 @@ async function getData(query) {
 
   function queryChecker(query) {
     if (query === '') {
-      query = 'Cheese';
+      query = 'All';
     } else {
       query;
     }
@@ -26,12 +26,17 @@ async function getData(query) {
   const urlIngredients = `https://themealdb.com/api/json/v1/1/search.php?s=${queryIngredients}`;
 
   const dataRecipes = await fetchData(urlIngredients);
-  console.log('All fetched data: ', dataRecipes);
 
-  // Filter data
-  const filteredData = filterData(dataRecipes.meals);
+  if (dataRecipes.meals === null) {
+    console.log('dit is null');
+    return null;
+  } else {
+    // console.log('All fetched data: ', dataRecipes);
 
-  return filteredData;
+    // Filter data
+    const filteredData = filterData(dataRecipes.meals);
+    return filteredData;
+  }
 }
 
 module.exports = getData;

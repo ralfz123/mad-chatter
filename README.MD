@@ -48,7 +48,7 @@ This application is an app where you can cook with each other on distance (each 
 ### Sketches
 
 <figure>
-    <img alt="Sketch of the application" width=700px src="public/assets/readme/concept-sketch-v1.jpg" /> 
+    <img alt="Sketch of the application" width=700px src="https://raw.githubusercontent.com/ralfz123/real-time-web-2021/main/public/assets/readme/concept-sketch-v1.JPG" /> 
     <figcaption>First sketch</figcaption>
 </figure>
 
@@ -56,6 +56,9 @@ This application is an app where you can cook with each other on distance (each 
 #### Timer and Instructions challenge 
 - Is this a good challenge
 - Have to pick the timer or the instructions or combine both?
+
+### Improvements
+Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overloaded door de serverside rendering
 
 #### Features
 **Login**  
@@ -150,9 +153,11 @@ http://localhost:5000/
 - [ ] Put words as queries for the recipes
 - [ ] Create room
 - [ ] Authentication (DB / login with name)
-
+- [ ] Handle incorrect queries
+    - Display under the input field, not in recipes box
 #### Code:
-- [ ] Render data from querie data
+- [x] Render data from querie data
+- [ ] Clear preview from new query data rendering
 
 
 #### Readme:

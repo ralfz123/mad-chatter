@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <%- include ('./partials/head') %>
-    <title>Home</title>
   </head>
+
   <body>
     <%- include ('./partials/header') %>
 
@@ -13,12 +13,13 @@
           <h2>Ingredients</h2>
           <form id="ingredientsForm">
             <label for="query-ingredient"
-              >What ingredients are in your fridge?</label
+              >My main ingredient I want recipes of is</label
             >
             <input
               type="text"
               id="query-ingredient"
-              placeholder="e.x. Tomatoe"
+              placeholder="e.x. Cheese"
+              required
             />
             <ul id="ingredients"></ul>
             <button type="submit">Search</button>
@@ -27,34 +28,28 @@
 
         <article>
           <h3>Chat</h3>
+          <p>Discuss here the recipes</p>
           <form id="chatForm">
             <label for="name">Firstname</label>
-            <input type="text" id="name" placeholder="John Doe" />
+            <input type="text" id="name" placeholder="John Doe" required />
 
-            <label for="message">Message</label>
-            <input type="text" id="message" placeholder="Say hi" />
+            <ol id="messages"></ol>
+            <input
+              type="text"
+              id="message"
+              placeholder="Shall we do the pasta?"
+            />
             <button type="submit">Send</button>
           </form>
-          <p>Discuss here the recipes</p>
-          <ol id="messages"></ol>
         </article>
       </section>
 
       <section id="recipes">
         <h2>Recipes</h2>
         <ol>
-          <% if (data.length > 0) { data.forEach(({title,id}) => { %>
-
-          <li>
-            <p><%= title%></p>
-          </li>
-
-          <%}) } else{ %>
-          <p>Find recipes by entering a ingredient in the input field</p>
-          <%} %>
+          <p>Find recipes by entering a ingredient in the input field.</p>
         </ol>
       </section>
     </main>
 
     <%- include ('./partials/footer') %>
-
