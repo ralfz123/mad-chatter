@@ -145,6 +145,7 @@ button:active {
   border: 1px solid rgba(183, 183, 183, 0.512);
   height: 15vh;
   margin: 0.3em;
+  overflow-y: scroll;
 }
 
 #chat-query article:nth-child(2) ol li {

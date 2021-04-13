@@ -36,7 +36,6 @@ io.on('connection', (socket) => {
   // Message handler
   socket.on('message', (messageInfo) => {
     io.emit('message', messageInfo);
-    console.log('message: ', messageInfo.message);
   });
 
   // Detects when user has disconnected

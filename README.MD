@@ -162,6 +162,11 @@ http://localhost:5000/
 
 #### Readme:
 - [ ] Data model flow
+- [ ] 3 concepts describe in wiki
+    - sketch
+    - api
+    - why
+    - concept
 
 #### Backlog
 - [ ] lorem

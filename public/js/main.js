@@ -62,6 +62,7 @@ function addMessage(name, message) {
   item.textContent = `${name}: ${message}`;
   item.setAttribute('class', 'newMsg');
   chatBox.appendChild(item);
+  chatBox.scrollTop = chatBox.scrollHeight
   setTimeout(() => {
     item.removeAttribute('class', 'newMsg');
   }, 1500);
