@@ -1,48 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cooking</title>
-    <!-- <link rel="stylesheet" href="css/main.css" /> -->
-    <script src="/socket.io/socket.io.js"></script>
+    <%- include ('./partials/head') %>
+    <title>Home</title>
   </head>
   <body>
-    <h1>Cooking With Each Other</h1>
-    <section>
-      <h2>Ingredients</h2>
-      <form>
-        <label for="name">Firstname</label>
-        <input type="text" id="name" placeholder="John Doe" />
-        <label for="query-ingredient"
-          >What ingredients are in your fridge?</label
-        >
-        <input type="text" id="query-ingredient" placeholder="e.x. Tomatoe" />
-        <button type="submit">Search</button>
-      </form>
+    <%- include ('./partials/header') %>
 
-      <article>
-        <h3>Chat/Discuss</h3>
-        <p>Discuss here the recipes</p>
-        <ol></ol>
-      </article>
-    </section>
+    <main>
+      <section id="chat-query">
+        <article>
+          <h2>Ingredients</h2>
+          <form id="ingredientsForm">
+            <label for="query-ingredient"
+              >What ingredients are in your fridge?</label
+            >
+            <input
+              type="text"
+              id="query-ingredient"
+              placeholder="e.x. Tomatoe"
+            />
+            <ul id="ingredients"></ul>
+            <button type="submit">Search</button>
+          </form>
+        </article>
 
-    <section>
-      <h2>Recipes</h2>
-      <ol>
-        <% if (data.length > 0) { data.forEach(({title,id}) => { %>
+        <article>
+          <h3>Chat</h3>
+          <form id="chatForm">
+            <label for="name">Firstname</label>
+            <input type="text" id="name" placeholder="John Doe" />
 
-        <li>
-          <p><%= title%></p>
-        </li>
+            <label for="message">Message</label>
+            <input type="text" id="message" placeholder="Say hi" />
+            <button type="submit">Send</button>
+          </form>
+          <p>Discuss here the recipes</p>
+          <ol id="messages"></ol>
+        </article>
+      </section>
 
-        <%}) } else{ %>
-        <p>Find recipes by entering a ingredient in the input field</p>
-        <%} %>
-      </ol>
-    </section>
-    <script src="js/main.js"></script>
-  </body>
-</html>
+      <section id="recipes">
+        <h2>Recipes</h2>
+        <ol>
+          <% if (data.length > 0) { data.forEach(({title,id}) => { %>
+
+          <li>
+            <p><%= title%></p>
+          </li>
+
+          <%}) } else{ %>
+          <p>Find recipes by entering a ingredient in the input field</p>
+          <%} %>
+        </ol>
+      </section>
+    </main>
+
+    <%- include ('./partials/footer') %>
+

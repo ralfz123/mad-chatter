@@ -39,11 +39,17 @@ io.on('connection', (socket) => {
   // io.emit('message', "this is a test"); --> sending to all clients, include sender
   // socket.emit('message', "this is a test"); --> sending to sender-client only
 
-  //  Receiving message, emit it
+  // Ingredient query handler
+  socket.on('query', (queryInfo) => {
+    io.emit('query', queryInfo);
+    console.log('query: ', queryInfo);
+    getQueryData(queryInfo);
+  });
+
+  // Message handler
   socket.on('message', (messageInfo) => {
     io.emit('message', messageInfo);
-    console.log('query: ', messageInfo.query);
-    getQueryData(messageInfo.query);
+    console.log('message: ', messageInfo.message);
   });
 
   // Detects when user has disconnected

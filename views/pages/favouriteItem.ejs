@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ('../partials/head') %>
+    <title>#<%= favData.id %> | CYL 😹</title>
+  </head>
+  <body>
+    <%- include ('../partials/header') %>
+
+    <main>
+      <section id="fav-item">
+        <a href="/favourites">Back</a>
+        <h1>Favourite #<%= favData.id %></h1>
+
+        <img src="<%= favData.cat %>" alt="fav-cat-image" />
+        <div>
+          <p><%= favData.setup %></p>
+          <p><%= favData.punchline %></p>
+        </div>
+      </section>
+    </main>
+
+    <%- include ('../partials/footer') %>
+

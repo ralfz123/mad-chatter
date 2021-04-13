@@ -1,8 +1,7 @@
 ##### Real-Time Web-2021 @cmda-minor-web 2020 - 2021
 
 ![Badge stating project is licensed under MIT license](https://img.shields.io/github/license/ralfz123/real-time-web-2021) ![Badge stating amount of issues open](https://img.shields.io/github/issues/ralfz123/real-time-web-2021) [![](https://img.shields.io/badge/site--status-up-success)](https://ralfz123.github.io/real-time-web-2021) [![Badges via shields.io](https://img.shields.io/badge/badges%20via-shields.io-brightgreen)](shields.io)
-# [title]
-
+# Recipe creator :fork_and_knife: :meat_on_bone:
 _Real-Time Web, a course of the minor Web Design & Development. It is a minor of the third year from the study [CMD](https://www.cmd-amsterdam.nl/)._
 
 [Link to live version :rocket:](https://rtw-2021.herokuapp.com/)
@@ -32,26 +31,41 @@ During this course you will learn how to build a real-time application. You will
 The course Real-Time Web is about learning how to build a real-time application. Real-Time Web is part of the half year minor programme about Web Design and Development in Amsterdam. Bachelor Communication and Multimedia Design, Amsterdam University of Applied Science.
 
 ## :heart_eyes: Concept
-First I rebuild the chat app, and now I got a better understanding how socket.io works.
+<!-- First I rebuild the chat app, and now I got a better understanding how socket.io works.
 
 Features:
-- send chat to every client
+- Send chat to every client
 - Display name of other client
 - Client name is equal to "Yourself"
 
-Now, I have an good concept about cooking, because I like cooking a lot! Here's the concept:
+Now, I have an good concept about cooking, because I like cooking a lot! Here's the concept: -->
 
-This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can both search on recipes by entering some food ingredients that you have in house. When you both are agree with one recipe, you click on that recipe and you can start cooking. You can play the timer OR you can follow both the instructions of the recipe. The solution for cooking in this period.
+>_This is the solution for cooking together in Corona-times :fork_and_knife:._
 
-Sketches
+This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can both search on recipes by entering some food ingredients that you have in your house. When you both are agree with one recipe, you click on that recipe and you can start cooking. You both set a timer about how long you think it will take to cook the recipe. Also you follow the instructions of the recipe and you can check them by the checkboxes. The person who finishes the dish first is the winner :trophy: .
+
+
+### Sketches
 
 <figure>
-    <img alt="Screenshot of the application" width=700px /> 
-    <figcaption>UI screenshot</figcaption>
+    <img alt="Sketch of the application" width=700px src="public/assets/readme/concept-sketch-v1.jpg" /> 
+    <figcaption>First sketch</figcaption>
 </figure>
 
+### Spike
+#### Timer and Instructions challenge 
+- Is this a good challenge
+- Have to pick the timer or the instructions or combine both?
+
 #### Features
-- lorem
+**Login**  
+- Authenticated login with username and password
+- Create rooms of 2 persons
+
+**App**  
+- You can search through recipes by entering a ingredient
+- You can chat with each other to talk about which recipe you pick
+- You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: )
 
 ## :nerd_face: Technical summary 
 This app is built, using:
@@ -65,7 +79,7 @@ This app is built, using:
 ## :nerd_face: Code Conventions
 I prefer to work with these dev-rules for myself:
 - Use of semicolon at the end of the line
-- Tabs/spaces 2/4?
+- Spaces: 2
 - Code comments
     - param explanation of functions
     - inline code comments after variable declaration
@@ -135,7 +149,7 @@ http://localhost:5000/
 - [ ] Sign in as name and send messages
 - [ ] Put words as queries for the recipes
 - [ ] Create room
-- [ ] 
+- [ ] Authentication (DB / login with name)
 
 #### Code:
 - [ ] Render data from querie data
