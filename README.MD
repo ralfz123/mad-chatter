@@ -169,7 +169,9 @@ http://localhost:5000/
     - concept
 
 #### Backlog
-- [ ] lorem
+- [ ] Multiple ingredients as query
+- [ ] Diet meals
+- [ ] allergic meals
 
 
 </details>

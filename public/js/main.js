@@ -40,6 +40,7 @@ chatForm.addEventListener('submit', function (e) {
 });
 
 socket.on('message', (emitted) => {
+  new Audio('https://www.myinstants.com/media/sounds/msn-sound_1.mp3').play();
   addMessage(emitted.name, emitted.message);
 });
 
