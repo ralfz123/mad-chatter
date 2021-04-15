@@ -97,24 +97,73 @@ I prefer to work with these dev-rules for myself:
 - ES6 modules
 
 # :1234: Data
-### APIs are:
+### API is
 <!-- 1. (x) [spoonacular](https://spoonacular.com/food-api/docs#Analyze-Recipe) -->
 [mealDB](https://www.themealdb.com/api.php)
 
 The data variables I used, are:
-#### 1. Lorem ispum
-- `id`
-- `lorem`  
+- `idMeal`
+- `strMeal`
+- `strCategory`
+- `ingredients` - Array
+- `strInstructions`
+- `strMealThumb`
+- `strYoutube`
 
 ### Dataset structure
-#### 1. Lorem ispum
+#### RAW
 
 ```js
 {
-    id: 123,
-    lorem: "lorem"
+    meals: [
+            {
+                idMeal: "52779",
+                strMeal: "Cream Cheese Tart",
+                strDrinkAlternate: null,
+                strCategory: "Starter",
+                strArea: "Unknown",
+                strInstructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
+                strMealThumb: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
+                strTags: "Tart,Savory",
+                strYoutube: "https://www.youtube.com/watch?v=UhQPwO4uymo",
+                strIngredient1: "Flour",
+                strIngredient2: "Butter",
+                strIngredient3: "Egg",
+                strIngredient4: "Salt",
+                strMeasure1: "250g",
+                strMeasure2: "125g",
+                strMeasure3: "1",
+                strMeasure4: "Pinch",
+                strSource: "https://www.instagram.com/p/BHyuMZ1hZX0",
+                strImageSource: null,
+                strCreativeCommonsConfirmed: null,
+                dateModified: null
+            },
+        ]
 }
 ```
+
+#### CLEAN
+
+```js
+{
+    meals: [
+            {
+                idMeal: "52779",
+                strMeal: "Cream Cheese Tart",
+                strCategory: "Starter",
+                strInstructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
+                strIngredient1: "Flour",
+                strIngredient2: "Butter",
+                strIngredient3: "Egg",
+                strIngredient4: "Salt",
+                strYoutube: "https://www.youtube.com/watch?v=UhQPwO4uymo",
+                strMealThumb: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
+            },
+           ]
+}
+```
+
 
 ### Data lifecycle diagram
 <img src="public/assets/readme/data-lifecycle-diagram.png" width="700px" />
