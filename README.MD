@@ -48,13 +48,13 @@ This application is an app where you can cook with each other on distance (each 
 ### Sketches
 
 <figure>
-    <img alt="Sketch of the application" width=550px src="https://raw.githubusercontent.com/ralfz123/real-time-web-2021/main/public/assets/readme/concept-sketch-v1.JPG" /> 
+    <img alt="Sketch of the application" width=400px src="https://raw.githubusercontent.com/ralfz123/real-time-web-2021/main/public/assets/readme/concept-sketch-v1.JPG" /> 
     <figcaption>First sketch</figcaption>
 </figure>
 
 
 <figure>
-    <img alt="First live version of the application" width=600px src="https://raw.githubusercontent.com/ralfz123/real-time-web-2021/main/public/assets/readme/concept-sketch-v1.JPG" /> 
+    <img alt="First live version of the application" width=600px src="public/assets/readme/app-ss-v1.png" /> 
     <figcaption>First live app (v1)</figcaption>
 </figure>
 
