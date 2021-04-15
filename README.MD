@@ -86,7 +86,7 @@ This app is built, using:
 - [EJS Templating engine](https://ejs.co/)
 - [Heroku deployment](https://www.heroku.com/nodejs)
 
-## :nerd_face: Code Conventions
+## :lipstick: Code Conventions
 I prefer to work with these dev-rules for myself:
 - Use of semicolon at the end of the line
 - Spaces: 2
