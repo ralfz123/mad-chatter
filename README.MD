@@ -40,7 +40,7 @@ Features:
 
 Now, I have an good concept about cooking, because I like cooking a lot! Here's the concept: -->
 
->_This is the solution for cooking together in Corona-times :fork_and_knife:._
+>_This is the solution for cooking together in times of Corona :fork_and_knife:._
 
 This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can both search on recipes by entering some food ingredients that you have in your house. When you both are agree with one recipe, you click on that recipe and you can start cooking. You both set a timer about how long you think it will take to cook the recipe. Also you follow the instructions of the recipe and you can check them by the checkboxes. The person who finishes the dish first is the winner :trophy: .
 
@@ -48,8 +48,14 @@ This application is an app where you can cook with each other on distance (each 
 ### Sketches
 
 <figure>
-    <img alt="Sketch of the application" width=700px src="https://raw.githubusercontent.com/ralfz123/real-time-web-2021/main/public/assets/readme/concept-sketch-v1.JPG" /> 
+    <img alt="Sketch of the application" width=550px src="https://raw.githubusercontent.com/ralfz123/real-time-web-2021/main/public/assets/readme/concept-sketch-v1.JPG" /> 
     <figcaption>First sketch</figcaption>
+</figure>
+
+
+<figure>
+    <img alt="First live version of the application" width=600px src="https://raw.githubusercontent.com/ralfz123/real-time-web-2021/main/public/assets/readme/concept-sketch-v1.JPG" /> 
+    <figcaption>First live app (v1)</figcaption>
 </figure>
 
 ### Spike
@@ -68,6 +74,7 @@ Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overlo
 **App**  
 - You can search through recipes by entering a ingredient
 - You can chat with each other to talk about which recipe you pick
+- You can see the details of the recipe, when it's chosen
 - You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: )
 
 ## :nerd_face: Technical summary 
@@ -91,14 +98,13 @@ I prefer to work with these dev-rules for myself:
 
 # :1234: Data
 ### APIs are:
-1. (x) [spoonacular](https://spoonacular.com/food-api/docs#Analyze-Recipe)
-2. [mealDB](https://www.themealdb.com/api.php)
+<!-- 1. (x) [spoonacular](https://spoonacular.com/food-api/docs#Analyze-Recipe) -->
+[mealDB](https://www.themealdb.com/api.php)
 
 The data variables I used, are:
 #### 1. Lorem ispum
 - `id`
 - `lorem`  
-
 
 ### Dataset structure
 #### 1. Lorem ispum
@@ -110,8 +116,12 @@ The data variables I used, are:
 }
 ```
 
-### Data-flow diagram
-lorem
+### Data lifecycle diagram
+<img src="public/assets/readme/data-lifecycle-diagram.png" width="700px" />
+
+Have to be done:  
+- Login data
+- Rooms (has to work always, except the amount of online users)
 
 
 ## Challenges / Inventions:

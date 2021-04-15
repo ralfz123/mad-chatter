@@ -49,7 +49,16 @@
         <ol>
           <p>Find recipes by entering a ingredient in the input field.</p>
         </ol>
+        <form action="/match">
+          <label for="chosen-recipe">Chosen recipe:</label>
+          <input type="text" id="chosen-recipe" placeholder="ex French Onion Soup" />
+          <button>
+            Choose!
+          </button>
+        </form>
       </section>
     </main>
 
     <%- include ('./partials/footer') %>
+  </body>
+</html>

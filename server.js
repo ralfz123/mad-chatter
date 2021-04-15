@@ -8,16 +8,12 @@ const getData = require('./modules/fetch.js');
 app.use(express.static('public'));
 
 app.get('/', async function getHome(req, res) {
-  // Get data through fetch and put in a variable called dataAll
-  // let dataRecipes = await getData();
-
-  // // Declare data variables for better use in .ejs files
-  // let data = dataRecipes;
-
-  // // Render data
+  // get name of login and render it as data with template
   res.render('index.ejs');
-//   let data = [{ title: 'Fill in ingredient in the input' }];
-//   res.render('index.ejs', { data, rerender: false });
+});
+
+app.get('/match', function (req, res) {
+  res.render('match.ejs');
 });
 
 io.on('connection', (socket) => {
@@ -47,6 +43,7 @@ io.on('connection', (socket) => {
     // Get data by query
     let dataQuery = await getData(query);
 
+    // return emitted data for clientside handling
     return io.emit('data', dataQuery);
   }
 });

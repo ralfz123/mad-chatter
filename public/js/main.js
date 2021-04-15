@@ -63,7 +63,7 @@ function addMessage(name, message) {
   item.textContent = `${name}: ${message}`;
   item.setAttribute('class', 'newMsg');
   chatBox.appendChild(item);
-  chatBox.scrollTop = chatBox.scrollHeight
+  chatBox.scrollTop = chatBox.scrollHeight;
   setTimeout(() => {
     item.removeAttribute('class', 'newMsg');
   }, 1500);
@@ -130,3 +130,8 @@ socket.on('data', (data) => {
 //     return name;
 //   }
 // }
+
+// function that checks when all input[type=checkbox] are checked --> then finished animation (toggle class)
+function finished() {
+  // lorem
+}

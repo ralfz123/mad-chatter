@@ -206,6 +206,13 @@ ol {
   width: 100%;
 }
 
+/* match - instructions */
+
+#match input[type='checkbox']:checked ~ label {
+  text-decoration: line-through;
+  font-style: italic;
+}
+
 /* scrollbar */
 
 ::-webkit-scrollbar {
