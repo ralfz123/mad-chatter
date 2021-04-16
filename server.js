@@ -23,10 +23,17 @@ io.on('connection', (socket) => {
   // io.emit('message', "this is a test"); --> sending to all clients, include sender
   // socket.emit('message', "this is a test"); --> sending to sender-client only
 
-  // Ingredient query handler
+  // Ingredient id handler
   socket.on('query', (queryInfo) => {
     io.emit('query', queryInfo);
     getQueryData(queryInfo.query);
+  });
+
+  // Chosen recipe handler
+  socket.on('chosenRecipe', (recipeID) => {
+    io.emit('chosenRecipe', recipeID);
+    getRecipeData(recipeID);
+    // www.themealdb.com/api/json/v1/1/lookup.php?i=52772
   });
 
   // Message handler
@@ -42,9 +49,20 @@ io.on('connection', (socket) => {
   async function getQueryData(query) {
     // Get data by query
     let dataQuery = await getData(query);
+    console.log(dataQuery);
 
     // return emitted data for clientside handling
     return io.emit('data', dataQuery);
+  }
+
+  async function getRecipeData(id) {
+    // Get data by id
+    let dataRecipe = await getData(id);
+    // look how I did at WAFS
+    console.log(dataRecipe);
+
+    // return emitted data for clientside handling
+    return io.emit('data', dataRecipe);
   }
 });
 

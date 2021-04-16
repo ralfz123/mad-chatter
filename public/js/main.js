@@ -19,7 +19,8 @@ ingredientsForm.addEventListener('submit', function (e) {
   e.preventDefault();
   if (inputQuery.value) {
     socket.emit('query', { query: inputQuery.value });
-    inputQuery.value = '';
+    // inputQuery.value = '';
+    inputQuery.setAttribute('disabled', 'disabled');
   }
 });
 
@@ -85,7 +86,7 @@ socket.on('data', (data) => {
       item.appendChild(label);
 
       let image = document.createElement('img');
-      image.setAttribute('src', data[i].preview);
+      // image.setAttribute('src', data[i].preview);
       image.setAttribute('alt', data[i].title);
       label.appendChild(image);
 
@@ -107,6 +108,9 @@ socket.on('data', (data) => {
 });
 
 // Get value of selected recipe
+// www.themealdb.com/api/json/v1/1/lookup.php?i=52772
+// Get whole recipe by entering the id of the recipe
+
 // function selecRec() {
 //   let recipes = document.getElementsByName('selectedRecipe');
 
@@ -121,15 +125,26 @@ socket.on('data', (data) => {
 //   }
 // }
 
-// // issue: somebody else can have the same name
-// // Checks if name of the messager is the same as the client
-// function convertNameSelf(name) {
-//   if (name === inputName.value) {
-//     return (name = '(Yourself)');
-//   } else {
-//     return name;
-//   }
-// }
+let inputChosenRecipe = document.querySelector('#chosen-recipe');
+const chosenRecipeForm = document.querySelector('#recipes form');
+
+chosenRecipeForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (inputChosenRecipe.value) {
+    socket.emit('chosenRecipe', { recipe: inputChosenRecipe.value });
+    console.log(inputChosenRecipe.value);
+  }
+});
+
+// issue: somebody else can have the same name
+// Checks if name of the messager is the same as the client
+function convertNameSelf(name) {
+  if (name === inputName.value) {
+    return (name = '(Yourself)');
+  } else {
+    return name;
+  }
+}
 
 // function that checks when all input[type=checkbox] are checked --> then finished animation (toggle class)
 function finished() {

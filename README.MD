@@ -101,6 +101,24 @@ I prefer to work with these dev-rules for myself:
 <!-- 1. (x) [spoonacular](https://spoonacular.com/food-api/docs#Analyze-Recipe) -->
 [mealDB](https://www.themealdb.com/api.php)
 
+### KEY
+You can get the data by entering a query after the url.
+Developer test `API-KEY` = `1`.
+[Here](https://www.themealdb.com/api.php) is a list of how you handle the URL of the API.
+
+<!-- Search meal by name
+www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata
+List all meals by first letter
+www.themealdb.com/api/json/v1/1/search.php?f=a
+Lookup full meal details by id
+www.themealdb.com/api/json/v1/1/lookup.php?i=52772
+Lookup a single random meal
+www.themealdb.com/api/json/v1/1/random.php -->
+
+
+
+
+### Data variables
 The data variables I used, are:
 - `idMeal`
 - `strMeal`
@@ -217,6 +235,7 @@ http://localhost:5000/
 #### Code:
 - [x] Render data from querie data
 - [ ] Clear preview from new query data rendering
+- [ ] Search query through data.meals[i].strIngredient (==)
 
 
 #### Readme:

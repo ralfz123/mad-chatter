@@ -40,21 +40,3 @@ async function getData(query) {
 }
 
 module.exports = getData;
-
-// Cookbook API
-// fetch('https://mycookbook-io1.p.rapidapi.com/recipes/rapidapi', {
-//   method: 'GET',
-//   headers: {
-//     'content-type': 'text/plain',
-//     'x-rapidapi-key': '3cc7aa52b1msh7d0d64cd31dabd6p1145c9jsn76dfd8cdb3dc',
-//     'x-rapidapi-host': 'mycookbook-io1.p.rapidapi.com',
-//   },
-//   body:
-//     'https://www.jamieoliver.com/recipes/vegetables-recipes/superfood-salad/',
-// })
-//   .then((response) => {
-//     console.log(response);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
