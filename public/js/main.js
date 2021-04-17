@@ -130,10 +130,7 @@ const chosenRecipeForm = document.querySelector('#recipes form');
 
 chosenRecipeForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  if (inputChosenRecipe.value) {
-    socket.emit('chosenRecipe', { recipe: inputChosenRecipe.value });
-    console.log(inputChosenRecipe.value);
-  }
+  socket.emit('chosenRecipe', inputChosenRecipe.value);
 });
 
 // issue: somebody else can have the same name

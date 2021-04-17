@@ -3,7 +3,7 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 5000;
-const getData = require('./modules/fetch.js');
+const { getData, getRecipeDatas } = require('./modules/fetch.js');
 
 app.use(express.static('public'));
 
@@ -33,14 +33,13 @@ io.on('connection', (socket) => {
   socket.on('chosenRecipe', (recipeID) => {
     io.emit('chosenRecipe', recipeID);
     getRecipeData(recipeID);
-    // www.themealdb.com/api/json/v1/1/lookup.php?i=52772
   });
 
   // Message handler
   socket.on('message', (messageInfo) => {
     io.emit('message', messageInfo);
   });
-
+  // lowercase;
   // Detects when user has disconnected
   socket.on('disconnect', () => {
     console.log('user disconnected');
@@ -57,7 +56,7 @@ io.on('connection', (socket) => {
 
   async function getRecipeData(id) {
     // Get data by id
-    let dataRecipe = await getData(id);
+    let dataRecipe = await getRecipeDatas(id);
     // look how I did at WAFS
     console.log(dataRecipe);
 

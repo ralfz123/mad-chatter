@@ -8,35 +8,59 @@ async function fetchData(url) {
 }
 
 async function getData(query) {
-  queryChecker(query);
-
-  function queryChecker(query) {
-    if (query === '') {
-      query = 'All';
-    } else {
-      query;
-    }
-    return query;
+  if (typeof query === 'number') {
+    console.log('check');
   }
-  console.log('query: ', query);
+  // queryChecker(query);
 
-  const queryIngredients = query;
+  // function queryChecker(query) {
+  //   if (query === '') {
+  //     query = 'All';
+  //   } else {
+  //     query;
+  //   }
+  //   return query;
+  // }
+  // console.log('query: ', query);
 
-  // API endpoint by ingredients query
-  const urlIngredients = `https://themealdb.com/api/json/v1/1/search.php?s=${queryIngredients}`;
+  // const queryIngredients = query;
 
-  const dataRecipes = await fetchData(urlIngredients);
+  // // API endpoint by ingredients query
+  // const urlIngredients = `https://themealdb.com/api/json/v1/1/search.php?s=${queryIngredients}`;
 
-  if (dataRecipes.meals === null) {
-    console.log('dit is null');
-    return null;
-  } else {
-    // console.log('All fetched data: ', dataRecipes);
+  // const dataRecipes = await fetchData(urlIngredients);
 
-    // Filter data
-    const filteredData = filterData(dataRecipes.meals);
-    return filteredData;
-  }
+  // if (dataRecipes.meals === null) {
+  //   console.log('dit is null');
+  //   return null;
+  // } else {
+  //   // console.log('All fetched data: ', dataRecipes);
+
+  //   // Filter data
+  //   const filteredData = filterData(dataRecipes.meals);
+  //   return filteredData;
+  // }
 }
 
-module.exports = getData;
+async function getRecipeDatas(id) {
+  const queryRecipe = id;
+
+  // API endpoint by ingredients query
+  const urlRecipe = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${queryRecipe}`;
+
+  const dataRecipe = await fetchData(urlRecipe);
+  console.log(dataRecipe.meals);
+
+  // if (dataRecipes.meals === null) {
+  //   console.log('dit is null');
+  //   return null;
+  // } else {
+  //   // console.log('All fetched data: ', dataRecipes);
+
+  //   // Filter data
+  //   const filteredData = filterData(dataRecipes.meals);
+  //   return filteredData;
+  // }
+}
+
+module.exports = { getData, getRecipeDatas };

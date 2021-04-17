@@ -77,6 +77,8 @@ Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overlo
 - You can see the details of the recipe, when it's chosen
 - You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: )
 
+- Hover over recipe, get data in tooltip
+
 ## :nerd_face: Technical summary 
 This app is built, using:
 - [Socket.io](http://socket.io/)
