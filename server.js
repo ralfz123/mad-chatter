@@ -48,7 +48,6 @@ io.on('connection', (socket) => {
   async function getQueryData(query) {
     // Get data by query
     let dataQuery = await getData(query);
-    console.log(dataQuery);
 
     // return emitted data for clientside handling
     return io.emit('data', dataQuery);
@@ -61,7 +60,7 @@ io.on('connection', (socket) => {
     console.log(dataRecipe);
 
     // return emitted data for clientside handling
-    return io.emit('data', dataRecipe);
+    return io.emit('dataRecipe', dataRecipe);
   }
 });
 

@@ -86,12 +86,12 @@ socket.on('data', (data) => {
       item.appendChild(label);
 
       let image = document.createElement('img');
-      // image.setAttribute('src', data[i].preview);
+      image.setAttribute('src', data[i].preview);
       image.setAttribute('alt', data[i].title);
       label.appendChild(image);
 
       let title = document.createElement('p');
-      title.textContent = data[i].title;
+      title.textContent = data[i].id;
       label.appendChild(title);
 
       // let input = document.createElement('input');
@@ -100,6 +100,28 @@ socket.on('data', (data) => {
       // input.setAttribute('value', data[i].title);
       // input.setAttribute('name', 'selectedRecipe');
       // item.appendChild(input);
+    }
+  } else {
+    let stateText = document.querySelector('#recipes ol p');
+    stateText.textContent = 'No correct ingredient';
+  }
+});
+
+// Show chosen recipe --> RENDER IT IN /MATCH TEMPLATE!
+socket.on('dataRecipe', (data) => {
+  if (data !== null) {
+    console.log('data is er', data);
+    let stateText = document.querySelector('#recipes ol p');
+    stateText.style.display = 'none';
+
+    for (let i in data) {
+      let item = document.createElement('li');
+      item.setAttribute('class', 'recipes-response');
+      list.appendChild(item);
+
+      let title = document.createElement('p');
+      title.textContent = data[i].strMeal;
+      item.appendChild(title);
     }
   } else {
     let stateText = document.querySelector('#recipes ol p');
