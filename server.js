@@ -53,15 +53,18 @@ io.on('connection', (socket) => {
     return io.emit('data', dataQuery);
   }
 
+  // look how I did at WAFS!
   async function getRecipeData(id) {
     // Get data by id
     let dataRecipe = await getRecipeDatas(id);
-    // look how I did at WAFS
-    console.log(dataRecipe);
-
+    // goToMatch(req, res, dataRecipe);
     // return emitted data for clientside handling
     return io.emit('dataRecipe', dataRecipe);
   }
+
+  app.get('/match', function goToMatch(req, res, data) {
+    console.log(data);
+  });
 });
 
 http.listen(port, () => {

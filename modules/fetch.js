@@ -21,7 +21,6 @@ async function getData(query) {
     }
     return query;
   }
-  // console.log('query: ', query);
 
   const queryIngredients = query;
 
@@ -34,8 +33,6 @@ async function getData(query) {
     console.log('dit is null');
     return null;
   } else {
-    // console.log('All fetched data: ', dataRecipes);
-
     // Filter data
     const filteredData = filterData(dataRecipes.meals);
     return filteredData;
@@ -49,19 +46,15 @@ async function getRecipeDatas(id) {
   const urlRecipe = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${queryRecipe}`;
 
   const dataRecipe = await fetchData(urlRecipe);
-  console.log(dataRecipe.meals);
-  return dataRecipe.meals;
 
-  // if (dataRecipes.meals === null) {
-  //   console.log('dit is null');
-  //   return null;
-  // } else {
-  //   // console.log('All fetched data: ', dataRecipes);
-
-  //   // Filter data
-  //   const filteredData = filterData(dataRecipes.meals);
-  //   return filteredData;
-  // }
+  if (dataRecipe.meals === null) {
+    console.log('dit is null');
+    return null;
+  } else {
+    // Filter data
+    const filteredData = filterData(dataRecipe.meals);
+    return filteredData;
+  }
 }
 
 module.exports = { getData, getRecipeDatas };
