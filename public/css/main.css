@@ -114,7 +114,6 @@ button:active {
 #chat-query form#ingredientsForm input {
   background-color: transparent;
   color: #ffffff;
-  /* outline: none; */
   outline-style: none;
   border-top: none;
   border-left: none;
@@ -123,9 +122,25 @@ button:active {
   padding: 3px 10px;
 }
 
-#chat-query form ul {
+#chat-query form#ingredientsForm p {
+  font-size: 2em;
 }
 
+#chat-query form#ingredientsForm p.newIngr {
+  animation: fadeInRecipe 0.5s ease-in-out;
+}
+
+@keyframes fadeInRecipe {
+  0% {
+    background: rgb(255, 255, 255);
+    color: black;
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* 
 #chat-query form ul li.ingredient {
   list-style: none;
   background: white;
@@ -135,7 +150,7 @@ button:active {
   display: inline;
   margin: 0.1rem;
   padding: 0.1rem 1rem;
-}
+} */
 
 #chat-query article {
   height: 30vh;
@@ -209,7 +224,8 @@ ol {
 /* match - instructions */
 
 #match {
-  justify-content: center;}
+  justify-content: center;
+}
 
 #match input[type='checkbox']:checked ~ label {
   text-decoration: line-through;

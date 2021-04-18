@@ -30,7 +30,7 @@ async function getData(query) {
   const dataRecipes = await fetchData(urlIngredients);
 
   if (dataRecipes.meals === null) {
-    console.log('dit is null');
+    console.log('No data');
     return null;
   } else {
     // Filter data

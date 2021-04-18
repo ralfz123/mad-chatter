@@ -14,31 +14,37 @@ var message = document.querySelector('.chat-message');
 
 // List
 const list = document.querySelector('#recipes ol');
-
-ingredientsForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  if (inputQuery.value) {
-    socket.emit('query', { query: inputQuery.value });
-    // inputQuery.value = '';
-    inputQuery.setAttribute('disabled', 'disabled');
-  }
-});
+if (ingredientsForm) {
+  ingredientsForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (inputQuery.value) {
+      socket.emit('query', { query: inputQuery.value });
+      // inputQuery.value = '';
+    }
+  });
+} else {
+  null;
+}
 
 socket.on('query', (emitted) => {
   addIngredient(emitted.query);
 });
 
-chatForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  if (inputMessage.value) {
-    socket.emit('message', {
-      name: inputName.value,
-      message: inputMessage.value,
-    });
-    inputName.setAttribute('disabled', 'disabled');
-    inputMessage.value = '';
-  }
-});
+if (chatForm) {
+  chatForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (inputMessage.value) {
+      socket.emit('message', {
+        name: inputName.value,
+        message: inputMessage.value,
+      });
+      inputName.setAttribute('disabled', 'disabled');
+      inputMessage.value = '';
+    }
+  });
+} else {
+  null;
+}
 
 socket.on('message', (emitted) => {
   new Audio('https://www.myinstants.com/media/sounds/msn-sound_1.mp3').play();
@@ -48,10 +54,11 @@ socket.on('message', (emitted) => {
 // Add ingredient to box
 function addIngredient(ingredient) {
   if (ingredient !== null) {
-    var item = document.createElement('li');
-    item.textContent = ingredient;
-    item.setAttribute('class', 'ingredient');
-    ingredientsBox.appendChild(item);
+    ingredientsBox.textContent = ingredient;
+    ingredientsBox.setAttribute('class', 'newIngr');
+    setTimeout(() => {
+      ingredientsBox.removeAttribute('class', 'newIngr');
+    }, 1500);
   } else {
     null;
   }
@@ -107,31 +114,16 @@ socket.on('data', (data) => {
   }
 });
 
-// Get value of selected recipe
-// www.themealdb.com/api/json/v1/1/lookup.php?i=52772
-// Get whole recipe by entering the id of the recipe
-
-// function selecRec() {
-//   let recipes = document.getElementsByName('selectedRecipe');
-
-//   let selected;
-
-//   for (let i in recipes) {
-//     console.log(recipes[i].checked);
-//     if (recipes[i].checked) {
-//       selected = recipes[i].value;
-//       console.log(selected);
-//     }
-//   }
-// }
-
 let inputChosenRecipe = document.querySelector('#chosen-recipe');
 const chosenRecipeForm = document.querySelector('#recipes form');
-
-chosenRecipeForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  socket.emit('chosenRecipe', inputChosenRecipe.value);
-});
+if (chosenRecipeForm) {
+  chosenRecipeForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    socket.emit('chosenRecipe', inputChosenRecipe.value);
+  });
+} else {
+  null;
+}
 
 // Show chosen recipe -->
 
@@ -172,6 +164,24 @@ function convertNameSelf(name) {
   }
 }
 
+setTimer();
+// Timer from player
+function setTimer() {
+  const form = document.querySelector('#match form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      // Create countdown section
+      const countdownPlace = document.querySelector('#match article p span');
+      let timer = document.querySelector('#timer');
+      let timerHours = timer.value;
+      let timerMinutes = timerHours * 60; // convert hours to minutes
+      countdownPlace.textContent = timerMinutes;
+    });
+  } else {
+    null;
+  }
+}
 // function that checks when all input[type=checkbox] are checked from the instructions challenge --> then finished animation (toggle class)
 function finished() {
   // lorem

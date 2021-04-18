@@ -9,76 +9,85 @@
     <h2>Match</h2>
     <main id="match">
       <section id="player-one">
-        <h3>player 1</h3>
+        <h3>player 1:{name}</h3>
         <article>
-          <p>set Timer/countdown</p>
           <form>
-            <label for="">How long do you need? (minutes) </label>
+            <label for="timer">How long do you need? </label>
             <input
               type="number"
+              id="timer"
               placeholder="ex. 34"
               style="width: 4rem"
-            />minutes
+              pattern="[0-9]+([\.,][0-9]+)?"
+              step="0.01"
+            />hours
+            <button>set time</button>
           </form>
+          <p><span></span> minutes</p>
         </article>
         <h3>Instructions</h3>
         <ol>
           <li>
             1.
             <input type="checkbox" id="instructions-p1-1" />
-            <label for="instructions-p1-1">Boil water</label>
+            <label for="instructions-p1-1">{Boil water}</label>
           </li>
 
           <li>
             2.
             <input type="checkbox" id="instructions-p1-2" />
-            <label for="instructions-p1-2">Chop salad</label>
+            <label for="instructions-p1-2">{Chop salad}</label>
           </li>
 
           <li>
             3.
             <input type="checkbox" id="instructions-p1-3" />
-            <label for="instructions-p1-3">Eat it</label>
+            <label for="instructions-p1-3">{Eat it}</label>
           </li>
         </ol>
       </section>
 
       <section id="player-two">
-        <h3>player 2</h3>
+        <h3>player 2:{name}</h3>
         <article>
-          <p>set Timer/countdown</p>
           <form>
-            <label for="">How long do you need? (minutes) </label>
+            <label for="timerPlayer2">How long do you need? </label>
             <input
               type="number"
+              id="timerPlayer2"
               placeholder="ex. 34"
               style="width: 4rem"
-            />minutes
+              pattern="[0-9]+([\.,][0-9]+)?"
+              step="0.01"
+            />hours
+            <button>set time</button>
           </form>
+          <p><span></span> minutes</p>
         </article>
         <h3>Instructions</h3>
         <ol>
           <li>
             1.
             <input type="checkbox" id="instructions-p2-1" />
-            <label for="instructions-p2-1">Boil water</label>
+            <label for="instructions-p2-1">{Boil water}</label>
           </li>
 
           <li>
             2.
             <input type="checkbox" id="instructions-p2-2" />
-            <label for="instructions-p2-2">Chop salad</label>
+            <label for="instructions-p2-2">{Chop salad}</label>
           </li>
 
           <li>
             3.
             <input type="checkbox" id="instructions-p2-3" />
-            <label for="instructions-p2-3">Eat it</label>
+            <label for="instructions-p2-3">{Eat it}</label>
           </li>
         </ol>
       </section>
     </main>
+    <button>START</button>
+    <!-- 3 ... 2 ... 1... GO! (emitted)
+    (countdown starts ) -->
 
     <%- include ('./partials/footer') %>
-  </body>
-</html>
