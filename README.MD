@@ -9,23 +9,18 @@ _Real-Time Web, a course of the minor Web Design & Development. It is a minor of
 ### Table of Contents
 <table style="margin-left: auto; margin-right: auto;">
     <tr>
-        <td align="center"><a href="#rocket-purpose-of-project">🚀 Purpose of Project<a></td>
+        <td align="center"><a href="#rocket-purpose">🚀 Purpose<a></td>
         <td align="center"><a href="#heart_eyes-concept">😍 Concept<a></td>
         <td align="center"><a href="#1234-data">🔢 Data<a></td>
-        <td align="center"><a href="#nerd_face-technical-summary">🤓  Technical summary<a></td>
-        <td align="center"><a href="#nerd_face-code-conventions">🤓  Code Conventions<a></td>
+        <td align="center"><a href="#nerd_face-technical-summary">🤓 Technical summary<a></td>
+        <td align="center"><a href="#nerd_face-code-conventions">🤓 Code Conventions<a></td>
         <td align="center"><a href="#gear-installation">⚙️ Installation<a></td>
         <td align="center"><a href="#file_folder-sources">📁 Sources<a></td>
         <td align="center"><a href="#cop-license">👮 License<a></td>
     </tr> 
 </table>
 
-#### Team exercise: build a chat app with socket.io
-[Repo link (`team-page` branche)](https://github.com/ralfz123/real-time-web-2021/tree/team-page)    
-
-[Live link :rocket:](https://real-time-web-2021.herokuapp.com/)
-
-## :rocket: Purpose of Project
+## :rocket: Purpose
 During this course you will learn how to build a real-time application. You will learn techniques to setup an open connection between the client and the server. This will enable you to send data in real-time both ways, at the same time.
 
 The course Real-Time Web is about learning how to build a real-time application. Real-Time Web is part of the half year minor programme about Web Design and Development in Amsterdam. Bachelor Communication and Multimedia Design, Amsterdam University of Applied Science.
@@ -76,7 +71,6 @@ Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overlo
 - You can chat with each other to talk about which recipe you pick
 - You can see the details of the recipe, when it's chosen
 - You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: )
-
 - Hover over recipe, get data in tooltip
 
 ## :nerd_face: Technical summary 
@@ -103,7 +97,7 @@ I prefer to work with these dev-rules for myself:
 <!-- 1. (x) [spoonacular](https://spoonacular.com/food-api/docs#Analyze-Recipe) -->
 [mealDB](https://www.themealdb.com/api.php)
 
-### KEY
+### :key: KEY
 You can get the data by entering a query after the url.
 Developer test `API-KEY` = `1`.
 [Here](https://www.themealdb.com/api.php) is a list of how you handle the URL of the API.

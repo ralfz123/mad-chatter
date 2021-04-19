@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include ('./partials/head') %>
+    <%- include ('./partials/head', {title: 'Home'}) %>
   </head>
 
   <body>
@@ -10,9 +10,10 @@
     <main>
       <section id="chat-query">
         <article>
-          <h2>Ingredients</h2>
+          <!-- <h2>Ingredients</h2> -->
           <form id="ingredientsForm">
             <label for="query-ingredient"
+            style="font-size: 2rem;"
               >My main ingredient I want recipes of is</label
             >
             <input
@@ -28,7 +29,8 @@
 
         <article>
           <h3>Chat</h3>
-          <p>Discuss here the recipes</p>
+          <p
+          style="font-style: italic;">Discuss here the recipes</p>
           <form id="chatForm">
             <label for="name">Firstname</label>
             <input type="text" id="name" placeholder="John Doe" required />
@@ -60,5 +62,4 @@
     </main>
 
     <%- include ('./partials/footer') %>
-  </body>
-</html>
+

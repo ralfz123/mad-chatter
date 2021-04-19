@@ -7,13 +7,18 @@ const { getData, getRecipeDatas } = require('./modules/fetch.js');
 
 app.use(express.static('public'));
 
-app.get('/', async function getHome(req, res) {
+app.get('/', function (req, res) {
   // get name of login and render it as data with template
   res.render('index.ejs');
 });
 
+app.post('/', function (req, res) {
+  let data = getRecipeData(recipeID);
+  res.render('pages/match.ejs', { data: data });
+});
+
 app.get('/match', function (req, res) {
-  res.render('match.ejs');
+  res.render('pages/match.ejs');
 });
 
 io.on('connection', (socket) => {
@@ -32,7 +37,7 @@ io.on('connection', (socket) => {
   // Chosen recipe handler
   socket.on('chosenRecipe', (recipeID) => {
     io.emit('chosenRecipe', recipeID);
-    getRecipeData(recipeID);
+    // getRecipeData(recipeID);
   });
 
   // Message handler

@@ -21,6 +21,7 @@ html {
 
 :root {
   background: var(--color-background-2);
+  background: #181419;
 }
 
 * {
@@ -100,9 +101,17 @@ button:active {
   color: rgb(28, 24, 149);
 }
 
+/* style both sections */
+#chat-query,
+#recipes {
+  background: rgba(0, 0, 0, 0.231);
+  background: #2e2034;
+  background: #2b272d;
+  border-radius: 10px;
+}
+
 /* chat-query section */
 #chat-query {
-  background: rgba(0, 0, 0, 0.231);
   width: 40vw;
   padding: 0.5em;
 }
@@ -124,10 +133,14 @@ button:active {
 
 #chat-query form#ingredientsForm p {
   font-size: 2em;
+  background: red;
+  border-radius: 10px;
+  
 }
 
 #chat-query form#ingredientsForm p.newIngr {
   animation: fadeInRecipe 0.5s ease-in-out;
+  padding: 0.3rem;
 }
 
 @keyframes fadeInRecipe {
@@ -188,7 +201,6 @@ ol {
 
 /* recipes section */
 #recipes {
-  background: rgba(0, 0, 0, 0.231);
   width: 60vw;
   height: 55vh;
   padding: 0.5em;
