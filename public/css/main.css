@@ -40,7 +40,7 @@ html {
 
 body {
   margin: 0 auto;
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
 
   max-width: var(--max-content-width);
@@ -129,18 +129,24 @@ button:active {
   border-right: none;
   border-bottom: solid #ffffff 1px;
   padding: 3px 10px;
+  font-size: 2rem;
+  width: 100%;
+  background: -webkit-linear-gradient(#eee, #cb0e0e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background: -moz-linear-gradient(#eee, #cb0e0e);
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent
 }
 
 #chat-query form#ingredientsForm p {
   font-size: 2em;
-  background: red;
+  background: #cb0e0e;
   border-radius: 10px;
-  
 }
 
 #chat-query form#ingredientsForm p.newIngr {
   animation: fadeInRecipe 0.5s ease-in-out;
-  padding: 0.3rem;
 }
 
 @keyframes fadeInRecipe {
@@ -150,6 +156,7 @@ button:active {
   }
   100% {
     background: transparent;
+    color: black;
   }
 }
 

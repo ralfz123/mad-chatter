@@ -4,22 +4,53 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 5000;
 const { getData, getRecipeDatas } = require('./modules/fetch.js');
+const bodyParser = require('body-parser');
 
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function (req, res) {
-  // get name of login and render it as data with template
   res.render('index.ejs');
 });
 
-app.post('/', function (req, res) {
-  let data = getRecipeData(recipeID);
-  res.render('pages/match.ejs', { data: data });
+// ! Emit this data+action to the other
+app.post('/match', async function (req, res) {
+  let data = await getRecipeData(req.body.recipeID);
+  console.log(data);
+  res.render('pages/match.ejs', { data: data[0] });
 });
 
 app.get('/match', function (req, res) {
   res.render('pages/match.ejs');
 });
+
+// if user LoggedIn=false, then redirect to login
+app.get('/login', function (req, res) {
+  res.render('pages/login.ejs');
+});
+
+app.post('/login', function (req, res) {
+  console.log(`Login credentials: ${req.body.name} - ${req.body.password}`);
+  res.redirect('/');
+});
+
+app.get('/register', function (req, res) {
+  res.render('pages/register.ejs');
+});
+
+app.post('/register', function (req, res) {
+  res.redirect('/login');
+});
+
+// look how I did at WAFS!
+async function getRecipeData(id) {
+  // Get data by id
+  let dataRecipe = await getRecipeDatas(id);
+  // goToMatch(req, res, dataRecipe);
+  // return emitted data for clientside handling
+  return dataRecipe;
+  // return io.emit('dataRecipe', dataRecipe);
+}
 
 io.on('connection', (socket) => {
   console.log('user connected');
@@ -35,10 +66,10 @@ io.on('connection', (socket) => {
   });
 
   // Chosen recipe handler
-  socket.on('chosenRecipe', (recipeID) => {
-    io.emit('chosenRecipe', recipeID);
-    // getRecipeData(recipeID);
-  });
+  // socket.on('chosenRecipe', (recipeID) => {
+  //   io.emit('chosenRecipe', recipeID);
+  //   // getRecipeData(recipeID);
+  // });
 
   // Message handler
   socket.on('message', (messageInfo) => {
@@ -58,14 +89,14 @@ io.on('connection', (socket) => {
     return io.emit('data', dataQuery);
   }
 
-  // look how I did at WAFS!
-  async function getRecipeData(id) {
-    // Get data by id
-    let dataRecipe = await getRecipeDatas(id);
-    // goToMatch(req, res, dataRecipe);
-    // return emitted data for clientside handling
-    return io.emit('dataRecipe', dataRecipe);
-  }
+  // // look how I did at WAFS!
+  // async function getRecipeData(id) {
+  //   // Get data by id
+  //   let dataRecipe = await getRecipeDatas(id);
+  //   // goToMatch(req, res, dataRecipe);
+  //   // return emitted data for clientside handling
+  //   return io.emit('dataRecipe', dataRecipe);
+  // }
 
   app.get('/match', function goToMatch(req, res, data) {
     console.log(data);

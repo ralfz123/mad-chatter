@@ -8,12 +8,6 @@
 
 function filterData(rawData) {
   const dataObject = rawData.map((el) => {
-    function cleanIngredients() {
-      // check which ingredients are !null and
-      // Or put all ingrdeins in a selfcfreated array and then filter over it and check if its null
-    }
-
-    console.log;
     return {
       id: el.idMeal,
       title: el.strMeal,
@@ -45,4 +39,12 @@ function filterData(rawData) {
   return dataObject;
 }
 
+// check which ingredients are !null and
+// Or put all ingrdeins in a selfcfreated array and then filter over it and check if its null
+function filterIngredients(data) {
+  let filteredIngredients = data[0].ingredients.filter((ingredient) => {
+    return ingredient != '' && ingredient != null;
+  });
+  return filteredIngredients;
+}
 module.exports = filterData;

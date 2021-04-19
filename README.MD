@@ -12,8 +12,8 @@ _Real-Time Web, a course of the minor Web Design & Development. It is a minor of
         <td align="center"><a href="#rocket-purpose">🚀 Purpose<a></td>
         <td align="center"><a href="#heart_eyes-concept">😍 Concept<a></td>
         <td align="center"><a href="#1234-data">🔢 Data<a></td>
-        <td align="center"><a href="#nerd_face-technical-summary">🤓 Technical summary<a></td>
-        <td align="center"><a href="#nerd_face-code-conventions">🤓 Code Conventions<a></td>
+        <td align="center"><a href="#nerd_face-techstuff">🤓 TechStuff<a></td>
+        <td align="center"><a href="#nerd_face-codestyle">🤓 CodeStyle<a></td>
         <td align="center"><a href="#gear-installation">⚙️ Installation<a></td>
         <td align="center"><a href="#file_folder-sources">📁 Sources<a></td>
         <td align="center"><a href="#cop-license">👮 License<a></td>
@@ -26,14 +26,7 @@ During this course you will learn how to build a real-time application. You will
 The course Real-Time Web is about learning how to build a real-time application. Real-Time Web is part of the half year minor programme about Web Design and Development in Amsterdam. Bachelor Communication and Multimedia Design, Amsterdam University of Applied Science.
 
 ## :heart_eyes: Concept
-<!-- First I rebuild the chat app, and now I got a better understanding how socket.io works.
-
-Features:
-- Send chat to every client
-- Display name of other client
-- Client name is equal to "Yourself"
-
-Now, I have an good concept about cooking, because I like cooking a lot! Here's the concept: -->
+[_3 Concepts_](wiki.com)
 
 >_This is the solution for cooking together in times of Corona :fork_and_knife:._
 
@@ -73,7 +66,7 @@ Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overlo
 - You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: )
 - Hover over recipe, get data in tooltip
 
-## :nerd_face: Technical summary 
+## :nerd_face: TechStuff
 This app is built, using:
 - [Socket.io](http://socket.io/)
 - [npm](https://www.npmjs.com/)
@@ -82,7 +75,7 @@ This app is built, using:
 - [EJS Templating engine](https://ejs.co/)
 - [Heroku deployment](https://www.heroku.com/nodejs)
 
-## :lipstick: Code Conventions
+## :lipstick: CodeStyle
 I prefer to work with these dev-rules for myself:
 - Use of semicolon at the end of the line
 - Spaces: 2
@@ -222,20 +215,27 @@ http://localhost:5000/
 
 #### App:
 
-- [ ] Sign in as name and send messages
-- [ ] Put words as queries for the recipes
+- [ ] Create login
+    - [ ] Sign in as name and send messages
 - [ ] Create room
+- [x] Put words as queries for the recipes
 - [ ] Authentication (DB / login with name)
 - [ ] Handle incorrect queries
-    - Display under the input field, not in recipes box
+    - [ ] Display under the input field, not in recipes box
+
 #### Code:
 - [x] Render data from querie data
 - [ ] Clear preview from new query data rendering
 - [ ] Search query through data.meals[i].strIngredient (==)
+- [ ] Getting alert when teamplayer has started the match, but you are yet on /home
+- [ ] Filter ingredients in one way instead of mentioning each ingr
+- [ ] Filter instructions in sentences
+
+- [ ] rename functions and variables to descriptive ones
 
 
 #### Readme:
-- [ ] Data model flow
+- [x] Data lifecycle diagram
 - [ ] 3 concepts describe in wiki
     - sketch
     - api
@@ -246,6 +246,7 @@ http://localhost:5000/
 - [ ] Multiple ingredients as query
 - [ ] Diet meals
 - [ ] allergic meals
+- [ ] When on /match, play Audio for each (io.emit)
 
 
 </details>

@@ -54,6 +54,7 @@ socket.on('message', (emitted) => {
 // Add ingredient to box
 function addIngredient(ingredient) {
   if (ingredient !== null) {
+    ingredientsBox.style.padding = '0.3rem';
     ingredientsBox.textContent = ingredient;
     ingredientsBox.setAttribute('class', 'newIngr');
     setTimeout(() => {
@@ -83,76 +84,85 @@ socket.on('data', (data) => {
     let stateText = document.querySelector('#recipes ol p');
     stateText.style.display = 'none';
 
-    for (let i in data) {
-      let item = document.createElement('li');
-      item.setAttribute('class', 'recipes-response');
-      list.appendChild(item);
+    // Update-pattern: removes recipes from old query
+    // ! Not finished yet
+    let oldRecipes = document.querySelector('.recipes-response');
+    if (oldRecipes) {
+      oldRecipes.parentNode.removeChild(oldRecipes);
+    } else {
+      for (let i in data) {
+        let item = document.createElement('li');
+        item.setAttribute('class', 'recipes-response');
+        list.appendChild(item);
 
-      let label = document.createElement('label');
-      label.setAttribute('for', data[i].title);
-      item.appendChild(label);
+        let label = document.createElement('label');
+        label.setAttribute('for', data[i].title);
+        item.appendChild(label);
 
-      let image = document.createElement('img');
-      image.setAttribute('src', data[i].preview);
-      image.setAttribute('alt', data[i].title);
-      label.appendChild(image);
+        let image = document.createElement('img');
+        image.setAttribute('src', data[i].preview);
+        image.setAttribute('alt', data[i].title);
+        label.appendChild(image);
 
-      let title = document.createElement('p');
-      title.textContent = data[i].id;
-      label.appendChild(title);
+        let title = document.createElement('p');
+        title.textContent = data[i].id;
+        label.appendChild(title);
 
-      // let input = document.createElement('input');
-      // input.setAttribute('type', 'checkbox');
-      // input.setAttribute('id', data[i].title);
-      // input.setAttribute('value', data[i].title);
-      // input.setAttribute('name', 'selectedRecipe');
-      // item.appendChild(input);
+        // let input = document.createElement('input');
+        // input.setAttribute('type', 'checkbox');
+        // input.setAttribute('id', data[i].title);
+        // input.setAttribute('value', data[i].title);
+        // input.setAttribute('name', 'selectedRecipe');
+        // item.appendChild(input);
+        // }
+      }
     }
   } else {
+    // ! Remove all old recipes
     let stateText = document.querySelector('#recipes ol p');
     stateText.textContent = 'No correct ingredient';
   }
 });
 
-let inputChosenRecipe = document.querySelector('#chosen-recipe');
-const chosenRecipeForm = document.querySelector('#recipes form');
-if (chosenRecipeForm) {
-  chosenRecipeForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    socket.emit('chosenRecipe', inputChosenRecipe.value);
-  });
-} else {
-  null;
-}
+// let inputChosenRecipe = document.querySelector('#chosen-recipe');
+// const chosenRecipeForm = document.querySelector('#recipes form');
+// if (chosenRecipeForm) {
+//   chosenRecipeForm.addEventListener('submit', function (e) {
+//     e.preventDefault();
+//     socket.emit('chosenRecipe', inputChosenRecipe.value);
+//   });
+// } else {
+//   null;
+// }
 
 // Show chosen recipe -->
 
 // RENDER IT IN /MATCH TEMPLATE!
-socket.on('dataRecipe', (data) => {
-  if (data !== null) {
-    let stateText = document.querySelector('#recipes ol p');
-    stateText.style.display = 'none';
+// socket.on('dataRecipe', (data) => {
+//   if (data !== null) {
+//     let stateText = document.querySelector('#recipes ol p');
+//     stateText.style.display = 'none';
 
-    for (let i in data) {
-      let item = document.createElement('li');
-      item.setAttribute('class', 'recipe-response');
-      list.appendChild(item);
+//     for (let i in data) {
+//       let item = document.createElement('li');
+//       item.setAttribute('class', 'recipe-response');
+//       list.appendChild(item);
 
-      let image = document.createElement('img');
-      image.setAttribute('src', data[i].preview);
-      image.setAttribute('alt', data[i].title);
-      image.setAttribute('style', 'width:50px;');
-      item.appendChild(image);
+//       let image = document.createElement('img');
+//       image.setAttribute('src', data[i].preview);
+//       image.setAttribute('alt', data[i].title);
+//       image.setAttribute('style', 'width:50px;');
+//       item.appendChild(image);
 
-      let title = document.createElement('p');
-      title.textContent = `chosen: ${data[i].id}`;
-      item.appendChild(title);
-    }
-  } else {
-    let stateText = document.querySelector('#recipes ol p');
-    stateText.textContent = 'No correct ingredient';
-  }
-});
+//       let title = document.createElement('p');
+//       title.textContent = `chosen: ${data[i].id}`;
+//       item.appendChild(title);
+//     }
+//   } else {
+//     let stateText = document.querySelector('#recipes ol p');
+//     stateText.textContent = 'No correct ingredient';
+//   }
+// });
 
 // issue: somebody else can have the same name
 // Checks if name of the messager is the same as the client
