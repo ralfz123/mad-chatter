@@ -3,6 +3,9 @@
 <body>
   <%- include ('../partials/header') %>
   <h2>Match</h2>
+  <button>START MATCH</button>
+  <!-- 3 ... 2 ... 1... GO! (emitted)
+    (countdown starts ) -->
   <main id="match">
     <div
       style="
@@ -11,23 +14,25 @@
         left: 0;
         background-color: green;
         font-size: 0.6rem;
-        opacity: 0.5;
+        opacity: .7;
       "
     >
-      <p>chosen recipe</p>
+      <p>Chosen recipe: <%- data.title%></p>
       <img src="<%- data.preview %>" alt="<%- data.title%>" width="100px" />
-      <p><%- data.title%></p>
+
       <details>
         <summary>ingredients</summary>
         <ul>
           <% data.ingredients.forEach((object) => {%>
           <li>
-            <input type="checkbox" id="ingrIndex" />
-            <label for="ingrIndex"><%= object %></label>
+            <p><%= object %></p>
           </li>
           <% })%>
         </ul>
       </details>
+      <video width="300px" controls>
+        <source src="<%- data.video %>" type="video/mp4" />
+      </video>
     </div>
 
     <section id="player-one">
@@ -76,8 +81,5 @@
       </ol>
     </section>
   </main>
-  <button>START</button>
-  <!-- 3 ... 2 ... 1... GO! (emitted)
-    (countdown starts ) -->
 
   <%- include ('../partials/footer') %>

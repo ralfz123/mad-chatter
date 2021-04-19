@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
   res.render('index.ejs');
 });
 
-// ! Emit this data+action to the other
+// ! Emit this data+action to the other so user X knows the state of user Y
 app.post('/match', async function (req, res) {
   let data = await getRecipeData(req.body.recipeID);
   console.log(data);
