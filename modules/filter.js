@@ -8,6 +8,16 @@
 
 function filterData(rawData) {
   const dataObject = rawData.map((el) => {
+    // Splitted up a text blob into seperated sentences
+    let rawText = el.strInstructions;
+    let intoSentences = rawText
+      .replace(/([.?!])\s*(?=[A-Z])/g, '$1|')
+      .split('|');
+
+    // Converts Youtube URLs to embedded URLs
+    const oldVideoUrl = el.strYoutube;
+    let newVideoUrl = oldVideoUrl.replace('watch?v=', 'embed/');
+
     return {
       id: el.idMeal,
       title: el.strMeal,
@@ -30,9 +40,9 @@ function filterData(rawData) {
         el.strIngredient15,
         el.strIngredient16,
       ],
-      instructions: el.strInstructions,
+      instructions: intoSentences,
       preview: el.strMealThumb,
-      video: el.strYoutube,
+      video: newVideoUrl,
     };
   });
 

@@ -8,13 +8,22 @@
     <section id="recipedata">
       <h2><%- data.title%></h2>
       <article>
-        <a
-          href="<%- data.video %>"
-          target="_blank"
-          title="Click to see in a video how to make <%- data.title%>"
-        >
-          <img src="<%- data.preview %>" alt="<%- data.title%>"
-        /></a>
+        <% if (data.video != ''){ %>
+
+        <iframe
+          id="ytplayer"
+          type="text/html"
+          width="140"
+          height="360"
+          src="<%- data.video%>"
+          frameborder="0"
+        ></iframe>
+
+        <img src="<%- data.preview %>" alt="<%- data.title%>" />
+
+        <%} else {%>
+        <img src="<%- data.preview %>" alt="<%- data.title%>" />
+        <% } %>
 
         <ul>
           <% data.ingredients.forEach((object) => {%>
@@ -50,11 +59,17 @@
         </article>
         <h3>Instructions</h3>
         <ol class="recipe-instructions">
-          <p><%= data.instructions %></p>
+          <% data.instructions.forEach((sentence) => { %>
+          <li>
+            <input type="checkbox" id="step1" name="instructions-checklist" />
+            <label for="step1"> <%= sentence %> </label>
+          </li>
+          <%}) %>
         </ol>
+        <button>Done!</button>
       </article>
 
-      <article id="player-two">
+      <!-- <article id="player-two">
         <h3>player 2:{name}</h3>
         <article>
           <form>
@@ -75,7 +90,9 @@
         <ol class="recipe-instructions">
           <p><%= data.instructions %></p>
         </ol>
-      </article>
+
+        <button>Done!</button>
+      </article> -->
     </section>
   </main>
 

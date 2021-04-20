@@ -1,7 +1,7 @@
 ##### Real-Time Web-2021 @cmda-minor-web 2020 - 2021
 
 ![Badge stating project is licensed under MIT license](https://img.shields.io/github/license/ralfz123/real-time-web-2021) ![Badge stating amount of issues open](https://img.shields.io/github/issues/ralfz123/real-time-web-2021) [![](https://img.shields.io/badge/site--status-up-success)](https://ralfz123.github.io/real-time-web-2021) [![Badges via shields.io](https://img.shields.io/badge/badges%20via-shields.io-brightgreen)](shields.io)
-# Recipe creator :fork_and_knife: :meat_on_bone:
+# Cooking on Remote :fork_and_knife: :meat_on_bone:
 _Real-Time Web, a course of the minor Web Design & Development. It is a minor of the third year from the study [CMD](https://www.cmd-amsterdam.nl/)._
 
 [Link to live version :rocket:](https://rtw-2021.herokuapp.com/)
@@ -64,7 +64,8 @@ Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overlo
 - You can chat with each other to talk about which recipe you pick
 - You can see the details of the recipe, when it's chosen
 - You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: )
-- Hover over recipe, get data in tooltip
+(- Hover over recipe, get data in tooltip)
+- Get embedded YouTube video of how to make the recipe
 
 ## :nerd_face: TechStuff
 This app is built, using:
@@ -229,9 +230,9 @@ http://localhost:5000/
 - [ ] Search query through data.meals[i].strIngredient (==)
 - [ ] Getting alert when teamplayer has started the match, but you are yet on /home
 - [ ] Filter ingredients in one way instead of mentioning each ingr (filter null, '', duplicate values)
-- [ ] Filter instructions in sentences
-
+- [x] Filter instructions in sentences -> split on each sentence
 - [ ] rename functions and variables to descriptive ones
+- [ ] Style Recipe data layout
 
 
 #### Readme:

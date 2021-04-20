@@ -95,7 +95,7 @@ io.on('connection', (socket) => {
   // }
 
   app.get('/match', function goToMatch(req, res, data) {
-    console.log(data);
+    // console.log(data);
   });
 });
 

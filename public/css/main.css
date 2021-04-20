@@ -297,12 +297,12 @@ ol {
 
 #match #recipedata {
   padding: 0.6rem;
-  width: 60%;
+  /* width: 60%; */
   margin: 0 auto;
   background: #2b272d;
 }
 
-#match #recipedata a,
+#match #recipedata img,
 #match #recipedata ul {
   width: 50%;
 }
@@ -312,30 +312,14 @@ ol {
   flex-direction: row;
 }
 
-#match #recipedata a {
-  margin: 0 auto;
-}
-
-#match #recipedata a img {
+#match #recipedata img {
   width: 50%;
   /* min-width: 80%; */
   display: block;
   margin: 0 auto;
   border-radius: 5px;
   box-shadow: 0 0 10px black;
-  transition: .2s;
-}
-
-#match #recipedata a img:hover,
-#match #recipedata a img:focus,
-#match #recipedata a img:active {
-  transform: scale(1.1);
-}
-
-#match #recipedata a img:hover:after,
-#match #recipedata a img:focus:after,
-#match #recipedata a img:active:after {
-  content: 'hi';display: inline-block;
+  transition: 0.2s;
 }
 
 #match > WINNER {
