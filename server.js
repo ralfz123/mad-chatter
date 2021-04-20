@@ -5,6 +5,16 @@ const io = require('socket.io')(http);
 const port = process.env.PORT || 5000;
 const { getData, getRecipeDatas } = require('./modules/fetch.js');
 const bodyParser = require('body-parser');
+const firebase = require('firebase');
+const uuid = require('uuid').v4;
+
+require('dotenv').config();
+
+firebase.initializeApp({
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+});
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,7 +26,7 @@ app.get('/', function (req, res) {
 // ! Emit this data+action to the other so user X knows the state of user Y
 app.post('/match', async function (req, res) {
   let data = await getRecipeData(req.body.recipeID);
-  console.log(data);
+  console.log('query data: ', data);
   res.render('pages/match.ejs', { data: data[0] });
 });
 
@@ -29,16 +39,35 @@ app.get('/login', function (req, res) {
   res.render('pages/login.ejs');
 });
 
-app.post('/login', function (req, res) {
+app.post('/login', async function (req, res) {
   console.log(`Login credentials: ${req.body.name} - ${req.body.password}`);
-  res.redirect('/');
+  res.redirect('/room');
+});
+
+app.get('/room', function (req, res) {
+  res.render('pages/room.ejs');
 });
 
 app.get('/register', function (req, res) {
   res.render('pages/register.ejs');
 });
 
-app.post('/register', function (req, res) {
+app.post('/register', async function (req, res) {
+  const nickname = req.body.name;
+  // const password = req.body.password;
+
+  const db = firebase.firestore();
+  const data = db.collection('users');
+
+  const snapshot = await data.where('username', '==', nickname).get();
+
+  if (snapshot.empty) {
+    await db.collection('users').doc(uuid()).set({
+      username: nickname.toLowerCase(),
+    });
+    return res.redirect('/login');
+  }
+
   res.redirect('/login');
 });
 
@@ -93,10 +122,6 @@ io.on('connection', (socket) => {
   //   // return emitted data for clientside handling
   //   return io.emit('dataRecipe', dataRecipe);
   // }
-
-  app.get('/match', function goToMatch(req, res, data) {
-    // console.log(data);
-  });
 });
 
 http.listen(port, () => {

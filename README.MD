@@ -7,13 +7,13 @@ _Real-Time Web, a course of the minor Web Design & Development. It is a minor of
 [Link to live version :rocket:](https://rtw-2021.herokuapp.com/)
 
 ### Table of Contents
-<table style="margin-left: auto; margin-right: auto;">
+<table>
     <tr>
         <td align="center"><a href="#rocket-purpose">🚀 Purpose<a></td>
         <td align="center"><a href="#heart_eyes-concept">😍 Concept<a></td>
-        <td align="center"><a href="#1234-data">🔢 Data<a></td>
         <td align="center"><a href="#nerd_face-techstuff">🤓 TechStuff<a></td>
-        <td align="center"><a href="#nerd_face-codestyle">🤓 CodeStyle<a></td>
+        <td align="center"><a href="#lipstick-codestyle">🤓 CodeStyle<a></td>
+        <td align="center"><a href="#1234-data">🔢 Data<a></td>
         <td align="center"><a href="#gear-installation">⚙️ Installation<a></td>
         <td align="center"><a href="#file_folder-sources">📁 Sources<a></td>
         <td align="center"><a href="#cop-license">👮 License<a></td>
@@ -233,6 +233,7 @@ http://localhost:5000/
 - [x] Filter instructions in sentences -> split on each sentence
 - [ ] rename functions and variables to descriptive ones
 - [ ] Style Recipe data layout
+- [ ] Emit data to the other client after getting NEW recipes data (2nd req)
 
 
 #### Readme:
@@ -248,12 +249,13 @@ http://localhost:5000/
 - [ ] Diet meals
 - [ ] allergic meals
 - [ ] When on /match, play Audio for each (io.emit)
+- [ ] When someone wins or loses, play sound
 
 
 </details>
 
 ## :file_folder: Sources
-Credits to [Justus](https://github.com/ju5tu5) && [Koop Reynders](https://github.com/KoopReynders) && for giving interesting lectures about Real Time Webapps and how to deal with it.
+Credits to [Justus](https://github.com/ju5tu5) && [Koop Reynders](https://github.com/KoopReynders) && [Lukas van Driel](https://github.com/lukasvan3l) for giving interesting lectures about Real Time Webapps and how to deal with it.
 
 ### Code sources
 - Stackoverflow (n.d.). Searching for answers on dev questions - Stackoverflow. Retrieved 6 April 2021 from https://www.stackoverflow.com

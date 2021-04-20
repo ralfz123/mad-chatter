@@ -17,6 +17,7 @@
           height="360"
           src="<%- data.video%>"
           frameborder="0"
+          allowfullscreen
         ></iframe>
 
         <img src="<%- data.preview %>" alt="<%- data.title%>" />
@@ -49,7 +50,6 @@
               type="number"
               id="timer"
               placeholder="ex. 34"
-              style="width: 4rem"
               pattern="[0-9]+([\.,][0-9]+)?"
               step="0.01"
             />hours
@@ -78,7 +78,6 @@
               type="number"
               id="timerPlayer2"
               placeholder="ex. 34"
-              style="width: 4rem"
               pattern="[0-9]+([\.,][0-9]+)?"
               step="0.01"
             />hours
