@@ -228,7 +228,7 @@ http://localhost:5000/
 - [ ] Clear preview from new query data rendering
 - [ ] Search query through data.meals[i].strIngredient (==)
 - [ ] Getting alert when teamplayer has started the match, but you are yet on /home
-- [ ] Filter ingredients in one way instead of mentioning each ingr
+- [ ] Filter ingredients in one way instead of mentioning each ingr (filter null, '', duplicate values)
 - [ ] Filter instructions in sentences
 
 - [ ] rename functions and variables to descriptive ones

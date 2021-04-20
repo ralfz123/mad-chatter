@@ -55,10 +55,6 @@ async function getRecipeData(id) {
 io.on('connection', (socket) => {
   console.log('user connected');
 
-  // rule:
-  // io.emit('message', "this is a test"); --> sending to all clients, include sender
-  // socket.emit('message', "this is a test"); --> sending to sender-client only
-
   // Ingredient id handler
   socket.on('query', (queryInfo) => {
     io.emit('query', queryInfo);

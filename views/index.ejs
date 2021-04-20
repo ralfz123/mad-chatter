@@ -30,6 +30,7 @@
           <input type="text" id="name" placeholder="loginName" required />
 
           <ol id="messages"></ol>
+          <label for="message">Message</label>
           <input
             type="text"
             id="message"
@@ -44,6 +45,7 @@
       <h2>Recipes</h2>
       <ol>
         <p>Find recipes by entering a ingredient in the input field.</p>
+        <div class="loader"></div>
       </ol>
       <form action="/match" method="POST" enctype="application/x-www-form-urlencoded">
         <label for="chosen-recipe">Chosen recipe(id):</label>
