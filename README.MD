@@ -4,7 +4,7 @@
 # Cooking on Remote :fork_and_knife: :meat_on_bone:
 _Real-Time Web, a course of the minor Web Design & Development. It is a minor of the third year from the study [CMD](https://www.cmd-amsterdam.nl/)._
 
-[Link to live version :rocket:](https://rtw-2021.herokuapp.com/)
+[Link to live version :rocket: :fire:](https://rtw-2021.herokuapp.com/)
 
 ### Table of Contents
 <table>
