@@ -1,4 +1,4 @@
-##### Real-Time Web-2021 @cmda-minor-web 2020 - 2021
+##### Real Time Web @cmda-minor-web 2020 - 2021
 
 ![Badge stating project is licensed under MIT license](https://img.shields.io/github/license/ralfz123/real-time-web-2021) ![Badge stating amount of issues open](https://img.shields.io/github/issues/ralfz123/real-time-web-2021) [![](https://img.shields.io/badge/site--status-up-success)](https://ralfz123.github.io/real-time-web-2021) [![Badges via shields.io](https://img.shields.io/badge/badges%20via-shields.io-brightgreen)](shields.io)
 # Cooking on Remote :fork_and_knife: :meat_on_bone:
@@ -172,6 +172,9 @@ The data variables I used, are:
 }
 ```
 
+### Database - Firebase
+Key:
+methods:
 
 ### Data lifecycle diagram
 <img src="public/assets/readme/data-lifecycle-diagram.png" width="700px" />
