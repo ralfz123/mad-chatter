@@ -12,7 +12,7 @@ _Real-Time Web, a course of the minor Web Design & Development. It is a minor of
         <td align="center"><a href="#rocket-purpose">🚀 Purpose<a></td>
         <td align="center"><a href="#heart_eyes-concept">😍 Concept<a></td>
         <td align="center"><a href="#nerd_face-techstuff">🤓 TechStuff<a></td>
-        <td align="center"><a href="#lipstick-codestyle">🤓 CodeStyle<a></td>
+        <td align="center"><a href="#lipstick-codestyle">💄 CodeStyle<a></td>
         <td align="center"><a href="#1234-data">🔢 Data<a></td>
         <td align="center"><a href="#gear-installation">⚙️ Installation<a></td>
         <td align="center"><a href="#file_folder-sources">📁 Sources<a></td>
