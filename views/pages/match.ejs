@@ -61,12 +61,17 @@
         <ol class="recipe-instructions">
           <% data.instructions.forEach((sentence) => { %>
           <li>
-            <input type="checkbox" id="step1" name="instructions-checklist" />
-            <label for="step1"> <%= sentence %> </label>
+            <input type="checkbox" id="indexOfSentece" name="instructions-checklist" />
+            <label for="indexOfSentece"> <%= sentence %> </label>
           </li>
           <%}) %>
         </ol>
         <button>Done!</button>
+      </article>
+      
+      <article style="background-color: transparent; border-radius: 5px;">
+        <h3>player 2:{name}</h3>
+        <p>Estimated time:{time}</p>
       </article>
 
       <!-- <article id="player-two">

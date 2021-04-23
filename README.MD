@@ -226,6 +226,7 @@ http://localhost:5000/
 - [ ] Authentication (DB / login with name)
 - [ ] Handle incorrect queries
     - [ ] Display under the input field, not in recipes box
+- [ ] Who's in the room?
 
 #### Code:
 - [x] Render data from querie data

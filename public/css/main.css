@@ -81,6 +81,10 @@ h3 {
 
 input {
   color: var(--color-black);
+  background: none;
+  border: none;
+  border-bottom: 1px solid grey;
+  color: white;
 }
 
 button {
