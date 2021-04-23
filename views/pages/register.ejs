@@ -5,21 +5,24 @@
   <h2>Register</h2>
   <main id="register">
     <form action="/register" method="POST">
-      <label for="name">name</label>
-      <input type="text" id="name" name="name" placeholder="John" required />
+      <label for="name"
+        >Naam
+        <input type="text" id="name" name="name" placeholder="John" required
+      /></label>
 
-      <!-- <label for="password">password</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        pattern=".{6,}"
-        title="Six or more charachters"
-        placeholder="Six or more characters"
-        required
-      /> -->
+      <label for="password"
+        >Password
+        <input
+          type="password"
+          id="password"
+          name="password"
+          pattern=".{6,}"
+          title="Six or more charachters"
+          placeholder="Six or more characters"
+          required
+      /></label>
 
-      <button type="submit">login</button>
+      <button type="submit">Register</button>
     </form>
   </main>
 

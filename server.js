@@ -11,9 +11,9 @@ const uuid = require('uuid').v4;
 require('dotenv').config();
 
 firebase.initializeApp({
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
 });
 
 app.use(express.static('public'));

@@ -241,7 +241,7 @@ http://localhost:5000/
 
 
 #### Readme:
-- [x] Data lifecycle diagram
+- [x] Data lifecycle diagram optimalise (columns?)
 - [ ] 3 concepts describe in wiki
     - sketch
     - api
