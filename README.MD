@@ -104,7 +104,7 @@ Lookup full meal details by id - `www.themealdb.com/api/json/v1/1/lookup.php?i=5
 
 ### Data variables
 The data variables I used, are:
-- `Meal`
+- `idMeal`
 - `strMeal`
 - `strCategory`
 - `strIngredient`
@@ -142,7 +142,7 @@ The data variables I used, are:
 ```
 
 #### CLEAN
-With [map]() and [filter]()
+With [map](https://github.com/ralfz123/real-time-web-2021/blob/main/modules/filter.js#L9-L50)
 
 ```js
 {
@@ -154,7 +154,7 @@ With [map]() and [filter]()
             "Butter",
             "Egg",
             "Salt",
-            ]
+            ],
     instructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
     preview: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
     video: "https://www.youtube.com/watch?v=UhQPwO4uymo",
@@ -173,9 +173,7 @@ Have to be done:
 - Rooms (has to work always, except the amount of online users)
 
 
-## Challenges / Inventions:
-Learned:  
-
+## Challenges / Inventions / Learned
 ### Socket.io
 What's it?
 What's it in my app?

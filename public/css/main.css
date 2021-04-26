@@ -227,6 +227,7 @@ main#login a {
 
 #chat-query article:nth-child(2) p {
   font-style: italic;
+  color: #6e666f;
 }
 
 #chat-query article:nth-child(2) ol li {
@@ -275,6 +276,30 @@ ol {
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   grid-auto-rows: minmax(100px, auto);
   grid-gap: 10px;
+}
+
+#recipes ol li {
+  position: relative;
+}
+
+#recipes ol li div {
+  opacity: 0;
+  transition: 0.2s;
+  position: absolute;
+  top: 0;
+  padding: 0.3em;
+  background-image: linear-gradient(to top, rgba(245, 246, 252, 0), #450057d8);
+  border-radius: 10px;
+  height: 50%;
+  width: 100%;
+}
+
+#recipes ol li div p {
+  font-size: 0.8rem;
+}
+
+#recipes ol li:hover div {
+  opacity: 1;
 }
 
 #recipes form {

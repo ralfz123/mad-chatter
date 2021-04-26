@@ -108,6 +108,12 @@ socket.on('data', (data) => {
         image.setAttribute('alt', data[i].title);
         label.appendChild(image);
 
+        let imageText = document.createElement('div');
+        let text = document.createElement('p');
+        text.textContent = data[i].title;
+        imageText.appendChild(text);
+        label.appendChild(imageText);
+
         let title = document.createElement('p');
         title.textContent = data[i].id;
         label.appendChild(title);
