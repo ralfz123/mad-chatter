@@ -26,8 +26,19 @@ app.get('/', function (req, res) {
 // ! Emit this data+action to the other so user X knows the state of user Y
 // return io.emit('dataRecipe', dataRecipe);
 app.post('/match', async function (req, res) {
-  let data = await getRecipeData(req.body.recipeID);
+  let checkedRecipe = req.body.recipeID;
+
+  let data = await getRecipeData(checkedRecipe);
   console.log('query data: ', data);
+
+  // const db = firebase.firestore();
+  // const dataCollection = db.collection('users').doc(nickname);
+
+  // const update = await dataCollection.update({
+  //   recipe: checkedRecipe,
+  // });
+  // update;
+
   res.render('pages/match.ejs', { data: data[0] });
 });
 
@@ -41,8 +52,29 @@ app.get('/login', function (req, res) {
 });
 
 app.post('/login', async function (req, res) {
-  console.log(`Login credentials: ${req.body.name} - ${req.body.password}`);
-  res.redirect('/room');
+  const nickname = req.body.name;
+  const password = req.body.password;
+  console.log(nickname, password);
+
+  const db = firebase.firestore();
+  const data = db.collection('users');
+
+  const snapshot = await data
+    .where('username', '==', nickname.toLowerCase())
+    .where('password', '==', password)
+    .get();
+
+  snapshot.forEach((doc) => {
+    console.log(doc.data());
+  });
+
+  if (snapshot.empty) {
+    console.log('No user found');
+    // send alert (validate)
+    res.redirect('/login');
+  }
+
+  res.redirect('/');
 });
 
 app.get('/room', function (req, res) {
@@ -55,7 +87,7 @@ app.get('/register', function (req, res) {
 
 app.post('/register', async function (req, res) {
   const nickname = req.body.name;
-  // const password = req.body.password;
+  const password = req.body.password;
 
   const db = firebase.firestore();
   const data = db.collection('users');
@@ -63,10 +95,10 @@ app.post('/register', async function (req, res) {
   const snapshot = await data.where('username', '==', nickname).get();
 
   if (snapshot.empty) {
-    await db.collection('users').doc(uuid()).set({
+    await data.doc(uuid()).set({
       username: nickname.toLowerCase(),
+      password: password,
     });
-    return res.redirect('/login');
   }
 
   res.redirect('/login');
@@ -84,14 +116,14 @@ io.on('connection', (socket) => {
   // Chosen recipe handler
   // socket.on('chosenRecipe', (recipeID) => {
   //   io.emit('chosenRecipe', recipeID);
-  //   // getRecipeData(recipeID);
+  //   getDataOfRecipe(recipeID);
   // });
 
   // Message handler
   socket.on('message', (messageInfo) => {
     io.emit('message', messageInfo);
   });
-  // lowercase;
+
   // Detects when user has disconnected
   socket.on('disconnect', () => {
     console.log('user disconnected');
@@ -104,6 +136,14 @@ io.on('connection', (socket) => {
     // return emitted data for clientside handling
     return io.emit('data', dataQuery);
   }
+
+  // async function getDataOfRecipe(id) {
+  //   // Get data by id
+  //   let dataRecipe = await getRecipeData(id);
+  //   // goToMatch(req, res, dataRecipe);
+  //   // return emitted data for clientside handling
+  //   return io.emit('dataRecipe', dataRecipe);
+  // }
 });
 
 http.listen(port, () => {

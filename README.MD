@@ -67,6 +67,9 @@ Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overlo
 (- Hover over recipe, get data in tooltip)
 - Get embedded YouTube video of how to make the recipe
 
+#### Realtime events
+lorem
+
 ## :nerd_face: TechStuff
 This app is built, using:
 - [Socket.io](http://socket.io/)

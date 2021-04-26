@@ -117,14 +117,6 @@ socket.on('data', (data) => {
         let title = document.createElement('p');
         title.textContent = data[i].id;
         label.appendChild(title);
-
-        // let input = document.createElement('input');
-        // input.setAttribute('type', 'checkbox');
-        // input.setAttribute('id', data[i].title);
-        // input.setAttribute('value', data[i].title);
-        // input.setAttribute('name', 'selectedRecipe');
-        // item.appendChild(input);
-        // }
       }
     }
   } else {
