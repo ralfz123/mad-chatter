@@ -126,45 +126,45 @@ socket.on('data', (data) => {
   }
 });
 
-// let inputChosenRecipe = document.querySelector('#chosen-recipe');
-// const chosenRecipeForm = document.querySelector('#recipes form');
-// if (chosenRecipeForm) {
-//   chosenRecipeForm.addEventListener('submit', function (e) {
-//     e.preventDefault();
-//     socket.emit('chosenRecipe', inputChosenRecipe.value);
-//   });
-// } else {
-//   null;
-// }
+let inputChosenRecipe = document.querySelector('#chosen-recipe');
+const chosenRecipeForm = document.querySelector('#recipes form');
+if (chosenRecipeForm) {
+  chosenRecipeForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    socket.emit('chosenRecipe', inputChosenRecipe.value);
+  });
+} else {
+  null;
+}
 
 // Show chosen recipe -->
 
 // RENDER IT IN /MATCH TEMPLATE!
-// socket.on('dataRecipe', (data) => {
-//   if (data !== null) {
-//     let stateText = document.querySelector('#recipes ol p');
-//     stateText.style.display = 'none';
+socket.on('dataRecipe', (data) => {
+  if (data !== null) {
+    let stateText = document.querySelector('#recipes ol p');
+    stateText.style.display = 'none';
 
-//     for (let i in data) {
-//       let item = document.createElement('li');
-//       item.setAttribute('class', 'recipe-response');
-//       list.appendChild(item);
+    for (let i in data) {
+      let item = document.createElement('li');
+      item.setAttribute('class', 'recipe-response');
+      list.appendChild(item);
 
-//       let image = document.createElement('img');
-//       image.setAttribute('src', data[i].preview);
-//       image.setAttribute('alt', data[i].title);
-//       image.setAttribute('style', 'width:50px;');
-//       item.appendChild(image);
+      let image = document.createElement('img');
+      image.setAttribute('src', data[i].preview);
+      image.setAttribute('alt', data[i].title);
+      image.setAttribute('style', 'width:50px;');
+      item.appendChild(image);
 
-//       let title = document.createElement('p');
-//       title.textContent = `chosen: ${data[i].id}`;
-//       item.appendChild(title);
-//     }
-//   } else {
-//     let stateText = document.querySelector('#recipes ol p');
-//     stateText.textContent = 'No correct ingredient';
-//   }
-// });
+      let title = document.createElement('p');
+      title.textContent = `chosen: ${data[i].id}`;
+      item.appendChild(title);
+    }
+  } else {
+    let stateText = document.querySelector('#recipes ol p');
+    stateText.textContent = 'No correct ingredient';
+  }
+});
 
 // issue: somebody else can have the same name
 // Checks if name of the messager is the same as the client

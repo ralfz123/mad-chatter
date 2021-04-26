@@ -25,22 +25,22 @@ app.get('/', function (req, res) {
 
 // ! Emit this data+action to the other so user X knows the state of user Y
 // return io.emit('dataRecipe', dataRecipe);
-app.post('/match', async function (req, res) {
-  let checkedRecipe = req.body.recipeID;
+// app.post('/match', async function (req, res) {
+//   let checkedRecipe = req.body.recipeID;
 
-  let data = await getRecipeData(checkedRecipe);
-  console.log('query data: ', data);
+//   let data = await getRecipeData(checkedRecipe);
+//   console.log('query data: ', data);
 
-  // const db = firebase.firestore();
-  // const dataCollection = db.collection('users').doc(nickname);
+//   // const db = firebase.firestore();
+//   // const dataCollection = db.collection('users').doc(nickname);
 
-  // const update = await dataCollection.update({
-  //   recipe: checkedRecipe,
-  // });
-  // update;
+//   // const update = await dataCollection.update({
+//   //   recipe: checkedRecipe,
+//   // });
+//   // update;
 
-  res.render('pages/match.ejs', { data: data[0] });
-});
+//   res.render('pages/match.ejs', { data: data[0] });
+// });
 
 app.get('/match', function (req, res) {
   res.render('pages/match.ejs');
@@ -114,10 +114,10 @@ io.on('connection', (socket) => {
   });
 
   // Chosen recipe handler
-  // socket.on('chosenRecipe', (recipeID) => {
-  //   io.emit('chosenRecipe', recipeID);
-  //   getDataOfRecipe(recipeID);
-  // });
+  socket.on('chosenRecipe', (recipeID) => {
+    io.emit('chosenRecipe', recipeID);
+    getDataOfRecipe(recipeID);
+  });
 
   // Message handler
   socket.on('message', (messageInfo) => {
@@ -137,13 +137,13 @@ io.on('connection', (socket) => {
     return io.emit('data', dataQuery);
   }
 
-  // async function getDataOfRecipe(id) {
-  //   // Get data by id
-  //   let dataRecipe = await getRecipeData(id);
-  //   // goToMatch(req, res, dataRecipe);
-  //   // return emitted data for clientside handling
-  //   return io.emit('dataRecipe', dataRecipe);
-  // }
+  async function getDataOfRecipe(id) {
+    // Get data by id
+    let dataRecipe = await getRecipeData(id);
+
+    // return emitted data for clientside handling
+    return io.emit('dataRecipe', dataRecipe);
+  }
 });
 
 http.listen(port, () => {
