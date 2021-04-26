@@ -24,8 +24,9 @@ app.get('/', function (req, res) {
 });
 
 // ! Emit this data+action to the other so user X knows the state of user Y
+// return io.emit('dataRecipe', dataRecipe);
 app.post('/match', async function (req, res) {
-  let data = await getRecipeData(req.body.recipeID);
+  let data = await getRecipeDatas(req.body.recipeID);
   console.log('query data: ', data);
   res.render('pages/match.ejs', { data: data[0] });
 });
@@ -78,7 +79,6 @@ async function getRecipeData(id) {
   // goToMatch(req, res, dataRecipe);
   // return emitted data for clientside handling
   return dataRecipe;
-  // return io.emit('dataRecipe', dataRecipe);
 }
 
 io.on('connection', (socket) => {
@@ -105,23 +105,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-
-  async function getQueryData(query) {
-    // Get data by query
-    let dataQuery = await getData(query);
-
-    // return emitted data for clientside handling
-    return io.emit('data', dataQuery);
-  }
-
-  // // look how I did at WAFS!
-  // async function getRecipeData(id) {
-  //   // Get data by id
-  //   let dataRecipe = await getRecipeDatas(id);
-  //   // goToMatch(req, res, dataRecipe);
-  //   // return emitted data for clientside handling
-  //   return io.emit('dataRecipe', dataRecipe);
-  // }
 });
 
 http.listen(port, () => {
