@@ -79,11 +79,11 @@ This app is built, using:
 ## :lipstick: CodeStyle
 I prefer to work with these dev-rules for myself:
 - Use of semicolon at the end of the line
-- Spaces: 2
+- Indent spaces: 2
 - Code comments
-    - param explanation of functions
-    - inline code comments after variable declaration
-- naming of variables and functions has to be descriptive
+    - Param explanation of functions
+    - Inline code comments after variable declaration
+- Naming of variables and functions has to be descriptive
 - ES6 modules
 
 # :1234: Data
@@ -93,27 +93,21 @@ I prefer to work with these dev-rules for myself:
 
 ### :key: KEY
 You can get the data by entering a query after the url.
-Developer test `API-KEY` = `1`.
+Developer test `API-KEY` = `1`.  
+
 [Here](https://www.themealdb.com/api.php) is a list of how you handle the URL of the API.
 
-<!-- Search meal by name
-www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata
-List all meals by first letter
-www.themealdb.com/api/json/v1/1/search.php?f=a
-Lookup full meal details by id
-www.themealdb.com/api/json/v1/1/lookup.php?i=52772
-Lookup a single random meal
-www.themealdb.com/api/json/v1/1/random.php -->
-
-
+Search meal by name - `www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata`  
+List all meals by first letter - `www.themealdb.com/api/json/v1/1/search.php?f=a`  
+Lookup full meal details by id - `www.themealdb.com/api/json/v1/1/lookup.php?i=52772`  
 
 
 ### Data variables
 The data variables I used, are:
-- `idMeal`
+- `Meal`
 - `strMeal`
 - `strCategory`
-- `ingredients` - Array
+- `strIngredient`
 - `strInstructions`
 - `strMealThumb`
 - `strYoutube`
@@ -123,53 +117,48 @@ The data variables I used, are:
 
 ```js
 {
-    meals: [
-            {
-                idMeal: "52779",
-                strMeal: "Cream Cheese Tart",
-                strDrinkAlternate: null,
-                strCategory: "Starter",
-                strArea: "Unknown",
-                strInstructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
-                strMealThumb: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
-                strTags: "Tart,Savory",
-                strYoutube: "https://www.youtube.com/watch?v=UhQPwO4uymo",
-                strIngredient1: "Flour",
-                strIngredient2: "Butter",
-                strIngredient3: "Egg",
-                strIngredient4: "Salt",
-                strMeasure1: "250g",
-                strMeasure2: "125g",
-                strMeasure3: "1",
-                strMeasure4: "Pinch",
-                strSource: "https://www.instagram.com/p/BHyuMZ1hZX0",
-                strImageSource: null,
-                strCreativeCommonsConfirmed: null,
-                dateModified: null
-            },
-        ]
-}
+    idMeal: "52779",
+    strMeal: "Cream Cheese Tart",
+    strDrinkAlternate: null,
+    strCategory: "Starter",
+    strArea: "Unknown",
+    strInstructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
+    strMealThumb: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
+    strTags: "Tart,Savory",
+    strYoutube: "https://www.youtube.com/watch?v=UhQPwO4uymo",
+    strIngredient1: "Flour",
+    strIngredient2: "Butter",
+    strIngredient3: "Egg",
+    strIngredient4: "Salt",
+    strMeasure1: "250g",
+    strMeasure2: "125g",
+    strMeasure3: "1",
+    strMeasure4: "Pinch",
+    strSource: "https://www.instagram.com/p/BHyuMZ1hZX0",
+    strImageSource: null,
+    strCreativeCommonsConfirmed: null,
+    dateModified: null
+},
 ```
 
 #### CLEAN
+With [map]() and [filter]()
 
 ```js
 {
-    meals: [
-            {
-                idMeal: "52779",
-                strMeal: "Cream Cheese Tart",
-                strCategory: "Starter",
-                strInstructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
-                strIngredient1: "Flour",
-                strIngredient2: "Butter",
-                strIngredient3: "Egg",
-                strIngredient4: "Salt",
-                strYoutube: "https://www.youtube.com/watch?v=UhQPwO4uymo",
-                strMealThumb: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
-            },
-           ]
-}
+    id: "52779",
+    title: "Cream Cheese Tart",
+    category: "Starter",
+    ingredients: [
+            "Flour",
+            "Butter",
+            "Egg",
+            "Salt",
+            ]
+    instructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
+    preview: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
+    video: "https://www.youtube.com/watch?v=UhQPwO4uymo",
+},
 ```
 
 ### Database - Firebase
@@ -186,8 +175,10 @@ Have to be done:
 
 ## Challenges / Inventions:
 Learned:  
-- websocket using socket.io
 
+### Socket.io
+What's it?
+What's it in my app?
 ## :gear: Installation
 1. Clone the repository:  
 ```
@@ -214,6 +205,7 @@ http://localhost:5000/
 ```
 
 ## To-Do's :pencil:
+See [backlog](https://github.com/ralfz123/real-time-web-2021/projects/1)
 <details>
 <summary>Expand</summary>
 
@@ -254,7 +246,6 @@ http://localhost:5000/
 - [ ] allergic meals
 - [ ] When on /match, play Audio for each (io.emit)
 - [ ] When someone wins or loses, play sound
-
 
 </details>
 

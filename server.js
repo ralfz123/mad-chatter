@@ -3,7 +3,7 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 5000;
-const { getData, getRecipeDatas } = require('./modules/fetch.js');
+const { getData, getRecipeData } = require('./modules/fetch.js');
 const bodyParser = require('body-parser');
 const firebase = require('firebase');
 const uuid = require('uuid').v4;
@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 // ! Emit this data+action to the other so user X knows the state of user Y
 // return io.emit('dataRecipe', dataRecipe);
 app.post('/match', async function (req, res) {
-  let data = await getRecipeDatas(req.body.recipeID);
+  let data = await getRecipeData(req.body.recipeID);
   console.log('query data: ', data);
   res.render('pages/match.ejs', { data: data[0] });
 });
@@ -72,15 +72,6 @@ app.post('/register', async function (req, res) {
   res.redirect('/login');
 });
 
-// look how I did at WAFS!
-async function getRecipeData(id) {
-  // Get data by id
-  let dataRecipe = await getRecipeDatas(id);
-  // goToMatch(req, res, dataRecipe);
-  // return emitted data for clientside handling
-  return dataRecipe;
-}
-
 io.on('connection', (socket) => {
   console.log('user connected');
 
@@ -105,6 +96,14 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+
+  async function getQueryData(query) {
+    // Get data by query
+    let dataQuery = await getData(query);
+
+    // return emitted data for clientside handling
+    return io.emit('data', dataQuery);
+  }
 });
 
 http.listen(port, () => {
