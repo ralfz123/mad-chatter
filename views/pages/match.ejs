@@ -60,9 +60,9 @@
               pattern="[0-9]+([\.,][0-9]+)?"
               step="0.01"
             />hours
-            <button>set time</button>
+            <button>set time + GO</button>
           </form>
-          <p><span></span> minutes</p>
+          <p><span></span> seconds</p>
         </article>
         <h3>Instructions</h3>
         <ol class="recipe-instructions">
@@ -81,7 +81,9 @@
           </li>
           <%}) %>
         </ol>
-        <button>Done!</button>
+        <form action="">
+          <button onclick="finished()">Done!</button>
+        </form>
 
         <article id="player-two">
           <h3>player 2:{name}</h3>
