@@ -8,6 +8,16 @@
     <section id="recipedata">
       <h2><%- data.title%></h2>
       <article>
+        <img src="<%- data.preview %>" alt="<%- data.title%>" />
+
+        <ul>
+          <% data.ingredients.forEach((object) => {%>
+          <li>
+            <p><%= object %></p>
+          </li>
+          <% })%>
+        </ul>
+
         <% if (data.video != ''){ %>
 
         <iframe
@@ -20,19 +30,16 @@
           allowfullscreen
         ></iframe>
 
-        <img src="<%- data.preview %>" alt="<%- data.title%>" />
-
         <%} else {%>
-        <img src="<%- data.preview %>" alt="<%- data.title%>" />
+        <p>
+          No video unfortunately, but maybe you can found some videos
+          <a
+            href="https://www.youtube.com/results?search_query=<%- data.title%>"
+            target="_blank"
+            >here</a
+          >. 🎥
+        </p>
         <% } %>
-
-        <ul>
-          <% data.ingredients.forEach((object) => {%>
-          <li>
-            <p><%= object %></p>
-          </li>
-          <% })%>
-        </ul>
       </article>
     </section>
 
@@ -59,14 +66,18 @@
         </article>
         <h3>Instructions</h3>
         <ol class="recipe-instructions">
-          <% data.instructions.forEach((sentence) => { %>
-          <li>
+          <!--
+            li
             <input
               type="checkbox"
               id="indexOfSentece"
               name="instructions-checklist"
             />
-            <label for="indexOfSentece"> <%= sentence %> </label>
+            <label for="indexOfSentece">  sentence  </label> 
+          li-->
+          <% data.instructions.forEach((sentence) => { %>
+          <li>
+            <p><%= sentence %></p>
           </li>
           <%}) %>
         </ol>
@@ -77,9 +88,8 @@
           <p>Estimated time:{time}</p>
         </article>
       </article>
-
-      
     </section>
   </main>
 
   <%- include ('../partials/footer') %>
+</body>

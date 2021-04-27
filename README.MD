@@ -68,7 +68,11 @@ Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overlo
 - Get embedded YouTube video of how to make the recipe
 
 #### Realtime events
-lorem
+##### Chat
+##### Go to match page when recipe is chosen
+##### Extended timer indication
+##### Winner result
+
 
 ## :nerd_face: TechStuff
 This app is built, using:

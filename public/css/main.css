@@ -1,7 +1,3 @@
-/* ------------------------------------------- */
-/*                   OVERALL                   */
-/* ------------------------------------------- */
-
 html {
   --color-white: #f0f0f5;
   --color-black: #1d1d21;
@@ -22,6 +18,7 @@ html {
 :root {
   background: var(--color-background-2);
   background: #181419;
+  background: #161516
 }
 
 * {
@@ -33,6 +30,9 @@ html {
   color: var(--color-white);
   font-family: var(--font-body);
 }
+/* ------------------------------------------- */
+/*                   OVERALL                   */
+/* ------------------------------------------- */
 
 /* ------------------------------------------- */
 /*                   BODY                      */
@@ -166,7 +166,7 @@ main#login a {
 
 #chat-query form#ingredientsForm input {
   background-color: transparent;
-  color: #ffffff;
+  color: #c5c3ff;
   outline-style: none;
   border-top: none;
   border-left: none;
@@ -178,12 +178,12 @@ main#login a {
   transition: 0.2s;
   margin-bottom: 0.5em;
   background: transparent;
-  background: -webkit-linear-gradient(#eee, #cb0e0e);
+  /* background: -webkit-linear-gradient(#eee, #cb0e0e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background: -moz-linear-gradient(#eee, #cb0e0e);
   -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
+  -moz-text-fill-color: transparent; */
 }
 
 #chat-query form#ingredientsForm input:focus {
@@ -306,6 +306,11 @@ ol {
   font-size: 0.8rem;
 }
 
+#recipes ol p.errorMsg {
+  color: #e61d1d;
+  font-style: italic;
+}
+
 #recipes ol li:hover div {
   opacity: 1;
 }
@@ -387,24 +392,44 @@ ol {
   background: #2b272d;
 }
 
-#match #recipedata img,
+/* #match #recipedata img,
 #match #recipedata ul {
   width: 50%;
-}
+} */
 
 #match #recipedata article:nth-child(2) {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  justify-content: space-between;
+  align-content: stretch;
 }
 
 #match #recipedata img {
   width: 50%;
+  width: 356px;
+  width: 300px;
+  height: 50%;
   /* min-width: 80%; */
   display: block;
-  margin: 0 auto;
+  margin: 0;
   border-radius: 5px;
   box-shadow: 0 0 10px black;
   transition: 0.2s;
+}
+
+#match #recipedata ul {
+  padding: 0.5em;
+}
+
+#match #recipedata iframe {
+  width: 13em;
+  height: 7em;
+}
+
+#match #recipedata article:nth-child(2) p {
+  width: 25%;
 }
 
 #match > WINNER {
@@ -444,14 +469,16 @@ ol {
 
 #match #playerdata #player-one {
   position: relative;
-  border: 5px solid red;
+  border: 5px solid rgba(241, 241, 241, 0.074);
+  padding: 1em;
+  border-radius: 10px;
 }
 
 #match #playerdata #player-two {
   position: absolute;
   top: 0;
   right: 0;
-  background-color: black;
+  background-color: rgb(170, 170, 170);
   border-radius: 5px;
   padding: 0.5em;
   /* width: 40%;
@@ -463,8 +490,8 @@ ol {
   font-style: italic;
 }
 
-#match .recipe-instructions p {
-  font-size: 0.8rem;
+#match .recipe-instructions {
+  list-style-type: decimal;
 }
 
 /* ------------------------------------------- */

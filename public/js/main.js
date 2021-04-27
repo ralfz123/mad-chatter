@@ -22,7 +22,6 @@ if (ingredientsForm) {
     if (inputQuery.value) {
       loader('show');
       socket.emit('query', { query: inputQuery.value });
-      // inputQuery.value = '';
     }
   });
 } else {
@@ -121,8 +120,10 @@ socket.on('data', (data) => {
     }
   } else {
     // ! Remove all old recipes
+    loader('hide');
     let stateText = document.querySelector('#recipes ol p');
-    stateText.textContent = 'No correct ingredient';
+    stateText.textContent = 'Incorrect ingredient';
+    stateText.setAttribute('class', 'errorMsg');
   }
 });
 
@@ -137,32 +138,20 @@ if (chosenRecipeForm) {
   null;
 }
 
-// Show chosen recipe -->
-
-// RENDER IT IN /MATCH TEMPLATE!
+// Show chosen recipe
 socket.on('dataRecipe', (data) => {
   if (data !== null) {
-    let stateText = document.querySelector('#recipes ol p');
-    stateText.style.display = 'none';
-
-    for (let i in data) {
-      let item = document.createElement('li');
-      item.setAttribute('class', 'recipe-response');
-      list.appendChild(item);
-
-      let image = document.createElement('img');
-      image.setAttribute('src', data[i].preview);
-      image.setAttribute('alt', data[i].title);
-      image.setAttribute('style', 'width:50px;');
-      item.appendChild(image);
-
-      let title = document.createElement('p');
-      title.textContent = `chosen: ${data[i].id}`;
-      item.appendChild(title);
-    }
+    window.location.replace(`/match/${data[0].id}`);
+    // let container = document.createElement('div');
+    // let link = document.createElement('a');
+    // link.textContent = `Gebruiker heeft gekozen voor ${data[0].title}`;
+    // link.setAttribute('href', `/match/${data[0].id}`);
+    // container.appendChild(link);
+    // list.appendChild(container);
   } else {
     let stateText = document.querySelector('#recipes ol p');
-    stateText.textContent = 'No correct ingredient';
+    stateText.textContent = 'Incorrect recipe ID';
+    stateText.setAttribute('class', 'errorMsg');
   }
 });
 

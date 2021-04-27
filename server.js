@@ -23,9 +23,8 @@ app.get('/', function (req, res) {
   res.render('index.ejs');
 });
 
-// ! Emit this data+action to the other so user X knows the state of user Y
-// return io.emit('dataRecipe', dataRecipe);
-// app.post('/match', async function (req, res) {
+// ! Emit this data+action to the other so user X knows the state of user Y // return io.emit('dataRecipe', dataRecipe);
+// app.post('/match/:id', async function (req, res) {
 //   let checkedRecipe = req.body.recipeID;
 
 //   let data = await getRecipeData(checkedRecipe);
@@ -42,8 +41,10 @@ app.get('/', function (req, res) {
 //   res.render('pages/match.ejs', { data: data[0] });
 // });
 
-app.get('/match', function (req, res) {
-  res.render('pages/match.ejs');
+app.get('/match/:id', async function (req, res) {
+  let data = await getRecipeData(req.params.id);
+  console.log(data);
+  res.render('pages/match.ejs', { data: data[0] });
 });
 
 // if user LoggedIn=false, then redirect to login
@@ -141,7 +142,8 @@ io.on('connection', (socket) => {
     // Get data by id
     let dataRecipe = await getRecipeData(id);
 
-    // return emitted data for clientside handling
+    // return emitted data for clientside handling for the other client
+    // return socket.broadcast.emit('dataRecipe', dataRecipe);
     return io.emit('dataRecipe', dataRecipe);
   }
 });
