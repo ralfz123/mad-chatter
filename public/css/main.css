@@ -18,7 +18,7 @@ html {
 :root {
   background: var(--color-background-2);
   background: #181419;
-  background: #161516
+  background: #161516;
 }
 
 * {
@@ -386,7 +386,7 @@ ol {
 /* ------------------------------------------- */
 
 #match #recipedata {
-  padding: 0.6rem;
+  padding: 1em 2em;
   /* width: 60%; */
   margin: 0 auto;
   background: #2b272d;
@@ -404,14 +404,12 @@ ol {
   justify-content: space-around;
   justify-content: space-between;
   align-content: stretch;
+  align-items: flex-start;
 }
 
 #match #recipedata img {
-  width: 50%;
-  width: 356px;
-  width: 300px;
+  width: 30%;
   height: 50%;
-  /* min-width: 80%; */
   display: block;
   margin: 0;
   border-radius: 5px;
@@ -419,18 +417,20 @@ ol {
   transition: 0.2s;
 }
 
-#match #recipedata ul {
-  padding: 0.5em;
+#match #recipedata ul li {
+  padding: 0.05em;
 }
 
 #match #recipedata iframe {
-  width: 13em;
-  height: 7em;
+  /* width: 13em; */
+  width: 30%;
+  /* height: 7em; */
+  /* height: auto; */
 }
 
-#match #recipedata article:nth-child(2) p {
+/* #match #recipedata article:nth-child(2) p {
   width: 25%;
-}
+} */
 
 #match > WINNER {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;

@@ -26,7 +26,7 @@ During this course you will learn how to build a real-time application. You will
 The course Real-Time Web is about learning how to build a real-time application. Real-Time Web is part of the half year minor programme about Web Design and Development in Amsterdam. Bachelor Communication and Multimedia Design, Amsterdam University of Applied Science.
 
 ## :heart_eyes: Concept
-[_3 Concepts_](wiki.com)
+[_3 Concepts_](https://github.com/ralfz123/real-time-web-2021/wiki)
 
 >_This is the solution for cooking together in times of Corona :fork_and_knife:._
 
@@ -42,8 +42,8 @@ This application is an app where you can cook with each other on distance (each 
 
 
 <figure>
-    <img alt="First live version of the application" width=600px src="public/assets/readme/app-ss-v1.png" /> 
-    <figcaption>First live app (v1)</figcaption>
+    <img alt="Second live version of the application" width=600px src="public/assets/readme/app-ss-v2.png" /> 
+    <figcaption>Screenshot live app</figcaption>
 </figure>
 
 ### Spike
@@ -156,12 +156,7 @@ With [map](https://github.com/ralfz123/real-time-web-2021/blob/main/modules/filt
     id: "52779",
     title: "Cream Cheese Tart",
     category: "Starter",
-    ingredients: [
-            "Flour",
-            "Butter",
-            "Egg",
-            "Salt",
-            ],
+    ingredients: ["Flour", "Butter", "Egg", "Salt"],
     instructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
     preview: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
     video: "https://www.youtube.com/watch?v=UhQPwO4uymo",
@@ -233,24 +228,17 @@ See [backlog](https://github.com/ralfz123/real-time-web-2021/projects/1)
 - [ ] Filter ingredients in one way instead of mentioning each ingr (filter null, '', duplicate values)
 - [x] Filter instructions in sentences -> split on each sentence
 - [ ] rename functions and variables to descriptive ones
-- [ ] Style Recipe data layout
+- [x] Style Recipe data layout
 - [ ] Emit data to the other client after getting NEW recipes data (2nd req)
 
 
 #### Readme:
 - [x] Data lifecycle diagram optimalise (columns?)
-- [ ] 3 concepts describe in wiki
+- [x] 3 concepts describe in wiki
     - sketch
     - api
     - why
     - concept
-
-#### Backlog
-- [ ] Multiple ingredients as query
-- [ ] Diet meals
-- [ ] allergic meals
-- [ ] When on /match, play Audio for each (io.emit)
-- [ ] When someone wins or loses, play sound
 
 </details>
 
