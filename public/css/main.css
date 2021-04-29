@@ -88,7 +88,7 @@ input {
 }
 
 button {
-  background: rgb(28, 24, 149);
+  background-color: rgb(28, 24, 149);
   color: white;
   padding: 0.2rem 0.4rem;
   border: none;
@@ -103,6 +103,32 @@ button:focus,
 button:active {
   background: white;
   color: rgb(28, 24, 149);
+}
+
+/* copy clipboard */
+.msgCopy {
+  position: absolute;
+  top: 0;
+  background: red;
+  width: 100%;
+  color: black;
+  animation: fadeOut 1500ms 1s ease-in-out;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.msgCopy p {
+  color: black;
 }
 
 /* login + register */
@@ -152,14 +178,6 @@ main#login a {
   flex-direction: column;
 }
 
-#chat-query article {
-  /* margin: 20px 0px; */
-}
-
-/* #chat-query article:nth-child(1) {
-  border-bottom: 2px solid rgba(198, 198, 198, 0.622);
-} */
-
 #chat-query form#ingredientsForm label {
   font-size: 2rem;
 }
@@ -191,12 +209,8 @@ main#login a {
 }
 
 #chat-query form#ingredientsForm p {
-  /* padding: 0.3rem; */
   margin: 0.5em 0;
   font-size: 2em;
-  /* background: #cb0e0e; */
-  /* border: 3px dashed #3e3940; */
-
   box-shadow: 0px 0px 7px 0px #fff;
   text-align: center;
   border-radius: 10px;
@@ -217,10 +231,6 @@ main#login a {
     background: transparent;
     color: black;
   }
-}
-
-#chat-query article {
-  /* height: 30vh; */
 }
 
 #chat-query article ol {
@@ -250,6 +260,19 @@ main#login a {
 
 #chat-query article:nth-child(2) ol li.newMsg {
   animation: fadeIn 0.5s ease-in-out;
+}
+#chat-query article:nth-child(2) form button:nth-child(6) {
+  background-image: url(../assets/send-icon.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 2.5em;
+  padding: 1em 2em;
+}
+
+#chat-query article:nth-child(2) form button:nth-child(6):hover,
+#chat-query article:nth-child(2) form button:nth-child(6):focus,
+#chat-query article:nth-child(2) form button:nth-child(6):active {
+  background-color: #6461ba;
 }
 
 @keyframes fadeIn {
@@ -296,7 +319,7 @@ ol {
   position: absolute;
   top: 0;
   padding: 0.3em;
-  background-image: linear-gradient(to top, rgba(245, 246, 252, 0), #450057d8);
+  background-image: linear-gradient(to top, rgba(245, 246, 252, 0), #4f0762d8);
   border-radius: 10px;
   height: 40%;
   width: 100%;
@@ -304,6 +327,12 @@ ol {
 
 #recipes ol li div p {
   font-size: 0.8rem;
+}
+
+#recipes ol li div p:nth-child(2) {
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-size: 0.6rem;
 }
 
 #recipes ol p.errorMsg {
@@ -356,14 +385,12 @@ ol {
   display: none;
 }
 
-#recipes ol li.recipes-response {
-}
-
 #recipes ol li.recipes-response img {
   position: relative;
   width: 100%;
   border-radius: 10px;
   height: auto;
+  box-shadow: -1px 10px 6px -4px #0d0d0d;
 }
 
 #recipes ol li.recipes-response p {
@@ -392,11 +419,6 @@ ol {
   background: #2b272d;
 }
 
-/* #match #recipedata img,
-#match #recipedata ul {
-  width: 50%;
-} */
-
 #match #recipedata article:nth-child(2) {
   display: flex;
   flex-direction: row;
@@ -422,15 +444,8 @@ ol {
 }
 
 #match #recipedata iframe {
-  /* width: 13em; */
   width: 30%;
-  /* height: 7em; */
-  /* height: auto; */
 }
-
-/* #match #recipedata article:nth-child(2) p {
-  width: 25%;
-} */
 
 #match > WINNER {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
@@ -462,10 +477,6 @@ ol {
 /* ------------------------------------------- */
 /*                PLAYER DATA                  */
 /* ------------------------------------------- */
-
-#match #playerdata {
-  /* display: flex; */
-}
 
 #match #playerdata #player-one {
   position: relative;
