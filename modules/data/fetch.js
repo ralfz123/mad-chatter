@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
-const filterData = require('./filter.js');
+const filterData = require('../utils/filter.js');
+const { urlIngr, urlRec } = require('../constants/api.js');
 
 /**
  * Fetch data and parses it to JSON
@@ -39,9 +40,7 @@ async function getData(query) {
   }
 
   const queryIngredients = query;
-
-  // API endpoint by ingredients query
-  const urlIngredients = `https://themealdb.com/api/json/v1/1/search.php?s=${queryIngredients}`;
+  const urlIngredients = `${urlIngr}${queryIngredients}`;
 
   const dataRecipes = await fetchData(urlIngredients);
 
@@ -64,10 +63,8 @@ async function getData(query) {
  */
 
 async function getRecipeData(id) {
-  const queryRecipe = id;
-
-  // API endpoint by recipe query
-  const urlRecipe = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${queryRecipe}`;
+  const recipeId = id;
+  const urlRecipe = `${urlRec}${recipeId}`;
 
   const dataRecipe = await fetchData(urlRecipe);
 
