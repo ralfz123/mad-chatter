@@ -3,8 +3,6 @@
 <body>
   <%- include ('./partials/header') %>
 
-  <p>Copy this room ID and share it with someone else: <span><%- id%></span></p>
-  <button class="copyIdBtn">Copy room ID</button>
   <main>
     <section id="chat-query">
       <article>
@@ -37,7 +35,7 @@
             placeholder="Pasta, right?"
             title="Type here your message"
           />
-          <button type="submit"></button>
+          <button type="submit">Send</button>
         </form>
       </article>
     </section>
@@ -48,12 +46,16 @@
         <p>Find recipes by entering a ingredient in the input field.</p>
         <div class="loader"></div>
       </ol>
-      <form method="GET" enctype="application/x-www-form-urlencoded">
-        <label for="chosen-recipe">One person has to chose a recipe(id):</label>
+      <form
+        action="/match/id"
+        method="POST"
+        enctype="application/x-www-form-urlencoded"
+      >
+        <label for="chosen-recipe">Chosen recipe(id):</label>
         <input
           type="number"
           id="chosen-recipe"
-          value="52779"
+          placeholder="52779"
           title="Fill in the ID of the recipe"
           name="recipeID"
           required
@@ -64,4 +66,4 @@
   </main>
 
   <%- include ('./partials/footer') %>
-</body>
+  

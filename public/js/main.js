@@ -42,7 +42,6 @@ if (chatForm) {
       });
       inputName.setAttribute('disabled', 'disabled');
       inputMessage.value = '';
-      inputMessage.focus();
     }
   });
 } else {
@@ -112,9 +111,6 @@ socket.on('data', (data) => {
         let text = document.createElement('p');
         text.textContent = data[i].title;
         imageText.appendChild(text);
-        let category = document.createElement('p');
-        category.textContent = data[i].category;
-        imageText.appendChild(category);
         label.appendChild(imageText);
 
         let title = document.createElement('p');
@@ -131,7 +127,6 @@ socket.on('data', (data) => {
   }
 });
 
-// Handles chosen recipe id
 let inputChosenRecipe = document.querySelector('#chosen-recipe');
 const chosenRecipeForm = document.querySelector('#recipes form');
 if (chosenRecipeForm) {
@@ -145,25 +140,19 @@ if (chosenRecipeForm) {
 
 // Show chosen recipe
 socket.on('dataRecipe', (data) => {
-  let roomId = window.location.pathname;
-  let recipeId = data[0].id;
-  let newUrl = `${roomId}/match/${recipeId}`;
-  console.log(newUrl);
-
-  // if (data !== null) {
-
-  window.location.replace(newUrl);
-  // let container = document.createElement('div');
-  // let link = document.createElement('a');
-  // link.textContent = `Gebruiker heeft gekozen voor ${data[0].title}`;
-  // link.setAttribute('href', `/match/${data[0].id}`);
-  // container.appendChild(link);
-  // list.appendChild(container);
-  // } else {
-  //   let stateText = document.querySelector('#recipes ol p');
-  //   stateText.textContent = 'Incorrect recipe ID';
-  //   stateText.setAttribute('class', 'errorMsg');
-  // }
+  if (data !== null) {
+    window.location.replace(`/match/${data[0].id}`);
+    // let container = document.createElement('div');
+    // let link = document.createElement('a');
+    // link.textContent = `Gebruiker heeft gekozen voor ${data[0].title}`;
+    // link.setAttribute('href', `/match/${data[0].id}`);
+    // container.appendChild(link);
+    // list.appendChild(container);
+  } else {
+    let stateText = document.querySelector('#recipes ol p');
+    stateText.textContent = 'Incorrect recipe ID';
+    stateText.setAttribute('class', 'errorMsg');
+  }
 });
 
 // issue: somebody else can have the same name
@@ -266,38 +255,4 @@ function loader(state) {
   } else {
     null;
   }
-}
-
-// https://stackoverflow.com/questions/50795042/create-a-copy-button-without-an-input-text-box/50795833
-let copyIdBtn = document.querySelector('.copyIdBtn');
-copyIdBtn.addEventListener('click', () => {
-  let rawRoomId = window.location.pathname;
-  let roomId = rawRoomId.substring(
-    rawRoomId.lastIndexOf('/') + 1,
-    rawRoomId.length
-  );
-  Clipboard_CopyTo(roomId);
-
-  // Feedback
-  let container = document.createElement('div');
-  container.classList.add('msgCopy');
-  let text = document.createElement('p');
-  text.textContent = `You've copied ${roomId} to clipboard!`;
-  container.append(text);
-  let header = document.querySelector('header');
-  header.appendChild(container);
-  header.style.position = 'relative';
-  setTimeout(function () {
-    container.remove();
-  }, 2300);
-});
-
-// Clip the room ID to clipboard
-function Clipboard_CopyTo(value) {
-  const tempInput = document.createElement('input');
-  tempInput.value = value;
-  document.body.appendChild(tempInput);
-  tempInput.select();
-  document.execCommand('copy');
-  document.body.removeChild(tempInput);
 }

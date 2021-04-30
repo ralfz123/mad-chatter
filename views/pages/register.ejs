@@ -1,10 +1,10 @@
-<%- include ('../partials/head', { title: 'Login'}) %>
+<%- include ('../partials/head', { title: 'Register'}) %>
 
 <body>
   <%- include ('../partials/header') %>
-  <h2>Login</h2>
-  <main id="login">
-    <form action="/login" method="POST">
+  <h2>Register</h2>
+  <main id="register">
+    <form action="/register" method="POST">
       <label for="name"
         >Name
         <input type="text" id="name" name="name" placeholder="John" required
@@ -22,11 +22,8 @@
           required
       /></label>
 
-      <button type="submit">Login</button>
+      <button type="submit">Register</button>
     </form>
-
-    <a href="/register">Register</a>
   </main>
 
   <%- include ('../partials/footer') %>
-</body>

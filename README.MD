@@ -1,10 +1,10 @@
 ##### Real Time Web @cmda-minor-web 2020 - 2021
 
-![Badge stating project is licensed under MIT license](https://img.shields.io/github/license/ralfz123/real-time-web-2021) ![Badge stating amount of issues open](https://img.shields.io/github/issues/ralfz123/real-time-web-2021) [![](https://img.shields.io/badge/site--status-up-success)](https://rtw-2021.herokuapp.com/) [![Badges via shields.io](https://img.shields.io/badge/badges%20via-shields.io-brightgreen)](shields.io)
+![Badge stating project is licensed under MIT license](https://img.shields.io/github/license/ralfz123/real-time-web-2021) ![Badge stating amount of issues open](https://img.shields.io/github/issues/ralfz123/real-time-web-2021) [![](https://img.shields.io/badge/site--status-up-success)](https://ralfz123.github.io/real-time-web-2021) [![Badges via shields.io](https://img.shields.io/badge/badges%20via-shields.io-brightgreen)](shields.io)
 # Cooking on Remote :fork_and_knife: :meat_on_bone:
 _Real-Time Web, a course of the minor Web Design & Development. It is a minor of the third year from the study [CMD](https://www.cmd-amsterdam.nl/)._
 
-[Link to live version :rocket:](https://rtw-2021.herokuapp.com/)
+[Link to live version :rocket: :fire:](https://rtw-2021.herokuapp.com/)
 
 ### Table of Contents
 <table>
@@ -33,7 +33,7 @@ The course Real-Time Web is about learning how to build a real-time application.
 This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can both search on recipes by entering some food ingredients that you have in your house. When you both are agree with one recipe, you click on that recipe and you can start cooking. You both set a timer about how long you think it will take to cook the recipe. Also you follow the instructions of the recipe and you can check them by the checkboxes. The person who finishes the dish first is the winner :trophy: .
 
 
-### Sketch
+### Sketches
 
 <figure>
     <img alt="Sketch of the application" width=400px src="https://raw.githubusercontent.com/ralfz123/real-time-web-2021/main/public/assets/readme/concept-sketch-v1.JPG" /> 
@@ -46,7 +46,15 @@ This application is an app where you can cook with each other on distance (each 
     <figcaption>Screenshot live app</figcaption>
 </figure>
 
-### Features
+### Spike
+#### Timer and Instructions challenge 
+- Is this a good challenge
+- Have to pick the timer or the instructions or combine both?
+
+### Improvements
+Ik heb data gerenderd van de recepten clientside, zodat server niet wordt overloaded door de serverside rendering
+
+#### Features
 **Login**  
 - Authenticated login with username and password
 - Create rooms of 2 persons
@@ -56,21 +64,19 @@ This application is an app where you can cook with each other on distance (each 
 - You can chat with each other to talk about which recipe you pick
 - You can see the details of the recipe, when it's chosen
 - You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: )
-- You can get an embedded YouTube video of how to make the recipe
+(- Hover over recipe, get data in tooltip)
+- Get embedded YouTube video of how to make the recipe
 
-### Realtime events 
-- Chat with each other
-- Go to match page when recipe is chosen
-- Extended timer indication (from you and the other one)
-- Winner result
+#### Realtime events
+##### Chat
+##### Go to match page when recipe is chosen
+##### Extended timer indication
+##### Winner result
 
-### Spike
-#### Timer and Instructions challenge 
-I was thinking about whether to use the timer for when the recipe is ready or the real-time instruction checklist. So I was testing it myself and I discussed it with other students, and I came to the conclusion that I'm going to use both. In this app I am only going to build the timer, but the backlog has instruction checklist ready.
 
 ## :nerd_face: TechStuff
 This app is built, using:
-- [socket.io](http://socket.io/)
+- [Socket.io](http://socket.io/)
 - [npm](https://www.npmjs.com/)
 - [Node.js server](https://nodejs.org/)
 - [Express router](https://expressjs.com/)
@@ -89,7 +95,8 @@ I prefer to work with these dev-rules for myself:
 
 # :1234: Data
 ### API is
-- [themealDB](https://www.themealdb.com/api.php)
+<!-- 1. (x) [spoonacular](https://spoonacular.com/food-api/docs#Analyze-Recipe) -->
+[mealDB](https://www.themealdb.com/api.php)
 
 ### :key: KEY
 You can get the data by entering a query after the url.
@@ -100,6 +107,7 @@ Developer test `API-KEY` = `1`.
 Search meal by name - `www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata`  
 List all meals by first letter - `www.themealdb.com/api/json/v1/1/search.php?f=a`  
 Lookup full meal details by id - `www.themealdb.com/api/json/v1/1/lookup.php?i=52772`  
+
 
 ### Data variables
 The data variables I used, are:
@@ -121,7 +129,7 @@ The data variables I used, are:
     strDrinkAlternate: null,
     strCategory: "Starter",
     strArea: "Unknown",
-    strInstructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt, press it into a tart form and place it in the fridge. Filling: stir 300g cream cheese and 100ml milk until smooth, add in 3 eggs, 100g grated parmesan cheese and season with salt, pepper and nutmeg. Take the crust out of the fridge and prick the bottom with a fork. Pour in the filling and bake at 175 degrees C for about 25 minutes. Cover the tart with some aluminium foil after half the time. In the mean time, slice about 350g mini tomatoes. In a small pan heat 3tbsp olive oil, 3tbsp white vinegar, 1 tbsp honey, salt and pepper and combine well. Pour over the tomato slices and mix well. With a spoon, place the tomato slices on the tart, avoiding too much liquid on it. Decorate with basil leaves and enjoy",
+    strInstructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
     strMealThumb: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
     strTags: "Tart,Savory",
     strYoutube: "https://www.youtube.com/watch?v=UhQPwO4uymo",
@@ -149,18 +157,7 @@ With [map](https://github.com/ralfz123/real-time-web-2021/blob/main/modules/filt
     title: "Cream Cheese Tart",
     category: "Starter",
     ingredients: ["Flour", "Butter", "Egg", "Salt"],
-    instructions: [
-        'Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt, press it into a tart form and place it in the fridge.',
-        'Filling: stir 300g cream cheese and 100ml milk until smooth, add in 3 eggs, 100g grated parmesan cheese and season with salt, pepper and nutmeg.',
-        'Take the crust out of the fridge and prick the bottom with a fork.',
-        'Pour in the filling and bake at 175 degrees C for about 25 minutes.',
-        'Cover the tart with some aluminium foil after half the time.',
-        'In the mean time, slice about 350g mini tomatoes.',
-        'In a small pan heat 3tbsp olive oil, 3tbsp white vinegar, 1 tbsp honey, salt and pepper and combine well.',
-        'Pour over the tomato slices and mix well.',
-        'With a spoon, place the tomato slices on the tart, avoiding too much liquid on it.',
-        'Decorate with basil leaves and enjoy'
-    ],
+    instructions: "Crust: make a dough from 250g flour (I like mixing different flours like plain and wholegrain spelt flour), 125g butter, 1 egg and a pinch of salt",
     preview: "https://www.themealdb.com/images/media/meals/wurrux1468416624.jpg",
     video: "https://www.youtube.com/watch?v=UhQPwO4uymo",
 },
@@ -179,12 +176,9 @@ Have to be done:
 
 
 ## Challenges / Inventions / Learned
-<!-- ### SocketIO
+### Socket.io
 What's it?
-What's it in my app? -->
-
-### Clientside data rendering
-I have rendered data from the recipes clientside so that the server is not overloaded by the serverside rendering.
+What's it in my app?
 ## :gear: Installation
 1. Clone the repository:  
 ```
@@ -249,7 +243,7 @@ See [backlog](https://github.com/ralfz123/real-time-web-2021/projects/1)
 </details>
 
 ## :file_folder: Sources
-Credits to [Justus](https://github.com/ju5tu5) && [Lukas van Driel](https://github.com/lukasvan3l) for giving interesting lectures about Real Time Webapps and how to deal with it.
+Credits to [Justus](https://github.com/ju5tu5) && [Koop Reynders](https://github.com/KoopReynders) && [Lukas van Driel](https://github.com/lukasvan3l) for giving interesting lectures about Real Time Webapps and how to deal with it.
 
 ### Code sources
 - Stackoverflow (n.d.). Searching for answers on dev questions - Stackoverflow. Retrieved 6 April 2021 from https://www.stackoverflow.com
