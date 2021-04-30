@@ -14,6 +14,8 @@ app.get('/', function (req, res) {
   res.render('index.ejs');
 });
 
+let chatMessages = [];
+
 app.get('/match/:id', async function (req, res) {
   let data = await getRecipeData(req.params.id);
   console.log(data);
@@ -57,6 +59,8 @@ io.on('connection', (socket) => {
 
   // Message handler
   socket.on('message', (messageInfo) => {
+    chatMessages.push('message');
+    console.log(chatMessages);
     io.emit('message', messageInfo);
   });
 

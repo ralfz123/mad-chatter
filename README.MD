@@ -116,6 +116,10 @@ I prefer to work with these dev-rules for myself:
 - ES6 modules
 
 # :1234: Data
+## Datamodel / management
+lorem lorem lorem
+
+## API Data
 ### API is
 - [themealDB](https://www.themealdb.com/api.php)
 
