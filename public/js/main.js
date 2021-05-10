@@ -8,7 +8,6 @@ var ingredientsBox = document.querySelector('#ingredients');
 // Chat
 var chatForm = document.querySelector('#chatForm');
 var chatBox = document.querySelector('#messages');
-var inputName = document.querySelector('#name');
 var inputMessage = document.querySelector('#message');
 var message = document.querySelector('.chat-message');
 
@@ -32,27 +31,6 @@ socket.on('query', (emitted) => {
   addIngredient(emitted.query);
 });
 
-if (chatForm) {
-  chatForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (inputMessage.value) {
-      socket.emit('message', {
-        name: inputName.value,
-        message: inputMessage.value,
-      });
-      inputName.setAttribute('disabled', 'disabled');
-      inputMessage.value = '';
-    }
-  });
-} else {
-  null;
-}
-
-socket.on('message', (emitted) => {
-  new Audio('https://www.myinstants.com/media/sounds/msn-sound_1.mp3').play();
-  addMessage(emitted.name, emitted.message);
-});
-
 // Add ingredient to box
 function addIngredient(ingredient) {
   if (ingredient !== null) {
@@ -65,19 +43,6 @@ function addIngredient(ingredient) {
   } else {
     null;
   }
-}
-
-// Add message to chatbox
-function addMessage(name, message) {
-  var item = document.createElement('li');
-  // name = convertNameSelf(name);
-  item.textContent = `${name}: ${message}`;
-  item.setAttribute('class', 'newMsg');
-  chatBox.appendChild(item);
-  chatBox.scrollTop = chatBox.scrollHeight;
-  setTimeout(() => {
-    item.removeAttribute('class', 'newMsg');
-  }, 1500);
 }
 
 // Show recipes result
@@ -155,7 +120,7 @@ socket.on('dataRecipe', (data) => {
   }
 });
 
-// issue: somebody else can have the same name
+// replace with user socket id
 // Checks if name of the messager is the same as the client
 function convertNameSelf(name) {
   if (name === inputName.value) {
@@ -255,4 +220,137 @@ function loader(state) {
   } else {
     null;
   }
+}
+
+// default chat msg?
+socket.on('welcome', (msg) => {
+  // console.log('Received: ', msg);
+});
+
+const homeSecOne = document.querySelector('#chat-query');
+const homeSecTwo = document.querySelector('#recipes');
+homeSecOne.style.display = 'none';
+homeSecTwo.style.display = 'none';
+
+const loginSection = document.querySelector('main > section');
+const loginForm = document.querySelector('main > section form');
+let roomInputs = document.getElementsByName('room');
+let nickname = document.querySelector('input[name=nickname]');
+
+loginForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  for (let i in roomInputs) {
+    if (roomInputs[i].checked) {
+      socket.emit('joinRoom', {
+        room: roomInputs[i].value,
+        user: nickname.value,
+      });
+      loginSection.style.display = 'none';
+      homeSecOne.style.display = 'block';
+      homeSecTwo.style.display = 'block';
+    }
+  }
+});
+
+socket.on('err', (err) => {
+  console.log(err);
+});
+
+socket.on('succes', (res) => {
+  console.log(res);
+});
+
+// Get room and users
+socket.on('roomUsers', ({ users }) => {
+  outputUsers(users);
+});
+
+// Add users to DOM
+function outputUsers(users) {
+  const userList = document.querySelector('.users');
+  userList.textContent = '';
+  users.forEach((user) => {
+    const li = document.createElement('li');
+    li.textContent = user.username;
+    userList.appendChild(li);
+  });
+}
+
+// // Message from server
+// socket.on('message', (message) => {
+//   outputMessage(message);
+
+//   // Scroll down
+//   chatMessages.scrollTop = chatMessages.scrollHeight;
+// });
+
+// chatForm.addEventListener('submit', (e) => {
+//   e.preventDefault();
+
+//   // Get message text
+//   let msg = e.target.elements.msg.value;
+
+//   msg = msg.trim();
+
+//   if (!msg) {
+//     return false;
+//   }
+
+//   socket.emit('chatMessage', msg);
+
+//   // Clear input
+//   e.target.elements.msg.value = '';
+//   e.target.elements.msg.focus();
+// });
+
+// Message submit
+if (chatForm) {
+  chatForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (inputMessage.value) {
+      let msg = inputMessage;
+      let msgText = inputMessage.value;
+
+      // Emit message to server
+      socket.emit('chatMessage', msgText);
+
+      // Clear input
+      inputMessage.value = '';
+      msg.focus();
+    }
+  });
+} else {
+  null;
+}
+
+socket.on('chatMessage', (message) => {
+  new Audio('https://www.myinstants.com/media/sounds/msn-sound_1.mp3').play();
+  addMessage(message);
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+// Add message to chatbox DOM
+function addMessage({ user, message }) {
+  let item = document.createElement('li');
+  item.setAttribute('class', 'newMsg');
+  // name = convertNameSelf(name);
+  let itemText = document.createElement('p');
+  item.appendChild(itemText);
+
+  let username = document.createElement('span');
+  username.textContent = `${user}: `;
+  username.style.fontWeight = 'bold';
+  itemText.appendChild(username);
+
+  let messageText = document.createElement('span');
+  messageText.textContent = message;
+  itemText.appendChild(messageText);
+
+  chatBox.appendChild(item);
+  chatBox.scrollTop = chatBox.scrollHeight;
+  setTimeout(() => {
+    item.removeAttribute('class', 'newMsg');
+  }, 1500);
 }

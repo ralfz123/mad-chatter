@@ -4,6 +4,24 @@
   <%- include ('./partials/header') %>
 
   <main>
+    <section>
+      <form action="">
+        <legend>
+          <label for="nickname"
+            >Nickname
+            <input type="text" name="nickname" id="nickname" />
+          </label>
+
+          <input type="radio" name="room" value="tasty" />TASTY
+          <input type="radio" name="room" value="fast" />FAST
+          <input type="radio" name="room" value="lol" />LOL
+          <input type="radio" name="room" value="delicious" />DELICIOUS
+          <input type="radio" name="room" value="flowerpower" />FLOWERPOWER
+          <button type="submit">Join Room</button>
+        </legend>
+      </form>
+    </section>
+
     <section id="chat-query">
       <article>
         <form id="ingredientsForm">
@@ -24,9 +42,6 @@
         <h3>Chat</h3>
         <p>What shall we eat?</p>
         <form id="chatForm">
-          <label for="name">Firstname</label>
-          <input type="text" id="name" placeholder="loginName" required />
-
           <ol id="messages"></ol>
           <label for="message">Message</label>
           <input
@@ -37,6 +52,7 @@
           />
           <button type="submit">Send</button>
         </form>
+        <ul class="users"></ul>
       </article>
     </section>
 
@@ -66,4 +82,4 @@
   </main>
 
   <%- include ('./partials/footer') %>
-  
+</body>

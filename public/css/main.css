@@ -141,6 +141,11 @@ main#login a {
   border-radius: 10px;
 }
 
+/* login */
+main > section {
+  display: block;
+}
+
 /* chat-query section */
 #chat-query {
   width: 40vw;
@@ -224,7 +229,6 @@ main#login a {
 }
 
 #chat-query article ol {
-  border: 1px solid rgba(183, 183, 183, 0.512);
   border: none;
   height: 15vh;
   margin: 0.3em;
@@ -233,19 +237,22 @@ main#login a {
   border-radius: 10px;
 }
 
-#chat-query article:nth-child(2) p {
+#chat-query article:nth-child(2) > p {
   font-style: italic;
   color: #6e666f;
 }
 
 #chat-query article:nth-child(2) ol li {
-  font-size: 0.8rem;
   color: white;
   background: #423f3f;
   width: 50%;
   padding: 0.2em;
   border-radius: 5px;
   margin: 0.3em 0.5em;
+}
+
+#chat-query article:nth-child(2) ol li p {
+  font-size: 0.8rem;
 }
 
 #chat-query article:nth-child(2) ol li.newMsg {
@@ -264,6 +271,26 @@ main#login a {
 /* all lists */
 ol {
   list-style-type: none;
+}
+
+/* user list */
+#chat-query .users {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 1em;
+  width: 13vw;
+  border: 0.5px solid yellow;
+
+  padding: 0.5em;
+  list-style: none;
+  /* height: 10vh; */
+  border-radius: 10px;
+  background: #39333b;
+}
+
+#chat-query .users li {
+  font-size: 0.9rem;
 }
 
 /* recipes section */
