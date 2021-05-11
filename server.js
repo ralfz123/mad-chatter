@@ -4,7 +4,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 5000;
 
-// const { getData, getRecipeData } = require('./modules/data/fetch.js');
+const { getData, getRecipeData } = require('./modules/data/fetch.js');
 
 const {
   userJoin,
@@ -88,7 +88,7 @@ io.on('connection', (socket) => {
           'joinSucces',
           `${user}, You have succesfully joined ${room}`
         ) &&
-        socket.to(newUser.room).emit('userJoined', `${user} joined the room`)
+        socket.to(newUser.room).emit('userJoined', `${user} joined this room`)
       );
     } else {
       return socket.emit('joinError', 'ERROR, No Room named ' + room);
@@ -103,23 +103,19 @@ io.on('connection', (socket) => {
   });
 
   // Ingredient id handler
-  // socket.on('query', (queryInfo) => {
-  //   io.emit('query', queryInfo);
-  //   getQueryData(queryInfo.query);
-  // });
+  socket.on('query', ({ query }) => {
+    let dataQuery = getQueryData(query);
+    socket.emit('data', dataQuery);
+    // push to array that contains all liked recipes and thereof can be chosen of.
+  });
 
-  // // Chosen recipe handler
-  // socket.on('chosenRecipe', (recipeID) => {
-  //   io.emit('chosenRecipe', recipeID);
-  //   getDataOfRecipe(recipeID);
-  // });
-
-  // // Message handler
-  // socket.on('message', (messageInfo) => {
-  //   chatMessages.push('message');
-  //   console.log(chatMessages);
-  //   io.emit('message', messageInfo);
-  // });
+  // Chosen recipe handler
+  socket.on('chosenRecipe', (recipeID) => {
+    // io.emit('chosenRecipe', recipeID);
+    getDataOfRecipe(recipeID);
+    // socket.to(newUser.room).emit('userJoined', `${user} joined this room`);
+    // Send data list (recipe id) to other clients (display array)
+  });
 
   // Detects when user has disconnected
   socket.on('disconnect', () => {
@@ -140,22 +136,22 @@ io.on('connection', (socket) => {
     }
   });
 
-  // async function getQueryData(query) {
-  //   // Get data by query
-  //   let dataQuery = await getData(query);
+  async function getQueryData(query) {
+    // Get data by query
+    let dataQuery = await getData(query);
 
-  //   // return emitted data for clientside handling
-  //   return io.emit('data', dataQuery);
-  // }
+    // return emitted data for clientside handling
+    return io.emit('data', dataQuery);
+  }
 
-  // async function getDataOfRecipe(id) {
-  //   // Get data by id
-  //   let dataRecipe = await getRecipeData(id);
+  async function getDataOfRecipe(id) {
+    // Get data by id
+    let dataRecipe = await getRecipeData(id);
 
-  //   // return emitted data for clientside handling for the other client
-  //   // return socket.broadcast.emit('dataRecipe', dataRecipe);
-  //   return io.emit('dataRecipe', dataRecipe);
-  // }
+    // return emitted data for clientside handling for the other client
+    // return socket.broadcast.emit('dataRecipe', dataRecipe);
+    return io.emit('dataRecipe', dataRecipe);
+  }
 });
 
 http.listen(port, () => {

@@ -27,26 +27,32 @@ if (ingredientsForm) {
   null;
 }
 
-socket.on('query', (emitted) => {
-  addIngredient(emitted.query);
-});
+// socket.on('query', (emitted) => {
+//   console.log(emitted);
+//   addIngredient(emitted.query);
+// });
 
-// Add ingredient to box
-function addIngredient(ingredient) {
-  if (ingredient !== null) {
-    ingredientsBox.style.padding = '0.3rem';
-    ingredientsBox.textContent = ingredient;
-    ingredientsBox.setAttribute('class', 'newIngr');
-    setTimeout(() => {
-      ingredientsBox.removeAttribute('class', 'newIngr');
-    }, 1500);
-  } else {
-    null;
-  }
-}
+// // Add ingredient to box
+// function addIngredient(ingredient) {
+//   if (ingredient !== null) {
+//     ingredientsBox.style.padding = '0.3rem';
+//     ingredientsBox.textContent = ingredient;
+//     ingredientsBox.setAttribute('class', 'newIngr');
+//     setTimeout(() => {
+//       ingredientsBox.removeAttribute('class', 'newIngr');
+//     }, 1500);
+//   } else {
+//     null;
+//   }
+// }
 
 // Show recipes result
 socket.on('data', (data) => {
+  addRecipes(data);
+});
+
+// function that makes all response from the data
+function addRecipes(data) {
   if (data !== null) {
     loader('hide');
     let stateText = document.querySelector('#recipes ol p');
@@ -90,35 +96,35 @@ socket.on('data', (data) => {
     stateText.textContent = 'Incorrect ingredient';
     stateText.setAttribute('class', 'errorMsg');
   }
-});
-
-let inputChosenRecipe = document.querySelector('#chosen-recipe');
-const chosenRecipeForm = document.querySelector('#recipes form');
-if (chosenRecipeForm) {
-  chosenRecipeForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    socket.emit('chosenRecipe', inputChosenRecipe.value);
-  });
-} else {
-  null;
 }
 
+// let inputChosenRecipe = document.querySelector('#chosen-recipe');
+// const chosenRecipeForm = document.querySelector('#recipes form');
+// if (chosenRecipeForm) {
+//   chosenRecipeForm.addEventListener('submit', function (e) {
+//     e.preventDefault();
+//     socket.emit('chosenRecipe', inputChosenRecipe.value);
+//   });
+// } else {
+//   null;
+// }
+
 // Show chosen recipe
-socket.on('dataRecipe', (data) => {
-  if (data !== null) {
-    window.location.replace(`/match/${data[0].id}`);
-    // let container = document.createElement('div');
-    // let link = document.createElement('a');
-    // link.textContent = `Gebruiker heeft gekozen voor ${data[0].title}`;
-    // link.setAttribute('href', `/match/${data[0].id}`);
-    // container.appendChild(link);
-    // list.appendChild(container);
-  } else {
-    let stateText = document.querySelector('#recipes ol p');
-    stateText.textContent = 'Incorrect recipe ID';
-    stateText.setAttribute('class', 'errorMsg');
-  }
-});
+// socket.on('dataRecipe', (data) => {
+//   if (data !== null) {
+//     window.location.replace(`/match/${data[0].id}`);
+//     // let container = document.createElement('div');
+//     // let link = document.createElement('a');
+//     // link.textContent = `Gebruiker heeft gekozen voor ${data[0].title}`;
+//     // link.setAttribute('href', `/match/${data[0].id}`);
+//     // container.appendChild(link);
+//     // list.appendChild(container);
+//   } else {
+//     let stateText = document.querySelector('#recipes ol p');
+//     stateText.textContent = 'Incorrect recipe ID';
+//     stateText.setAttribute('class', 'errorMsg');
+//   }
+// });
 
 // replace with user socket id
 // Checks if name of the messager is the same as the client
@@ -130,76 +136,77 @@ function convertNameSelf(name) {
   }
 }
 
-setTimer();
-// Timer from player
-function setTimer() {
-  const form = document.querySelector('#match form');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      // Create countdown section
-      const countdownPlace = document.querySelector('#match article p span');
-      let timer = document.querySelector('#timer');
-      let timerHours = timer.value;
-      let timerMinutes = timerHours * 60; // convert hours to minutes
-      let timerSeconds = timerMinutes * 60; // convert minutes to seconds
+// setTimer();
+// // Timer from player
+// function setTimer() {
+//   const form = document.querySelector('#match form');
+//   if (form) {
+//     form.addEventListener('submit', function (e) {
+//       e.preventDefault();
+//       // Create countdown section
+//       const countdownPlace = document.querySelector('#match article p span');
+//       let timer = document.querySelector('#timer');
+//       let timerHours = timer.value;
+//       let timerMinutes = timerHours * 60; // convert hours to minutes
+//       let timerSeconds = timerMinutes * 60; // convert minutes to seconds
 
-      countdownPlace.textContent = timerSeconds;
+//       countdownPlace.textContent = timerSeconds;
 
-      setInterval(function () {
-        let container = document.createElement('div');
-        container.setAttribute(
-          'style',
-          'position: absolute;background: #3e3e3ebf;left: 0;right: 0;margin-left: auto;margin-right: auto;width: 100%;text-align: center;top: 0;display: block;color: black;height: 100%;align-self: center;font-size: 9rem;'
-        );
-        let text = document.createElement('p');
-        text.textContent = 'Time is up! {playerName} has won!';
-        text.setAttribute('style', 'font-size:4rem;');
-        container.appendChild(text);
+//       setInterval(function () {
+//         let container = document.createElement('div');
+//         container.setAttribute(
+//           'style',
+//           'position: absolute;background: #3e3e3ebf;left: 0;right: 0;margin-left: auto;margin-right: auto;width: 100%;text-align: center;top: 0;display: block;color: black;height: 100%;align-self: center;font-size: 9rem;'
+//         );
+//         let text = document.createElement('p');
+//         text.textContent = 'Time is up! {playerName} has won!';
+//         text.setAttribute('style', 'font-size:4rem;');
+//         container.appendChild(text);
 
-        let body = document.querySelector('#playerdata');
-        body.setAttribute('style', 'position:relative;');
-        body.appendChild(container);
+//         let body = document.querySelector('#playerdata');
+//         body.setAttribute('style', 'position:relative;');
+//         body.appendChild(container);
 
-        let pOneData = document.querySelector('#player-one');
-        pOneData.setAttribute('style', 'filter: blur(2px);');
-      }, timerSeconds * 1000);
-    });
-  } else {
-    null;
-  }
-}
+//         let pOneData = document.querySelector('#player-one');
+//         pOneData.setAttribute('style', 'filter: blur(2px);');
+//       }, timerSeconds * 1000);
+//     });
+//   } else {
+//     null;
+//   }
+// }
+
 // BACKLOG: function that checks when all input[type=checkbox] are checked from the instructions challenge --> then finished animation (toggle class)
-function finished() {
-  let form = document.querySelector('.recipe-instructions ~ form');
-  // let finishBtn = document.querySelector('.recipe-instructions ~ form button');
+// function finished() {
+//   let form = document.querySelector('.recipe-instructions ~ form');
+//   // let finishBtn = document.querySelector('.recipe-instructions ~ form button');
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    console.log(`You're done!`);
-    let container = document.createElement('div');
-    container.setAttribute(
-      'style',
-      'position: absolute;background: #3e3e3ebf;left: 0;right: 0;margin-left: auto;margin-right: auto;width: 100%;text-align: center;top: 0;display: block;color: black;height: 100%;align-self: center;font-size: 9rem;'
-    );
-    let text = document.createElement('p');
-    text.textContent = '{playerName} has won!';
-    text.setAttribute('style', 'font-size:4rem;');
-    container.appendChild(text);
+//   form.addEventListener('submit', function (e) {
+//     e.preventDefault();
+//     console.log(`You're done!`);
+//     let container = document.createElement('div');
+//     container.setAttribute(
+//       'style',
+//       'position: absolute;background: #3e3e3ebf;left: 0;right: 0;margin-left: auto;margin-right: auto;width: 100%;text-align: center;top: 0;display: block;color: black;height: 100%;align-self: center;font-size: 9rem;'
+//     );
+//     let text = document.createElement('p');
+//     text.textContent = '{playerName} has won!';
+//     text.setAttribute('style', 'font-size:4rem;');
+//     container.appendChild(text);
 
-    let link = document.createElement('a');
-    link.setAttribute('href', '/');
-    link.textContent = 'Try again';
-    container.appendChild(link);
+//     let link = document.createElement('a');
+//     link.setAttribute('href', '/');
+//     link.textContent = 'Try again';
+//     container.appendChild(link);
 
-    let body = document.querySelector('#playerdata');
-    body.setAttribute('style', 'position:relative;');
-    body.appendChild(container);
+//     let body = document.querySelector('#playerdata');
+//     body.setAttribute('style', 'position:relative;');
+//     body.appendChild(container);
 
-    let pOneData = document.querySelector('#player-one');
-    pOneData.setAttribute('style', 'filter: blur(2px);');
-  });
-}
+//     let pOneData = document.querySelector('#player-one');
+//     pOneData.setAttribute('style', 'filter: blur(2px);');
+//   });
+// }
 
 /**
  * Loader as feedback element for the user (UX)
@@ -293,6 +300,7 @@ function outputUsers(room, users) {
   userList.textContent = '';
   let roomName = document.createElement('h3');
   roomName.textContent = room.toUpperCase();
+  roomName.style.textDecoration = 'underline';
   userList.appendChild(roomName);
   users.forEach((user) => {
     const li = document.createElement('li');
