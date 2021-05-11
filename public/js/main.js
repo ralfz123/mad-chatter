@@ -252,23 +252,48 @@ loginForm.addEventListener('submit', function (e) {
   }
 });
 
-socket.on('err', (err) => {
-  console.log(err);
+// Succesful joining room
+socket.on('joinSucces', (msg) => {
+  outputMessage(msg, 'msgContainerSucces');
 });
 
-socket.on('succes', (res) => {
-  console.log(res);
+// Room error invaled
+socket.on('joinError', (err) => {
+  outputMessage(msg, 'msgContainerError');
 });
+
+// Other user has joined
+socket.on('userJoined', (msg) => {
+  outputMessage(msg, 'msgContainerUser');
+});
+
+function outputMessage(msg, className) {
+  const header = document.querySelector('header');
+  let msgContainer = document.createElement('div');
+  msgContainer.setAttribute('class', className);
+  header.appendChild(msgContainer);
+  let msgTxt = document.createElement('p');
+  msgTxt.textContent = msg;
+  msgContainer.appendChild(msgTxt);
+
+  // Removes HTML msg container after 1.5 s
+  setTimeout(function () {
+    msgContainer.remove();
+  }, 3000);
+}
 
 // Get room and users
-socket.on('roomUsers', ({ users }) => {
-  outputUsers(users);
+socket.on('roomUsers', ({ room, users }) => {
+  outputUsers(room, users);
 });
 
 // Add users to DOM
-function outputUsers(users) {
+function outputUsers(room, users) {
   const userList = document.querySelector('.users');
   userList.textContent = '';
+  let roomName = document.createElement('h3');
+  roomName.textContent = room.toUpperCase();
+  userList.appendChild(roomName);
   users.forEach((user) => {
     const li = document.createElement('li');
     li.textContent = user.username;

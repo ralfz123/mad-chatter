@@ -49,7 +49,18 @@ app.get('/', function (req, res) {
 //   res.redirect('/login');
 // });
 
-const rooms = ['tasty', 'crazy', 'fast', 'delicious', 'flowerpower'];
+const rooms = [
+  'room-1',
+  'room-2',
+  'room-3',
+  'room-4',
+  'room-5',
+  'room-6',
+  'room-7',
+  'room-8',
+  'room-9',
+  'room-10',
+];
 
 io.on('connection', (socket) => {
   console.log('user connected');
@@ -68,21 +79,25 @@ io.on('connection', (socket) => {
 
     if (rooms.includes(room)) {
       socket.join(room);
-      // io.in(room).emit('newUser', user);
       io.in(newUser.room).emit('roomUsers', {
         room: newUser.room,
         users: getRoomUsers(newUser.room),
       });
-      return socket.emit('succes', 'You have succesfully joined this room');
+      return (
+        socket.emit(
+          'joinSucces',
+          `${user}, You have succesfully joined ${room}`
+        ) &&
+        socket.to(newUser.room).emit('userJoined', `${user} joined the room`)
+      );
     } else {
-      return socket.emit('err', 'ERROR, No Room named ' + room);
+      return socket.emit('joinError', 'ERROR, No Room named ' + room);
     }
   });
 
   // Listen for chatMessage
   socket.on('chatMessage', (msg) => {
     const user = getCurrentUser(socket.id);
-    console.log('message: ', msg);
 
     io.to(user.room).emit('chatMessage', { user: user.username, message: msg });
   });
