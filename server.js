@@ -17,36 +17,18 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
+let recipes = [];
+console.log('recipes LIST: ', recipes);
+// let chatMessages = [];
+
 app.get('/', function (req, res) {
   res.render('index.ejs');
 });
-
-// let chatMessages = [];
 
 // app.get('/match/:id', async function (req, res) {
 //   let data = await getRecipeData(req.params.id);
 //   console.log(data);
 //   res.render('pages/match.ejs', { data: data[0] });
-// });
-
-// app.get('/login', function (req, res) {
-//   res.render('pages/login.ejs');
-// });
-
-// app.post('/login', async function (req, res) {
-//   res.redirect('/');
-// });
-
-// app.get('/room', function (req, res) {
-//   res.render('pages/room.ejs');
-// });
-
-// app.get('/register', function (req, res) {
-//   res.render('pages/register.ejs');
-// });
-
-// app.post('/register', async function (req, res) {
-//   res.redirect('/login');
 // });
 
 const rooms = [
@@ -104,15 +86,24 @@ io.on('connection', (socket) => {
 
   // Ingredient id handler
   socket.on('query', ({ query }) => {
-    let dataQuery = getQueryData(query);
-    socket.emit('data', dataQuery);
-    // push to array that contains all liked recipes and thereof can be chosen of.
+    getQueryData(query);
   });
 
-  // Chosen recipe handler
-  socket.on('chosenRecipe', (recipeID) => {
-    // io.emit('chosenRecipe', recipeID);
-    getDataOfRecipe(recipeID);
+  // Chosen recipe handler - // push to array that contains all liked recipes and thereof can be chosen of.
+  socket.on('likedRecipe', async (recipeID) => {
+    const user = getCurrentUser(socket.id);
+
+    let data = await getRecipeData(recipeID);
+    recipes.push(data);
+
+    io.to(user.room).emit('dataRecipe', data);
+
+    // let recipe = getDataOfRecipe(recipeID);
+
+    // // Array item contains: image (template) and ID (for fetching that recipe data from API)
+    // recipes.push(recipe);
+    // console.log(recipes);
+
     // socket.to(newUser.room).emit('userJoined', `${user} joined this room`);
     // Send data list (recipe id) to other clients (display array)
   });
@@ -141,7 +132,8 @@ io.on('connection', (socket) => {
     let dataQuery = await getData(query);
 
     // return emitted data for clientside handling
-    return io.emit('data', dataQuery);
+    // return dataQuery;
+    return socket.emit('queryData', dataQuery);
   }
 
   async function getDataOfRecipe(id) {
@@ -150,7 +142,7 @@ io.on('connection', (socket) => {
 
     // return emitted data for clientside handling for the other client
     // return socket.broadcast.emit('dataRecipe', dataRecipe);
-    return io.emit('dataRecipe', dataRecipe);
+    return socket.broadcast.emit('dataRecipe', dataRecipe);
   }
 });
 

@@ -5,7 +5,7 @@
 
   <main>
     <section>
-      <form action="">
+      <form>
         <legend>
           <label for="nickname">Your fancy nickname is </label>
           <input
@@ -64,7 +64,6 @@
             required
           />
           <button type="submit">Search</button>
-          <p id="ingredients"></p>
         </form>
       </article>
 
@@ -83,30 +82,18 @@
           <button type="submit">Send</button>
         </form>
         <ul class="users"></ul>
+        <ul class="likedRecipes"></ul>
       </article>
     </section>
 
     <section id="recipes">
       <h2>Recipes</h2>
-      <ol>
-        <p>Find recipes by entering a ingredient in the input field.</p>
-        <div class="loader"></div>
-      </ol>
-      <form
-        action="/match/id"
-        method="POST"
-        enctype="application/x-www-form-urlencoded"
-      >
-        <label for="chosen-recipe">Chosen recipe(id):</label>
-        <input
-          type="number"
-          id="chosen-recipe"
-          placeholder="52779"
-          title="Fill in the ID of the recipe"
-          name="recipeID"
-          required
-        />
-        <button type="submit">Choose!</button>
+      <form>
+        <ol>
+          <p>Find recipes by entering a ingredient in the input field.</p>
+          <div class="loader"></div>
+        </ol>
+        <button type="submit">Add +</button>
       </form>
     </section>
   </main>

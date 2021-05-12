@@ -69,7 +69,7 @@ async function getRecipeData(id) {
   const dataRecipe = await fetchData(urlRecipe);
 
   if (dataRecipe.meals === null) {
-    console.log('dit is null');
+    console.log('This is null');
     return null;
   } else {
     // Filter data

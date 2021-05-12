@@ -345,18 +345,64 @@ ol {
   bottom: 0;
   left: 0;
   margin: 1em;
-  width: 23vw;
+  width: 8em;
   border: 0.5px solid yellow;
-
   padding: 0.5em;
   list-style: none;
-  /* height: 10vh; */
   border-radius: 10px;
   background: #39333b;
 }
 
 #chat-query .users li {
   font-size: 0.9rem;
+}
+
+/* liked recipes list */
+#chat-query .likedRecipes {
+  display: none;
+  position: absolute;
+  /* bottom: 0; */
+  top: 0;
+  /* right: 0; */
+  left: 0;
+  margin: 1em;
+  /* width: 60vw; */
+  height: fit-content;
+  border: 0.5px solid rgb(0, 213, 255);
+  padding: 0.5em;
+  list-style: none;
+  border-radius: 10px;
+  background: #39333b;
+}
+
+#chat-query .likedRecipes h3 {
+  text-decoration: underline;
+  padding-bottom: 0.3em;
+}
+
+#chat-query .likedRecipes li {
+  background: #8e37371a;
+  border: 1px solid #e8e8e8e8;
+  padding: 0.3em;
+  width: 5em;
+  border-radius: 6px;
+  box-shadow: 0 0 5px black;
+}
+
+#chat-query .likedRecipes li img {
+  width: 100%;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 40px white;
+  }
+  90% {
+    box-shadow: 0 0 5px white;
+  }
+  100% {
+    box-shadow: 0 0 0px white;
+  }
 }
 
 /* recipes section */
@@ -377,10 +423,27 @@ ol {
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   grid-auto-rows: minmax(100px, auto);
   grid-gap: 10px;
+  padding: 0.7em 0em;
 }
 
 #recipes ol li {
   position: relative;
+}
+#recipes input[type='radio'] {
+  display: none;
+}
+
+#recipes input[type='radio']:hover,
+#recipes input[type='radio']:focus,
+#recipes input[type='radio']:active {
+  cursor: pointer;
+}
+
+#recipes input[type='radio']:checked ~ img {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px #000000;
+  position: absolute;
+  z-index: 1;
 }
 
 #recipes ol li div {
@@ -449,19 +512,15 @@ ol {
   display: none;
 }
 
-#recipes ol li.recipes-response {
-}
-
 #recipes ol li.recipes-response img {
   position: relative;
   width: 100%;
   border-radius: 10px;
   height: auto;
+  transition: 0.2s;
 }
 
 #recipes ol li.recipes-response p {
-  /* position: absolute;
-  z-index: 1; */
   width: 100%;
 }
 
