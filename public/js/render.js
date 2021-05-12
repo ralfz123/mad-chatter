@@ -7,6 +7,9 @@ export function addRecipes(data) {
     let stateText = document.querySelector('#recipes ol p');
     stateText.style.display = 'none';
 
+    // Recipes List
+    const list = document.querySelector('#recipes ol');
+
     // Update-pattern: removes recipes from old query
     // ! Not finished yet
     let oldRecipes = document.querySelector('.recipes-response');
@@ -55,7 +58,6 @@ export function addRecipes(data) {
 // Display the array
 export function outputLikedRecipes(data) {
   const recipesList = document.querySelector('.likedRecipes');
-  recipesList.style.display = 'block';
   recipesList.textContent = '';
   let title = document.createElement('h3');
   title.textContent = 'Liked recipes';
@@ -64,16 +66,16 @@ export function outputLikedRecipes(data) {
   recipesList.style.animation = 'glow 2s ease-in-out';
   data.forEach((recipe) => {
     const li = document.createElement('li');
-    let recipeTitle = document.createElement('p');
-    let recipeId = document.createElement('p');
+    // let recipeTitle = document.createElement('p');
+    // let recipeId = document.createElement('p');
     let recipeImage = document.createElement('img');
 
     // recipeTitle.textContent = recipe.title;
-    recipeId.textContent = recipe.id;
+    // recipeId.textContent = recipe.id;
     recipeImage.setAttribute('src', recipe.preview);
 
     // li.appendChild(recipeTitle);
-    li.appendChild(recipeId);
+    // li.appendChild(recipeId);
     li.appendChild(recipeImage);
     recipesList.appendChild(li);
   });
@@ -110,6 +112,8 @@ export function outputUsers(room, users) {
 
 // Add message to chatbox DOM
 export function addMessage({ user, message }) {
+  const chatBox = document.querySelector('#messages');
+
   let item = document.createElement('li');
   item.setAttribute('class', 'newMsg');
   let itemText = document.createElement('p');

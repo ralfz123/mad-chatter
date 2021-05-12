@@ -18,9 +18,6 @@ const chatForm = document.querySelector('#chatForm');
 const chatBox = document.querySelector('#messages');
 const inputMessage = document.querySelector('#message');
 
-// Recipes List
-const list = document.querySelector('#recipes ol');
-
 loader('hide');
 
 // Listens to ingredient query form submit
@@ -80,8 +77,10 @@ socket.on('welcome', (msg) => {
 // login
 const homeSecOne = document.querySelector('#chat-query');
 const homeSecTwo = document.querySelector('#recipes');
+// const homeSecThree = document.querySelector('#room-info');
 homeSecOne.style.display = 'none';
 homeSecTwo.style.display = 'none';
+// homeSecThree.style.display = 'none';
 
 const loginSection = document.querySelector('main > section');
 const loginForm = document.querySelector('main > section form');
@@ -97,8 +96,9 @@ loginForm.addEventListener('submit', function (e) {
         user: nickname.value,
       });
       loginSection.style.display = 'none';
-      homeSecOne.style.display = 'block';
+      homeSecOne.style.display = 'flex';
       homeSecTwo.style.display = 'block';
+      // homeSecThree.style.display = 'block';
     }
   }
 });
