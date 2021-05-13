@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 let recipes = [];
-console.log('recipes LIST: ', recipes);
 // let chatMessages = [];
 
 app.get('/', function (req, res) {
@@ -94,9 +93,9 @@ io.on('connection', (socket) => {
     const user = getCurrentUser(socket.id);
 
     let data = await getRecipeData(recipeID);
-    recipes.push(data);
+    recipes.push(data[0]); // push to global array
 
-    io.to(user.room).emit('dataRecipe', data);
+    io.to(user.room).emit('dataRecipe', recipes);
 
     // let recipe = getDataOfRecipe(recipeID);
 

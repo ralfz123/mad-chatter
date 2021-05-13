@@ -7,7 +7,8 @@ import {
   addMessage,
 } from './render.js';
 
-var socket = io();
+// var socket = io();
+const socket = io(window.location.host);
 
 // Ingredients query
 const ingredientsForm = document.querySelector('#ingredientsForm');

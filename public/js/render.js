@@ -57,13 +57,15 @@ export function addRecipes(data) {
 //  I strive to this (as by the roomUsers):  function outputLikedrecipes(room, recipes)
 // Display the array
 export function outputLikedRecipes(data) {
-  const recipesList = document.querySelector('.likedRecipes');
+  const recipesContainer = document.querySelector('.likedRecipes');
+  const recipesList = document.querySelector('.likedRecipes ul');
   recipesList.textContent = '';
   let title = document.createElement('h3');
   title.textContent = 'Liked recipes';
   title.style.textDecoration = 'underline';
-  recipesList.appendChild(title);
-  recipesList.style.animation = 'glow 2s ease-in-out';
+  recipesContainer.appendChild(title);
+  recipesContainer.style.animation = 'glow 2s ease-in-out';
+
   data.forEach((recipe) => {
     const li = document.createElement('li');
     // let recipeTitle = document.createElement('p');
