@@ -62,7 +62,7 @@ if (chosenRecipeForm) {
 }
 
 // Add liked recipe to container
-socket.on('dataRecipe', (data) => {
+socket.on('likedRecipesList', (data) => {
   outputLikedRecipes(data);
 });
 

@@ -13,11 +13,18 @@ const {
   getRoomUsers,
 } = require('./modules/utils/users.js');
 
+const {
+  AddRecipe,
+  getCurrentRecipe,
+  deleteRecipe,
+  getRoomRecipes,
+} = require('./modules/utils/recipes.js');
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
-let recipes = [];
+// let recipes = [];
 // let chatMessages = [];
 
 app.get('/', function (req, res) {
@@ -64,6 +71,13 @@ io.on('connection', (socket) => {
         room: newUser.room,
         users: getRoomUsers(newUser.room),
       });
+      console.log(getRoomUsers(newUser.room));
+
+      // io.in(newUser.room).emit('likedRecipesList', {
+      //   room: newUser.room,
+      //   recipes: recipes(newUser.room),
+      // });
+
       return (
         socket.emit(
           'joinSucces',
@@ -92,10 +106,17 @@ io.on('connection', (socket) => {
   socket.on('likedRecipe', async (recipeID) => {
     const user = getCurrentUser(socket.id);
 
-    let data = await getRecipeData(recipeID);
-    recipes.push(data[0]); // push to global array
+    let recipeData = await getRecipeData(recipeID);
 
-    io.to(user.room).emit('dataRecipe', recipes);
+    const recipes = AddRecipe(user.room, recipeData[0]);
+
+    io.to(user.room).emit('likedRecipesList', recipes);
+
+    // io.to(user.room).emit('likedRecipesList', {
+    //   recipes: getRoomRecipes(user.room),
+    // });
+
+    // __________
 
     // let recipe = getDataOfRecipe(recipeID);
 

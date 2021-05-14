@@ -54,9 +54,9 @@ export function addRecipes(data) {
 }
 
 // Add liked recipes to DOM
-//  I strive to this (as by the roomUsers):  function outputLikedrecipes(room, recipes)
-// Display the array
-export function outputLikedRecipes(data) {
+//  I strive to this (as by the roomUsers):  function outputLikedrecipes(room, recipes) -- Display the array
+export function outputLikedRecipes(recipes) {
+  console.log('global array: ', recipes);
   const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
   recipesList.textContent = '';
@@ -66,7 +66,8 @@ export function outputLikedRecipes(data) {
   recipesContainer.appendChild(title);
   recipesContainer.style.animation = 'glow 2s ease-in-out';
 
-  data.forEach((recipe) => {
+  recipes.forEach((recipe) => {
+    // console.log('recipe data Obj: ', recipe.data);
     const li = document.createElement('li');
     // let recipeTitle = document.createElement('p');
     // let recipeId = document.createElement('p');
