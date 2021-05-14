@@ -107,11 +107,12 @@ export function outputAlert(msg, className) {
 }
 
 // Add users to DOM
-export function outputUsers(roomID, users) {
+export function outputUsers({ room, users }) {
+  console.log(room, users);
   const userList = document.querySelector('.users');
   userList.textContent = '';
   let roomName = document.createElement('h3');
-  roomName.textContent = `Room ${roomID}`;
+  roomName.textContent = `Room ${room}`;
   userList.appendChild(roomName);
   users.forEach((user) => {
     const li = document.createElement('li');

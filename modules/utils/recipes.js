@@ -1,6 +1,6 @@
 const recipes = [];
 
-// Join user to chat
+// add recipes to list
 function AddRecipe(room, likedRecipes) {
   const recipe = { room, likedRecipes };
 
@@ -9,12 +9,12 @@ function AddRecipe(room, likedRecipes) {
   return recipes;
 }
 
-// Get current user
+// Get current recipe
 function getCurrentRecipe(id) {
   return recipes.find((user) => user.id === id);
 }
 
-// User leaves chat
+// User deletes recipe
 function deleteRecipe(id) {
   const index = recipes.findIndex((user) => user.id === id);
 
@@ -34,20 +34,3 @@ module.exports = {
   deleteRecipe,
   getRoomRecipes,
 };
-
-// const rooms = {
-//   room5: {
-//     lijst: ['kaas'],
-//     players: ['harry', 'kokosnoot'],
-//   },
-//   room1: {
-//     lijst: ['Kokosnoot'],
-//   },
-// };
-
-// const joinRoom = (roomid) => {
-//   const test = rooms[roomid];
-//   return console.log(test);
-// };
-
-// joinRoom('room5');

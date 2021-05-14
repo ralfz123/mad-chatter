@@ -68,7 +68,7 @@ socket.on('likedRecipesList', (data) => {
 
 // --------------------------------
 
-// default chat msg?
+// default chat msg
 socket.on('welcome', (msg) => {
   // console.log('Received: ', msg);
 });

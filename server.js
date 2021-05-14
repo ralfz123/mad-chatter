@@ -5,22 +5,21 @@ const io = require('socket.io')(http);
 const port = process.env.PORT || 5000;
 
 const { getData, getRecipeData } = require('./modules/data/fetch.js');
+const { userJoin, getRoom } = require('./modules/utils/stateFunctions.js');
 
-const { roomsState } = require('./modules/utils/state.js');
+// const {
+//   // userJoin,
+//   getCurrentUser,
+//   userLeave,
+//   getRoomUsers,
+// } = require('./modules/utils/users.js');
 
-const {
-  // userJoin,
-  getCurrentUser,
-  userLeave,
-  getRoomUsers,
-} = require('./modules/utils/users.js');
-
-const {
-  AddRecipe,
-  getCurrentRecipe,
-  deleteRecipe,
-  getRoomRecipes,
-} = require('./modules/utils/recipes.js');
+// const {
+//   AddRecipe,
+//   getCurrentRecipe,
+//   deleteRecipe,
+//   getRoomRecipes,
+// } = require('./modules/utils/recipes.js');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,23 +42,9 @@ const rooms = [
   'room10',
 ];
 
-const userJoin = (roomID, user) => {
-  const assignRoom = roomsState[roomID];
-
-  const userR = {
-    username: user,
-    id: socket.id,
-  };
-
-  const addUser = roomsState[roomID].users.push(userR);
-
-  return assignRoom;
-};
-console.log(roomsState);
-
 io.on('connection', (socket) => {
   console.log('user connected');
-  socket.emit('welcome', 'Hello welcome to Cooking on Remote!');
+  // socket.emit('welcome', 'Hello welcome to Cooking on Remote!');
 
   socket.on('joinRoom', ({ room, user }) => {
     const newUser = userJoin(room, user);
@@ -96,15 +81,8 @@ io.on('connection', (socket) => {
     // 2. Send msg to clients
     // 3. Add msg to chat Array
     // 4. Save to clientjs for new users (chat history)
-
-    const user = getCurrentUserrr(socket.id);
-
-    // Get current user
-    function getCurrentUserrr(id) {
-      // return roomsState[].users.find((user) => user.id === id);
-    }
-
-    io.to(user.room).emit('chatMessage', { user: user, message: msg });
+    // const room = getRoom[]
+    // io.to(user.room).emit('chatMessage', { user: user, message: msg });
   });
 
   // Ingredient id handler
@@ -122,6 +100,7 @@ io.on('connection', (socket) => {
 
     io.to(user.room).emit('likedRecipesList', recipes);
 
+    // Give updated (global) state via sockets to client
     // io.to(user.room).emit('likedRecipesList', {
     //   recipes: getRoomRecipes(user.room),
     // });)
@@ -129,7 +108,7 @@ io.on('connection', (socket) => {
 
   // Detects when user has disconnected
   socket.on('disconnect', () => {
-    const user = userLeave(socket.id);
+    // const user = userLeave(socket.id);
 
     if (user) {
       // message that user left
@@ -151,7 +130,6 @@ io.on('connection', (socket) => {
     let dataQuery = await getData(query);
 
     // return emitted data for clientside handling
-    // return dataQuery;
     return socket.emit('queryData', dataQuery);
   }
 
@@ -160,7 +138,6 @@ io.on('connection', (socket) => {
     let dataRecipe = await getRecipeData(id);
 
     // return emitted data for clientside handling for the other client
-    // return socket.broadcast.emit('dataRecipe', dataRecipe);
     return socket.broadcast.emit('dataRecipe', dataRecipe);
   }
 });

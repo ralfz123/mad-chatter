@@ -30,9 +30,7 @@ The course Real-Time Web is about learning how to build a real-time application.
 
 >_This is the solution for cooking together in times of Corona :fork_and_knife:._
 
-This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can both search on recipes by entering some food ingredients that you have in your house. When you both are agree with one recipe, you click on that recipe and you can start cooking. You both set a timer about how long you think it will take to cook the recipe. Also you follow the instructions of the recipe and you can check them by the checkboxes. The person who finishes the dish first is the winner :trophy: .
-
-
+This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can register in a room. Then you can search on recipes by entering some food ingredients that you have in your house. You can like the recipes to your liked recipes of the room. After that you can pick one recipe of the liked ones and that recipe you are going to make. Also you follow the instructions of the recipe and you can check them by the checkboxes. 
 ### Sketch
 
 <figure>
@@ -47,11 +45,11 @@ This application is an app where you can cook with each other on distance (each 
 </figure>
 
 ### Features
-<!-- **Login**  
-- Authenticated login with username and password
-- Create rooms of 2 persons
+**Login**  
+- Create nickname
+- Choose room
 
-**App**   -->
+**App**  
 - You can search through recipes by entering a ingredient
 - You can chat with each other to talk about which recipe you pick
 - You can see the details of the recipe, when it's chosen
@@ -116,8 +114,73 @@ I prefer to work with these dev-rules for myself:
 - ES6 modules
 
 # :1234: Data
-## Datamodel / management
-lorem lorem lorem
+## Datamanagement
+Because of 10 hardcoded rooms, here is a data managmentmodel of each room, with each objects within that can be manipulated by clients.
+
+```js
+{
+  room1: {
+    id: 1,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room2: {
+    id: 2,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room3: {
+    id: 3,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room4: {
+    id: 4,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room5: {
+    id: 5,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room6: {
+    id: 6,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room7: {
+    id: 7,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room8: {
+    id: 8,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room9: {
+    id: 9,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+  room10: {
+    id: 10,
+    likedRecipes: [],
+    users: [],
+    chat: [],
+  },
+}
+```
 
 ## API Data
 ### API is
@@ -207,6 +270,8 @@ What's it in my app? -->
 
 ### Clientside data rendering
 I have rendered data from the recipes clientside so that the server is not overloaded by the serverside rendering.
+
+### State on the server (data model)
 ## :gear: Installation
 1. Clone the repository:  
 ```
