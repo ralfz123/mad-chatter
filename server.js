@@ -6,8 +6,10 @@ const port = process.env.PORT || 5000;
 
 const { getData, getRecipeData } = require('./modules/data/fetch.js');
 
+const { roomsState } = require('./modules/utils/state.js');
+
 const {
-  userJoin,
+  // userJoin,
   getCurrentUser,
   userLeave,
   getRoomUsers,
@@ -24,59 +26,57 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
-// let recipes = [];
-// let chatMessages = [];
-
 app.get('/', function (req, res) {
   res.render('index.ejs');
 });
 
-// app.get('/match/:id', async function (req, res) {
-//   let data = await getRecipeData(req.params.id);
-//   console.log(data);
-//   res.render('pages/match.ejs', { data: data[0] });
-// });
-
 const rooms = [
-  'room-1',
-  'room-2',
-  'room-3',
-  'room-4',
-  'room-5',
-  'room-6',
-  'room-7',
-  'room-8',
-  'room-9',
-  'room-10',
+  'room1',
+  'room2',
+  'room3',
+  'room4',
+  'room5',
+  'room6',
+  'room7',
+  'room8',
+  'room9',
+  'room10',
 ];
+
+const userJoin = (roomID, user) => {
+  const assignRoom = roomsState[roomID];
+
+  const userR = {
+    username: user,
+    id: socket.id,
+  };
+
+  const addUser = roomsState[roomID].users.push(userR);
+
+  return assignRoom;
+};
+console.log(roomsState);
 
 io.on('connection', (socket) => {
   console.log('user connected');
   socket.emit('welcome', 'Hello welcome to Cooking on Remote!');
 
   socket.on('joinRoom', ({ room, user }) => {
-    const newUser = userJoin(socket.id, user, room);
+    const newUser = userJoin(room, user);
 
-    socket.join(newUser.room);
-
-    // welcome msg to every new user individually
-    // socket.emit(
-    //   'message',
-    //   formatMessage(botName, 'Welcome at the Cooking On Remote application!!')
-    // );
+    socket.join(room);
 
     if (rooms.includes(room)) {
       socket.join(room);
-      io.in(newUser.room).emit('roomUsers', {
-        room: newUser.room,
-        users: getRoomUsers(newUser.room),
+      io.in(room).emit('roomUsers', {
+        room: newUser.id,
+        users: newUser.users,
       });
-      console.log(getRoomUsers(newUser.room));
 
-      // io.in(newUser.room).emit('likedRecipesList', {
-      //   room: newUser.room,
-      //   recipes: recipes(newUser.room),
-      // });
+      io.in(room).emit('likedRecipesList', {
+        room: newUser.room,
+        recipes: newUser.likedRecipes,
+      });
 
       return (
         socket.emit(
@@ -92,9 +92,19 @@ io.on('connection', (socket) => {
 
   // Listen for chatMessage
   socket.on('chatMessage', (msg) => {
-    const user = getCurrentUser(socket.id);
+    // 1. Which room
+    // 2. Send msg to clients
+    // 3. Add msg to chat Array
+    // 4. Save to clientjs for new users (chat history)
 
-    io.to(user.room).emit('chatMessage', { user: user.username, message: msg });
+    const user = getCurrentUserrr(socket.id);
+
+    // Get current user
+    function getCurrentUserrr(id) {
+      // return roomsState[].users.find((user) => user.id === id);
+    }
+
+    io.to(user.room).emit('chatMessage', { user: user, message: msg });
   });
 
   // Ingredient id handler
@@ -114,18 +124,7 @@ io.on('connection', (socket) => {
 
     // io.to(user.room).emit('likedRecipesList', {
     //   recipes: getRoomRecipes(user.room),
-    // });
-
-    // __________
-
-    // let recipe = getDataOfRecipe(recipeID);
-
-    // // Array item contains: image (template) and ID (for fetching that recipe data from API)
-    // recipes.push(recipe);
-    // console.log(recipes);
-
-    // socket.to(newUser.room).emit('userJoined', `${user} joined this room`);
-    // Send data list (recipe id) to other clients (display array)
+    // });)
   });
 
   // Detects when user has disconnected
@@ -165,6 +164,12 @@ io.on('connection', (socket) => {
     return socket.broadcast.emit('dataRecipe', dataRecipe);
   }
 });
+
+// app.get('/match/:id', async function (req, res) {
+//   let data = await getRecipeData(req.params.id);
+//   console.log(data);
+//   res.render('pages/match.ejs', { data: data[0] });
+// });
 
 http.listen(port, () => {
   console.log(`listening on port ${port}`);

@@ -34,3 +34,20 @@ module.exports = {
   deleteRecipe,
   getRoomRecipes,
 };
+
+// const rooms = {
+//   room5: {
+//     lijst: ['kaas'],
+//     players: ['harry', 'kokosnoot'],
+//   },
+//   room1: {
+//     lijst: ['Kokosnoot'],
+//   },
+// };
+
+// const joinRoom = (roomid) => {
+//   const test = rooms[roomid];
+//   return console.log(test);
+// };
+
+// joinRoom('room5');

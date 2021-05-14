@@ -55,7 +55,7 @@ export function addRecipes(data) {
 
 // Add liked recipes to DOM
 //  I strive to this (as by the roomUsers):  function outputLikedrecipes(room, recipes) -- Display the array
-export function outputLikedRecipes(recipes) {
+export function outputLikedRecipes({ room, recipes }) {
   console.log('global array: ', recipes);
   const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
@@ -65,23 +65,30 @@ export function outputLikedRecipes(recipes) {
   title.style.textDecoration = 'underline';
   recipesContainer.appendChild(title);
   recipesContainer.style.animation = 'glow 2s ease-in-out';
+  if (recipes.length) {
+    recipes.forEach((recipe) => {
+      // console.log('recipe data Obj: ', recipe.data);
+      const li = document.createElement('li');
+      // let recipeTitle = document.createElement('p');
+      // let recipeId = document.createElement('p');
+      let recipeImage = document.createElement('img');
 
-  recipes.forEach((recipe) => {
-    // console.log('recipe data Obj: ', recipe.data);
+      // recipeTitle.textContent = recipe.title;
+      // recipeId.textContent = recipe.id;
+      recipeImage.setAttribute('src', recipe.preview);
+
+      // li.appendChild(recipeTitle);
+      // li.appendChild(recipeId);
+      li.appendChild(recipeImage);
+      recipesList.appendChild(li);
+    });
+  } else {
     const li = document.createElement('li');
-    // let recipeTitle = document.createElement('p');
-    // let recipeId = document.createElement('p');
-    let recipeImage = document.createElement('img');
-
-    // recipeTitle.textContent = recipe.title;
-    // recipeId.textContent = recipe.id;
-    recipeImage.setAttribute('src', recipe.preview);
-
-    // li.appendChild(recipeTitle);
-    // li.appendChild(recipeId);
-    li.appendChild(recipeImage);
+    const text = document.createElement('p');
+    text.textContent = 'No liked recipes yet';
+    li.appendChild(text);
     recipesList.appendChild(li);
-  });
+  }
 }
 
 export function outputAlert(msg, className) {
@@ -100,15 +107,15 @@ export function outputAlert(msg, className) {
 }
 
 // Add users to DOM
-export function outputUsers(room, users) {
+export function outputUsers(roomID, users) {
   const userList = document.querySelector('.users');
   userList.textContent = '';
   let roomName = document.createElement('h3');
-  roomName.textContent = room.toUpperCase();
+  roomName.textContent = `Room ${roomID}`;
   userList.appendChild(roomName);
   users.forEach((user) => {
     const li = document.createElement('li');
-    li.textContent = user.username;
+    li.textContent = user;
     userList.appendChild(li);
   });
 }
