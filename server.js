@@ -5,21 +5,13 @@ const io = require('socket.io')(http);
 const port = process.env.PORT || 5000;
 
 const { getData, getRecipeData } = require('./modules/data/fetch.js');
-const { userJoin, getRoom } = require('./modules/utils/stateFunctions.js');
-
-// const {
-//   // userJoin,
-//   getCurrentUser,
-//   userLeave,
-//   getRoomUsers,
-// } = require('./modules/utils/users.js');
-
-// const {
-//   AddRecipe,
-//   getCurrentRecipe,
-//   deleteRecipe,
-//   getRoomRecipes,
-// } = require('./modules/utils/recipes.js');
+const {
+  userJoin,
+  getRoom,
+  addChatMsg,
+  addLikedRecipe,
+  getCurrentUser,
+} = require('./modules/utils/stateFunctions.js');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,20 +39,19 @@ io.on('connection', (socket) => {
   // socket.emit('welcome', 'Hello welcome to Cooking on Remote!');
 
   socket.on('joinRoom', ({ room, user }) => {
-    const newUser = userJoin(room, user);
+    const newUser = userJoin(room, user, socket.id);
+    // console.log(getRoom(room));
+    const roomData = getRoom(room);
 
     socket.join(room);
 
     if (rooms.includes(room)) {
       socket.join(room);
-      io.in(room).emit('roomUsers', {
-        room: newUser.id,
-        users: newUser.users,
-      });
-
-      io.in(room).emit('likedRecipesList', {
-        room: newUser.room,
-        recipes: newUser.likedRecipes,
+      io.in(room).emit('roomData', {
+        room: roomData.id,
+        users: roomData.users,
+        chat: roomData.chat,
+        likedRecipes: roomData.likedRecipes,
       });
 
       return (
@@ -76,13 +67,16 @@ io.on('connection', (socket) => {
   });
 
   // Listen for chatMessage
-  socket.on('chatMessage', (msg) => {
-    // 1. Which room
+  socket.on('chatMessage', ({ msg, room }) => {
+    // 1. Which user
+    const currentUser = getCurrentUser(socket.id, room);
+    const currentUserName = currentUser.username;
+
     // 2. Send msg to clients
-    // 3. Add msg to chat Array
-    // 4. Save to clientjs for new users (chat history)
-    // const room = getRoom[]
-    // io.to(user.room).emit('chatMessage', { user: user, message: msg });
+    io.to(room).emit('chatMessage', { user: currentUserName, message: msg });
+
+    // 3. Add msg to chat global state for later users
+    addChatMsg(msg, room, currentUser);
   });
 
   // Ingredient id handler
@@ -90,25 +84,59 @@ io.on('connection', (socket) => {
     getQueryData(query);
   });
 
-  // Chosen recipe handler - // push to array that contains all liked recipes and thereof can be chosen of.
-  socket.on('likedRecipe', async (recipeID) => {
-    const user = getCurrentUser(socket.id);
+  // Liked recipe handler
+  socket.on('likedRecipe', async ({ recipeID, room }) => {
+    // 1. Which user
+    const currentUser = getCurrentUser(socket.id, room);
+    const currentUserName = currentUser.username;
 
+    // 2. Fetch data
     let recipeData = await getRecipeData(recipeID);
 
-    const recipes = AddRecipe(user.room, recipeData[0]);
+    // 3. Add recipe to Clients
+    io.to(room).emit('likedRecipesList', {
+      user: currentUserName,
+      recipe: recipeData[0].id,
+    });
 
-    io.to(user.room).emit('likedRecipesList', recipes);
-
-    // Give updated (global) state via sockets to client
-    // io.to(user.room).emit('likedRecipesList', {
-    //   recipes: getRoomRecipes(user.room),
-    // });)
+    // 4. Add recipe to server global state
+    addLikedRecipe(recipeData[0].id, room, currentUser);
   });
+
+  // // Won recipe (chosen) roomdata[roomID].likedRecipes = array with liked recipes, there is one chosen
+  // socket.on('likedRecipe', async ({ recipeID, room }) => {
+  //   // 1. Which user
+  //   const currentUser = getCurrentUser(socket.id, room);
+  //   const currentUserName = currentUser.username;
+
+  //   // 2. fetch data by recipe id
+  //   let wonRecipeData = await getRecipeData(recipeID);
+
+  //   // 3.   add recipe to Clients -- add msg to clients that one recipe is chosen
+  //   io.to(room).emit('likedRecipesList', {
+  //     user: currentUserName,
+  //     recipe: recipeData[0].id,
+  //   });
+
+  //   // 4. Add recipe to server global state
+  //   addLikedRecipe(recipeData, room, currentUser);
+  // });
 
   // Detects when user has disconnected
   socket.on('disconnect', () => {
-    // const user = userLeave(socket.id);
+    // 1. Which user
+    const currentUser = getCurrentUser(socket.id, room);
+    const currentUserName = currentUser.username;
+
+    // 2. Which room
+    // console.log(getRoom(room));
+    const roomData = getRoom(room);
+
+    // 2. Delete user from array
+    const deleteUser = userJoin(room, user, socket.id);
+    // const user = userLeave(room, user, socket.id);
+
+    // 3. Render clientside the room userslist
 
     if (user) {
       // message that user left

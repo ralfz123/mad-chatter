@@ -10,6 +10,80 @@ import {
 // var socket = io();
 const socket = io(window.location.host);
 
+let globalRoom;
+
+// --------------------------------
+
+// default chat msg
+socket.on('welcome', (msg) => {
+  // console.log('Received: ', msg);
+});
+
+// --------------------------------
+
+// login
+const homeSecOne = document.querySelector('#chat-query');
+const homeSecTwo = document.querySelector('#recipes');
+// const homeSecThree = document.querySelector('#room-info');
+homeSecOne.style.display = 'none';
+homeSecTwo.style.display = 'none';
+// homeSecThree.style.display = 'none';
+
+const loginSection = document.querySelector('main > section');
+const loginForm = document.querySelector('main > section form');
+let roomInputs = document.getElementsByName('room');
+let nickname = document.querySelector('input[name=nickname]');
+
+loginForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  for (let i in roomInputs) {
+    if (roomInputs[i].checked) {
+      let roomID = `room${roomInputs[i].dataset.id}`; // assign to global client variable
+      globalRoom = roomID;
+
+      socket.emit('joinRoom', {
+        room: roomID,
+        // room: roomInputs[i].value,
+        user: nickname.value,
+      });
+      loginSection.style.display = 'none';
+      homeSecOne.style.display = 'flex';
+      homeSecTwo.style.display = 'block';
+      // homeSecThree.style.display = 'block';
+    }
+  }
+});
+
+// Succesful joining room
+socket.on('joinSucces', (msg) => {
+  outputAlert(msg, 'msgContainerSucces');
+});
+
+// Room error invaled
+socket.on('joinError', (err) => {
+  outputAlert(msg, 'msgContainerError');
+});
+
+// Other user has joined
+socket.on('userJoined', (msg) => {
+  outputAlert(msg, 'msgContainerUser');
+});
+
+// --------------------------------
+
+// Get room and users
+socket.on('roomData', ({ room, users, chat, likedRecipes }) => {
+  // outputUsers(room, users);
+
+  // Render this state when new client is joined and then go over to "real life" experience?
+  console.log('room id: ', room);
+  console.log('users: ', users);
+  console.log('chat: ', chat);
+  console.log('likedRecipes: ', likedRecipes);
+});
+
+// --------------------------------
+
 // Ingredients query
 const ingredientsForm = document.querySelector('#ingredientsForm');
 const inputQuery = document.querySelector('#query-ingredient');
@@ -52,7 +126,10 @@ if (chosenRecipeForm) {
 
     for (var i = 0, length = inputChosenRecipe.length; i < length; i++) {
       if (inputChosenRecipe[i].checked) {
-        socket.emit('likedRecipe', inputChosenRecipe[i].value);
+        socket.emit('likedRecipe', {
+          recipeID: inputChosenRecipe[i].value,
+          room: globalRoom,
+        });
         inputChosenRecipe[i].removeAttribute('checked', 'checked');
       }
     }
@@ -66,68 +143,6 @@ socket.on('likedRecipesList', (data) => {
   outputLikedRecipes(data);
 });
 
-// --------------------------------
-
-// default chat msg
-socket.on('welcome', (msg) => {
-  // console.log('Received: ', msg);
-});
-
-// --------------------------------
-
-// login
-const homeSecOne = document.querySelector('#chat-query');
-const homeSecTwo = document.querySelector('#recipes');
-// const homeSecThree = document.querySelector('#room-info');
-homeSecOne.style.display = 'none';
-homeSecTwo.style.display = 'none';
-// homeSecThree.style.display = 'none';
-
-const loginSection = document.querySelector('main > section');
-const loginForm = document.querySelector('main > section form');
-let roomInputs = document.getElementsByName('room');
-let nickname = document.querySelector('input[name=nickname]');
-
-loginForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  for (let i in roomInputs) {
-    if (roomInputs[i].checked) {
-      socket.emit('joinRoom', {
-        room: roomInputs[i].value,
-        user: nickname.value,
-      });
-      loginSection.style.display = 'none';
-      homeSecOne.style.display = 'flex';
-      homeSecTwo.style.display = 'block';
-      // homeSecThree.style.display = 'block';
-    }
-  }
-});
-
-// Succesful joining room
-socket.on('joinSucces', (msg) => {
-  outputAlert(msg, 'msgContainerSucces');
-});
-
-// Room error invaled
-socket.on('joinError', (err) => {
-  outputAlert(msg, 'msgContainerError');
-});
-
-// Other user has joined
-socket.on('userJoined', (msg) => {
-  outputAlert(msg, 'msgContainerUser');
-});
-
-// --------------------------------
-
-// Get room and users
-socket.on('roomUsers', ({ room, users }) => {
-  outputUsers(room, users);
-});
-
-// --------------------------------
-
 // Message submit
 if (chatForm) {
   chatForm.addEventListener('submit', function (e) {
@@ -138,7 +153,7 @@ if (chatForm) {
       let msgText = inputMessage.value;
 
       // Emit message to server
-      socket.emit('chatMessage', msgText);
+      socket.emit('chatMessage', { msg: msgText, room: globalRoom });
 
       // Clear input
       inputMessage.value = '';

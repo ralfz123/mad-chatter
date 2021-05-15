@@ -56,7 +56,7 @@ export function addRecipes(data) {
 // Add liked recipes to DOM
 //  I strive to this (as by the roomUsers):  function outputLikedrecipes(room, recipes) -- Display the array
 export function outputLikedRecipes({ room, recipes }) {
-  console.log('global array: ', recipes);
+  // console.log('global array: ', recipes);
   const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
   recipesList.textContent = '';
@@ -108,7 +108,7 @@ export function outputAlert(msg, className) {
 
 // Add users to DOM
 export function outputUsers({ room, users }) {
-  console.log(room, users);
+  // console.log(room, users);
   const userList = document.querySelector('.users');
   userList.textContent = '';
   let roomName = document.createElement('h3');
