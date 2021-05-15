@@ -54,41 +54,16 @@ export function addRecipes(data) {
 }
 
 // Add liked recipes to DOM
-//  I strive to this (as by the roomUsers):  function outputLikedrecipes(room, recipes) -- Display the array
-export function outputLikedRecipes({ room, recipes }) {
-  // console.log('global array: ', recipes);
+export function outputLikedRecipe({ recipe }) {
   const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
-  recipesList.textContent = '';
-  let title = document.createElement('h3');
-  title.textContent = 'Liked recipes';
-  title.style.textDecoration = 'underline';
-  recipesContainer.appendChild(title);
   recipesContainer.style.animation = 'glow 2s ease-in-out';
-  if (recipes.length) {
-    recipes.forEach((recipe) => {
-      // console.log('recipe data Obj: ', recipe.data);
-      const li = document.createElement('li');
-      // let recipeTitle = document.createElement('p');
-      // let recipeId = document.createElement('p');
-      let recipeImage = document.createElement('img');
 
-      // recipeTitle.textContent = recipe.title;
-      // recipeId.textContent = recipe.id;
-      recipeImage.setAttribute('src', recipe.preview);
-
-      // li.appendChild(recipeTitle);
-      // li.appendChild(recipeId);
-      li.appendChild(recipeImage);
-      recipesList.appendChild(li);
-    });
-  } else {
-    const li = document.createElement('li');
-    const text = document.createElement('p');
-    text.textContent = 'No liked recipes yet';
-    li.appendChild(text);
-    recipesList.appendChild(li);
-  }
+  const li = document.createElement('li');
+  let recipeId = document.createElement('p');
+  recipeId.textContent = recipe;
+  li.appendChild(recipeId);
+  recipesList.appendChild(li);
 }
 
 export function outputAlert(msg, className) {
@@ -100,15 +75,16 @@ export function outputAlert(msg, className) {
   msgTxt.textContent = msg;
   msgContainer.appendChild(msgTxt);
 
-  // Removes HTML msg container after 1.5 s
-  setTimeout(function () {
-    msgContainer.remove();
-  }, 3000);
+  if (!className == 'msgContainerRecipeLimit') {
+    // Removes HTML msg container after 1.5 s
+    setTimeout(function () {
+      msgContainer.remove();
+    }, 3000);
+  }
 }
 
 // Add users to DOM
-export function outputUsers({ room, users }) {
-  // console.log(room, users);
+export function outputUsers(room, users) {
   const userList = document.querySelector('.users');
   userList.textContent = '';
   let roomName = document.createElement('h3');
@@ -116,7 +92,7 @@ export function outputUsers({ room, users }) {
   userList.appendChild(roomName);
   users.forEach((user) => {
     const li = document.createElement('li');
-    li.textContent = user;
+    li.textContent = user.username;
     userList.appendChild(li);
   });
 }
@@ -131,7 +107,11 @@ export function addMessage({ user, message }) {
   item.appendChild(itemText);
 
   let username = document.createElement('span');
-  // name = convertNameSelf(name);
+  // Converts chatbot - another styling
+  // if (user == "Chatbot"){
+
+  // }else{
+
   username.textContent = `${user}: `;
   username.style.fontWeight = 'bold';
   itemText.appendChild(username);
@@ -147,11 +127,52 @@ export function addMessage({ user, message }) {
   }, 1500);
 }
 
-// // replace with user socket id --- Checks if name of the messager is the same as the client
-// function convertNameSelf(name) {
-//   if (name === inputName.value) {
-//     return (name = '(Yourself)');
-//   } else {
-//     return name;
-//   }
-// }
+// History chat
+export function historyOutputChat(chatMessages) {
+  const chatBox = document.querySelector('#messages');
+  chatBox.textContent = '';
+
+  chatMessages.forEach((msg) => {
+    const li = document.createElement('li');
+    li.textContent = `!!!${msg.user}: ${msg.message}`;
+    chatBox.appendChild(li);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+}
+
+// Add liked recipes to DOM
+export function historyOutputLikedRecipes(recipes) {
+  let data = recipes.recipes;
+  const recipesContainer = document.querySelector('.likedRecipes');
+  const recipesList = document.querySelector('.likedRecipes ul');
+  recipesList.textContent = '';
+  // let title = document.createElement('h3');
+  // title.textContent = 'Liked recipes';
+  // title.style.textDecoration = 'underline';
+  // recipesContainer.appendChild(title);
+  recipesContainer.style.animation = 'glow 2s ease-in-out';
+  if (data.length) {
+    data.forEach((recipe) => {
+      // console.log('recipe data Obj: ', recipe.data);
+      const li = document.createElement('li');
+      // let recipeTitle = document.createElement('p');
+      // let recipeId = document.createElement('p');
+      let recipeImage = document.createElement('img');
+
+      // recipeTitle.textContent = recipe.title;
+      // recipeId.textContent = recipe.recipe;
+      recipeImage.setAttribute('src', recipe.recipeImage);
+
+      // li.appendChild(recipeTitle);
+      // li.appendChild(recipeId);
+      li.appendChild(recipeImage);
+      recipesList.appendChild(li);
+    });
+  } else {
+    const li = document.createElement('li');
+    const text = document.createElement('p');
+    text.textContent = 'No liked recipes yet';
+    li.appendChild(text);
+    recipesList.appendChild(li);
+  }
+}

@@ -313,10 +313,10 @@ main section:nth-child(1) form button {
 #chat-query article:nth-child(2) ol li {
   color: white;
   background: #423f3f;
-  width: 50%;
+  margin: 0.3em 0.5em;
+  width: 100%;
   padding: 0.2em;
   border-radius: 5px;
-  margin: 0.3em 0.5em;
 }
 
 #chat-query article:nth-child(2) ol li p {
@@ -527,7 +527,8 @@ ul {
 
 #recipes ol li.recipes-response img {
   position: relative;
-  width: 100%;
+  /* width: 100%; */
+  width: 50%;
   border-radius: 10px;
   height: auto;
   transition: 0.2s;
@@ -563,6 +564,22 @@ ul {
 
 .msgContainerUser {
   background: #5c2581;
+}
+
+.msgContainerRecipeLimit {
+  position: absolute;
+  z-index: 2;
+  padding: 1em;
+  box-shadow: 0px 4px 10px 3px #404040;
+  background-color: black;
+  top: 6em;
+  width: 70%;
+  height: 60vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: block;
+  /* animation: fadeOut 3s ease-in-out alternate; */
 }
 
 @keyframes fadeOut {

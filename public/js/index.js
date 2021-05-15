@@ -1,10 +1,12 @@
 import { loader } from './loader.js';
 import {
   addRecipes,
-  outputLikedRecipes,
+  outputLikedRecipe,
   outputAlert,
   outputUsers,
   addMessage,
+  historyOutputChat,
+  historyOutputLikedRecipes,
 } from './render.js';
 
 // var socket = io();
@@ -73,13 +75,14 @@ socket.on('userJoined', (msg) => {
 
 // Get room and users
 socket.on('roomData', ({ room, users, chat, likedRecipes }) => {
-  // outputUsers(room, users);
-
   // Render this state when new client is joined and then go over to "real life" experience?
-  console.log('room id: ', room);
-  console.log('users: ', users);
-  console.log('chat: ', chat);
-  console.log('likedRecipes: ', likedRecipes);
+  // console.log('room id: ', room);
+  // console.log('users: ', users);
+  // console.log('chat: ', chat);
+  // console.log('likedRecipes: ', likedRecipes);
+  outputUsers(room, users);
+  historyOutputChat(chat);
+  historyOutputLikedRecipes(likedRecipes);
 });
 
 // --------------------------------
@@ -140,7 +143,13 @@ if (chosenRecipeForm) {
 
 // Add liked recipe to container
 socket.on('likedRecipesList', (data) => {
-  outputLikedRecipes(data);
+  // outputLikedRecipe(data); // one recipe!
+  historyOutputLikedRecipes(data);
+});
+
+// Liked recipes - The limit is reached - alert msg
+socket.on('alertMessageRecipe', (msg) => {
+  outputAlert(msg, 'msgContainerRecipeLimit');
 });
 
 // Message submit
@@ -170,4 +179,8 @@ socket.on('chatMessage', (message) => {
   addMessage(message);
 
   chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+socket.on('menu', (msg) => {
+  console.log(msg);
 });

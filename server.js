@@ -11,6 +11,7 @@ const {
   addChatMsg,
   addLikedRecipe,
   getCurrentUser,
+  getCurrentUserrr,
 } = require('./modules/utils/stateFunctions.js');
 
 const bodyParser = require('body-parser');
@@ -47,6 +48,14 @@ io.on('connection', (socket) => {
 
     if (rooms.includes(room)) {
       socket.join(room);
+
+      socket.in(room).emit('roomData', {
+        room: roomData.id,
+        users: roomData.users,
+        chat: roomData.chat,
+        likedRecipes: roomData.likedRecipes,
+      });
+
       io.in(room).emit('roomData', {
         room: roomData.id,
         users: roomData.users,
@@ -58,8 +67,7 @@ io.on('connection', (socket) => {
         socket.emit(
           'joinSucces',
           `${user}, You have succesfully joined ${room}`
-        ) &&
-        socket.to(newUser.room).emit('userJoined', `${user} joined this room`)
+        ) && socket.to(room).emit('userJoined', `${user} joined this room`)
       );
     } else {
       return socket.emit('joinError', 'ERROR, No Room named ' + room);
@@ -88,19 +96,40 @@ io.on('connection', (socket) => {
   socket.on('likedRecipe', async ({ recipeID, room }) => {
     // 1. Which user
     const currentUser = getCurrentUser(socket.id, room);
-    const currentUserName = currentUser.username;
+    // const currentUserName = currentUser.username;
 
     // 2. Fetch data
     let recipeData = await getRecipeData(recipeID);
 
-    // 3. Add recipe to Clients
-    io.to(room).emit('likedRecipesList', {
-      user: currentUserName,
-      recipe: recipeData[0].id,
-    });
-
     // 4. Add recipe to server global state
-    addLikedRecipe(recipeData[0].id, room, currentUser);
+    const recipesCount = addLikedRecipe(recipeData[0], room, currentUser);
+
+    // 1b. which room
+    const roomData = getRoom(room);
+    const recipesState = roomData.likedRecipes;
+
+    if (recipesCount == true) {
+      // 3. Add recipe to all clients
+      io.to(room).emit('likedRecipesList', {
+        // user: currentUserName,
+        recipes: recipesState,
+      });
+    } else {
+      console.log('The limit (5) is reached!');
+
+      const roomData = getRoom(room);
+      const firstJoinedUser = roomData.users[0];
+
+      // push to global state so when new user joins, he gets alert that the limit is reached
+
+      io.to(room).emit(
+        'alertMessageRecipe',
+        `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`
+      );
+
+      // Say to first joined user that he has to choose and give him a choice menu
+      socket.emit('menu', `user id = ${firstJoinedUser.id}`); //succeeded
+    }
   });
 
   // // Won recipe (chosen) roomdata[roomID].likedRecipes = array with liked recipes, there is one chosen
@@ -125,32 +154,38 @@ io.on('connection', (socket) => {
   // Detects when user has disconnected
   socket.on('disconnect', () => {
     // 1. Which user
-    const currentUser = getCurrentUser(socket.id, room);
-    const currentUserName = currentUser.username;
+    // const currentUser =
+    getCurrentUserrr(socket.id, rooms);
+    // currentUser;
+    // const currentUserName = currentUser.username;
 
     // 2. Which room
-    // console.log(getRoom(room));
-    const roomData = getRoom(room);
+    // Roomstate[room].users.username.id[socketid] // --> returns room
+    // console.log(getRoom(room).keys());
+    // const roomData = getRoom(room);
+    // console.log(roomData);
 
     // 2. Delete user from array
-    const deleteUser = userJoin(room, user, socket.id);
+    // const deleteUser = userJoin(room, user, socket.id);
     // const user = userLeave(room, user, socket.id);
 
     // 3. Render clientside the room userslist
 
-    if (user) {
-      // message that user left
-      // io.to(user.room).emit(
-      //   'message',
-      //   formatMessage(botName, `${user.username} has left the chat`)
-      // );
+    // if (user) {
+    //   // message that user left
+    //   // io.to(user.room).emit(
+    //   //   'message',
+    //   //   formatMessage(botName, `${user.username} has left the chat`)
+    //   // );
 
-      // Send users and room info
-      io.to(user.room).emit('roomUsers', {
-        room: user.room,
-        users: getRoomUsers(user.room),
-      });
-    }
+    //   // Send users and room info
+    //   io.to(user.room).emit('roomUsers', {
+    //     room: user.room,
+    //     users: getRoomUsers(user.room),
+    //   });
+
+    //   socket.to(newUser.room).emit('userJoined', `${user} joined this room`);
+    // }
   });
 
   async function getQueryData(query) {
