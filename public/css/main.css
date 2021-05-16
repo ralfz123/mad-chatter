@@ -105,6 +105,13 @@ button:active {
   color: rgb(28, 24, 149);
 }
 
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
 /* login + register */
 main#login,
 main#register {
@@ -589,8 +596,11 @@ ul {
 
 div.msgContainerRecipeLimitUser,
 div.msgContainerRecipeLimitAll {
-  background: #85593f;
-  box-shadow: 0px 4px 20px 6px #1c1c1c;
+  display: none;
+  background: #2b272d;
+  border: 3px solid green;
+  /* box-shadow: 0px 4px 20px 6px #1c1c1c; */
+  box-shadow: 0px 4px 18px 6px #008000;
   position: absolute;
   z-index: 3;
   padding: 1em;
@@ -600,7 +610,6 @@ div.msgContainerRecipeLimitAll {
   right: 0;
   height: 65vh;
   margin: 0 auto;
-  display: block;
 }
 
 div.msgContainerRecipeLimitUser ol {
@@ -626,21 +635,8 @@ div.msgContainerRecipeLimitUser ol li.choose-recipes img {
   transition: 0.2s;
 }
 
-/*  to all */
-.msgContainerRecipeLimitAll {
-  /* position: absolute;
-  z-index: 2;
-  padding: 1em;
-  box-shadow: 0px 4px 10px 3px #404040;
-  background-color: black;
-  top: 6em;
-  width: 70%;
-  height: 60vh;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  display: block; */
-  /* animation: fadeOut 3s ease-in-out alternate; */
+div.msgContainerRecipeLimitUser ol li.choose-recipes p {
+  font-size: 0.8rem;
 }
 
 /* ------------------------------------------- */

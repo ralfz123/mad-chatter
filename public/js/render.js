@@ -82,92 +82,66 @@ export function outputAlert(msg, className) {
 }
 
 // recipe alert limit for first joined user and clients
-export function outputRecipeAlert({ type, msg, data }) {
+export function outputRecipeAlert(data) {
+  let type = data.type;
+  let msg = data.msg;
+  let recipe = data.data;
+
+  let msgUser = document.querySelector('.msgContainerRecipeLimitUser');
+  let msgAllUsers = document.querySelector('.msgContainerRecipeLimitAll');
+
+  // Disable add button
+  let addRecipeBtn = document.querySelector('#recipes form button');
+  addRecipeBtn.setAttribute('disabled', 'disabled');
+
   if (type == 'allUsers') {
-    console.log('data', data);
-    console.log(type);
-    let className = 'msgContainerRecipeLimitAll';
+    console.log('data all users: ', recipe);
+    msgAllUsers.style.display = 'block';
 
-    // universal
-    const header = document.querySelector('header');
-    let msgContainer = document.createElement('div');
-    msgContainer.setAttribute('class', className);
-    header.appendChild(msgContainer);
-
-    // static
-    let msgTxt = document.createElement('p');
-    msgTxt.textContent = msg;
-    msgContainer.appendChild(msgTxt);
-
-    let button = document.createElement('button');
-    button.setAttribute('type', 'submit');
-    button.textContent = 'Okay, I wait till the user chooses';
-    msgContainer.appendChild(button);
+    let msgTxt = document.querySelector('.msgContainerRecipeLimitAll p');
+    msgTxt.textContent = `${msg}`;
   } else if (type == 'firstUser') {
-    console.log(type);
-    console.log('data', data);
-    let className = 'msgContainerRecipeLimitUser';
+    msgUser.style.display = 'block';
+    console.log('data first user:', recipe);
 
-    // universal
-    const header = document.querySelector('header');
-    let msgContainer = document.createElement('div');
-    msgContainer.setAttribute('class', className);
-    header.appendChild(msgContainer);
+    let message = data.msg;
 
     // static
-    let msgTxt = document.createElement('p');
-    msgTxt.textContent = msg;
-    msgContainer.appendChild(msgTxt);
+    let msgTxt = document.querySelector('.msgContainerRecipeLimitUser p');
+    msgTxt.textContent = `${message}`;
 
-    let form = document.createElement('form');
-    msgContainer.appendChild(form);
-
-    let listContainer = document.createElement('ol');
-    listContainer.setAttribute('class', className);
-    form.appendChild(listContainer);
+    let list = document.querySelector('.msgContainerRecipeLimitUser form ol');
 
     // data component
-    for (let i in data) {
+    for (let i in recipe) {
       let item = document.createElement('li');
       item.setAttribute('class', 'choose-recipes');
-      listContainer.appendChild(item);
+      list.appendChild(item);
 
       let label = document.createElement('label');
-      label.setAttribute('for', data[i].recipeId);
+      label.setAttribute('for', recipe[i].recipeId);
       item.appendChild(label);
 
       let input = document.createElement('input');
       input.setAttribute('type', 'radio');
-      input.setAttribute('id', data[i].recipeId);
-      input.setAttribute('value', data[i].recipeId);
-      input.setAttribute('name', 'recipes');
+      input.setAttribute('id', recipe[i].recipeId);
+      input.setAttribute('value', recipe[i].recipeId);
+      input.setAttribute('name', 'chosenRecipe');
       label.appendChild(input);
 
       let image = document.createElement('img');
-      image.setAttribute('src', data[i].recipeImage);
-      image.setAttribute('alt', data[i].recipeTitle);
+      image.setAttribute('src', recipe[i].recipeImage);
+      image.setAttribute('alt', recipe[i].recipeTitle);
       label.appendChild(image);
 
       let text = document.createElement('p');
-      text.textContent = data[i].recipeTitle;
+      text.textContent = recipe[i].recipeTitle;
       label.appendChild(text);
     }
 
-    let button = document.createElement('button');
-    button.setAttribute('type', 'submit');
-    button.textContent = 'Choose';
-    form.appendChild(button);
-
-    // delete other message for all clients
+    // delete other message
     let msg = document.querySelector('.msgContainerRecipeLimitAll');
-    msg.style.display = 'block';
-
-    // if (!className == 'msgContainerRecipeLimit') {
-    //   // Removes HTML msg container after 1.5 s
-    //   setTimeout(function () {
-    //     msgContainer.remove();
-    //   }, 3000);
-    // }
+    msg.style.display = 'none';
   }
 }
 

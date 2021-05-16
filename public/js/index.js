@@ -92,11 +92,6 @@ socket.on('roomData', ({ room, users, chat, likedRecipes }) => {
 const ingredientsForm = document.querySelector('#ingredientsForm');
 const inputQuery = document.querySelector('#query-ingredient');
 
-// Chat
-const chatForm = document.querySelector('#chatForm');
-const chatBox = document.querySelector('#messages');
-const inputMessage = document.querySelector('#message');
-
 loader('hide');
 
 // Listens to ingredient query form submit
@@ -121,11 +116,11 @@ socket.on('queryData', (data) => {
 
 // --------------------------------
 
-const chosenRecipeForm = document.querySelector('#recipes form');
-if (chosenRecipeForm) {
+const likeRecipesForm = document.querySelector('#recipes form');
+if (likeRecipesForm) {
   let inputChosenRecipe = document.getElementsByName('recipes');
 
-  chosenRecipeForm.addEventListener('submit', function (e) {
+  likeRecipesForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
     for (var i = 0, length = inputChosenRecipe.length; i < length; i++) {
@@ -148,10 +143,18 @@ socket.on('likedRecipesList', (data) => {
   historyOutputLikedRecipes(data);
 });
 
+// --------------------------------
 // Liked recipes - The limit is reached - alert msg
 socket.on('alertMessageRecipe', (type, msg, data) => {
   outputRecipeAlert(type, msg, data);
 });
+
+// --------------------------------
+
+// Chat
+const chatForm = document.querySelector('#chatForm');
+const chatBox = document.querySelector('#messages');
+const inputMessage = document.querySelector('#message');
 
 // Message submit
 if (chatForm) {
@@ -180,4 +183,50 @@ socket.on('chatMessage', (message) => {
   addMessage(message);
 
   chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+// --------------------------------
+
+// When button is submitted
+const inputRecipesChoices = document.getElementsByName('chosenRecipe');
+const msgChooseRecipe = document.querySelector('.msgContainerRecipeLimitUser');
+const chosenRecipeForm = document.querySelector(
+  '.msgContainerRecipeLimitUser form'
+);
+
+// choses recipe submit
+if (chosenRecipeForm) {
+  chosenRecipeForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    for (var i = 0, length = inputRecipesChoices.length; i < length; i++) {
+      if (inputRecipesChoices[i].checked) {
+        socket.emit('wonRecipe', {
+          recipeID: inputRecipesChoices[i].value,
+          room: globalRoom,
+        });
+        msgChooseRecipe.style.display = 'none';
+      }
+    }
+  });
+} else {
+  null;
+}
+
+socket.on('wonRecipeData', ({ recipe }) => {
+  console.log('won recipe datais hier: ', recipe);
+  // outputWonRecipe(recipe)
+  //  1. Make Display
+  // 2. Render data so all users can make the dish
+});
+
+const msgLimitAlertUsers = document.querySelector(
+  '.msgContainerRecipeLimitAll'
+);
+const okayBtn = document.querySelector('.msgContainerRecipeLimitAll button');
+
+okayBtn.addEventListener('clicked', function (e) {
+  e.preventDefault();
+
+  msgLimitAlertUsers.style.display = 'none';
 });

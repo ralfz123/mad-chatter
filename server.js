@@ -141,24 +141,30 @@ io.on('connection', (socket) => {
     // fetch data
   });
 
-  // // Won recipe (chosen) roomdata[roomID].likedRecipes = array with liked recipes, there is one chosen
-  // socket.on('likedRecipe', async ({ recipeID, room }) => {
-  //   // 1. Which user
-  //   const currentUser = getCurrentUser(socket.id, room);
-  //   const currentUserName = currentUser.username;
+  // Won recipe (chosen) roomdata[roomID].likedRecipes = array with liked recipes, there is one chosen
+  socket.on('wonRecipe', async ({ recipeID, room }) => {
+    // 1. Which user
+    const currentUser = getCurrentUser(socket.id, room);
+    const currentUserName = currentUser.username;
+    console.log('gekozen door: ', currentUserName);
 
-  //   // 2. fetch data by recipe id
-  //   let wonRecipeData = await getRecipeData(recipeID);
+    // 2. fetch data by recipe id
+    let wonRecipeData = await getRecipeData(recipeID);
+    console.log('won recipe data: ', wonRecipeData[0]);
 
-  //   // 3.   add recipe to Clients -- add msg to clients that one recipe is chosen
-  //   io.to(room).emit('likedRecipesList', {
-  //     user: currentUserName,
-  //     recipe: recipeData[0].id,
-  //   });
+    // 3.   add recipe to Clients -- add msg to clients that one recipe is chosen
+    io.to(room).emit('wonRecipeData', {
+      user: currentUserName,
+      recipe: wonRecipeData[0].preview,
+    });
 
-  //   // 4. Add recipe to server global state
-  //   addLikedRecipe(recipeData, room, currentUser);
-  // });
+    // 4. Add recipe to server global state
+    // addLikedRecipe(recipeData, room, currentUser);
+
+    // message to all clients (io.emit) "John Doe has chosen for Creame Cheese Cake"
+    // render display with recipe data
+    // Add to state, chosen: recipeiD + title
+  });
 
   // Detects when user has disconnected
   socket.on('disconnect', () => {
