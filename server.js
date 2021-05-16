@@ -50,6 +50,7 @@ io.on('connection', (socket) => {
     if (rooms.includes(room)) {
       socket.join(room);
 
+      // which one has to be gone?
       socket.in(room).emit('roomData', {
         room: roomData.id,
         users: roomData.users,
