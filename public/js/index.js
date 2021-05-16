@@ -86,6 +86,10 @@ socket.on('roomData', ({ room, users, chat, likedRecipes }) => {
   historyOutputLikedRecipes(likedRecipes);
 });
 
+socket.on('roomUsers', ({ room, users }) => {
+  outputUsers(room, users);
+});
+
 // --------------------------------
 
 // Ingredients query

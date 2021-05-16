@@ -7,6 +7,7 @@ const port = process.env.PORT || 5000;
 const { getData, getRecipeData } = require('./modules/data/fetch.js');
 const {
   userJoin,
+  userLeave,
   getRoom,
   addChatMsg,
   addLikedRecipe,
@@ -168,23 +169,19 @@ io.on('connection', (socket) => {
 
   // Detects when user has disconnected
   socket.on('disconnect', () => {
-    // 1. Which user
-    // const currentUser =
-    getCurrentUserrr(socket.id, rooms);
-    // currentUser;
-    // const currentUserName = currentUser.username;
+    // 1. Which room + user
+    const currentRoom = getCurrentUserrr(socket.id);
+    let room = `room${currentRoom}`;
 
-    // 2. Which room
-    // Roomstate[room].users.username.id[socketid] // --> returns room
-    // console.log(getRoom(room).keys());
-    // const roomData = getRoom(room);
-    // console.log(roomData);
+    // 2. user leaves
 
     // 2. Delete user from array
-    // const deleteUser = userJoin(room, user, socket.id);
-    // const user = userLeave(room, user, socket.id);
+    const user = userLeave(room, socket.id);
 
     // 3. Render clientside the room userslist
+    socket
+      .in(currentRoom)
+      .emit('roomUsers', { room: currentRoom, users: user });
 
     // if (user) {
     //   // message that user left

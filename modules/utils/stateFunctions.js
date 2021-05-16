@@ -13,16 +13,15 @@ function userJoin(roomID, user, userID) {
   return assignRoom;
 }
 
-function userLeave(roomID, user, userID) {
-  const index = roomsState[roomID].users.findIndex(
-    (user) => user.id === userID
-  );
+function userLeave(roomID, userID) {
+  let users = roomsState[roomID].users;
+  const index = users.findIndex((user) => user.id === userID);
 
   if (index !== -1) {
     return users.splice(index, 1)[0];
   }
-
-  console.log(roomsState[roomID].users);
+  return users;
+  // console.log('overige users: ', users);
 }
 
 function getRoom(roomID) {
@@ -43,7 +42,7 @@ function addChatMsg(message, roomID, user) {
 
   const addMsg = roomsState[roomID].chat.push(chatObj);
 
-  return console.log('NEW Message: ', assignMsg);
+  // return console.log('NEW Message: ', assignMsg);
 }
 
 // Get chat history
@@ -87,30 +86,102 @@ function getCurrentUser(userID, roomID) {
   return users.find((user) => user.id === userID);
 }
 
-function getCurrentUserrr(userID, rooms) {
-  // const users = roomsState.users;
+// const roomsState = {
+//   room1: {
+//     id: 1,
+//     likedRecipes: [],
+//     users: [{ username: 'Kees', id: '-bssNfkdyPnZdT7LAAAB' }],
+//     chat: [],
+//   },
+//   room2: {
+//     id: 2,
+//     likedRecipes: [],
+//     users: [
+//       { username: 'lappie', id: '-bsssfkd2PnZdT7LAAAB' },
+//       { username: 'dappie', id: 'hcUqPmSiAw_lsZ0iAAAD' },
+//     ],
+//     chat: [],
+//   },
+// };
 
-  // return users.find((user) => user.id === userID);
+// const find = (object, id) => {
+//   for (const [key, value] of Object.entries(object)) {
+//     const userId = roomsState[key].users;
+//     const roomid = roomsState[key].id;
 
-  // Check the users in all rooms
-  for (let i in rooms) {
-    let roomObjects = roomsState[rooms[i]].users;
-    // console.log('roomObjects: ', roomObjects); //returns: users objects from room
-    // console.log('rooms:::', rooms[i]); // returns: roomids
+//     for (let i = 0; i < userId.length; i++) {
+//       if (userId[i].id === id) {
+//         console.log(
+//           `Found user with id: ${userId[i].id} the user has the username: ${userId[i].username} and sits in room ${roomid}`
+//         );
+//         return true;
+//       }
+//     }
+//     return false;
+//   }
+// };
 
-    // check the ids of the users in all rooms
-    for (let i in roomObjects) {
-      let idsUsers = roomObjects[i].id;
-      // console.log('user ids: ', idsUsers); // returns: id from users
+// const test = find(roomsState, '-bsssfkd2PnZdT7LAAAB');
 
-      let roomNumber = Object.keys(roomObjects).find((idsUsers) => roomsState);
-      // console.log('roomNumber: ', roomNumber);
+// if (test) {
+//   console.log(test);
+// } else {
+//   console.log('Not found');
+// }
 
-      // if(id == userID){ //server
-      //   return true
-      // }
+// finds roomID where userID is in
+function getCurrentUserrr(userID) {
+  for (const [key, value] of Object.entries(roomsState)) {
+    let userId = roomsState[key].users;
+    let roomId = roomsState[key].id;
+
+    for (let i = 0; i < userId.length; i++) {
+      if (userId[i].id === userID) {
+        // roomId = `room${roomId}`;
+        return roomId;
+
+        // console.log(
+        //   `Found user with id: ${userId[i].id} the user has the username: ${userId[i].username} and sits in room ${roomId}`
+        // );
+        // return true;
+      }
     }
+    // else: null
+    // return false;
   }
+
+  // const test = find(roomsState, '-bsssfkd2PnZdT7LAAAB');
+
+  // if (test) {
+  //   console.log(test);
+  // } else {
+  //   console.log('Not found');
+  // }
+
+  // console.log(rooms);
+  // // const users = roomsState.users;
+
+  // // return users.find((user) => user.id === userID);
+
+  // // Check the users in all rooms
+  // for (let i in rooms) {
+  //   let roomObjects = roomsState[rooms[i]].users;
+  //   // console.log('roomObjects: ', roomObjects); //returns: users objects from room
+  //   // console.log('rooms:::', rooms[i]); // returns: roomids
+
+  //   // check the ids of the users in all rooms
+  //   for (let i in roomObjects) {
+  //     let idsUsers = roomObjects[i].id;
+  //     // console.log('user ids: ', idsUsers); // returns: id from users
+
+  //     let roomNumber = Object.keys(roomObjects).find((idsUsers) => roomsState);
+  //     // console.log('roomNumber: ', roomNumber);
+
+  //     // if(id == userID){ //server
+  //     //   return true
+  //     // }
+  //   }
+  // }
 
   // 1. find id in whole obj (obj.users)
   // 2. return the room where the id is in
@@ -125,6 +196,7 @@ function getCurrentUserrr(userID, rooms) {
 
 module.exports = {
   userJoin,
+  userLeave,
   getRoom,
   addChatMsg,
   addLikedRecipe,

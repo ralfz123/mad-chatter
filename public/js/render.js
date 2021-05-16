@@ -147,12 +147,15 @@ export function outputRecipeAlert(data) {
 
 // Add users to DOM
 export function outputUsers(room, users) {
+  console.log('room: ', room);
+  console.log('users: ', users);
   const userList = document.querySelector('.users');
   userList.textContent = '';
   let roomName = document.createElement('h3');
   roomName.textContent = `Room ${room}`;
   userList.appendChild(roomName);
   users.forEach((user) => {
+    console.log('userdata: ', user);
     const li = document.createElement('li');
     li.textContent = user.username;
     userList.appendChild(li);
