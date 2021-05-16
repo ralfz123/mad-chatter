@@ -56,10 +56,8 @@ function addChatMsg(message, roomID, user) {
 function addLikedRecipe(recipe, roomID, user) {
   // when there are 5 recipes chosen, there must be choose by (first user/random user) for the recipe
   if (roomsState[roomID].likedRecipes.length === 5) {
-    console.log('MORE THAN 5!');
     return false;
   } else {
-    console.log('Not 5');
     const assignRecipe = roomsState[roomID].likedRecipes;
 
     const recipeObj = {

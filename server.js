@@ -107,6 +107,7 @@ io.on('connection', (socket) => {
     // 1b. which room
     const roomData = getRoom(room);
     const recipesState = roomData.likedRecipes;
+    // console.log(recipesState);
 
     if (recipesCount == true) {
       // 3. Add recipe to all clients
@@ -115,21 +116,29 @@ io.on('connection', (socket) => {
         recipes: recipesState,
       });
     } else {
-      console.log('The limit (5) is reached!');
-
       const roomData = getRoom(room);
       const firstJoinedUser = roomData.users[0];
 
-      // push to global state so when new user joins, he gets alert that the limit is reached
+      // !push to global state so when new user joins, he gets alert that the limit is reached
 
-      io.to(room).emit(
-        'alertMessageRecipe',
-        `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`
-      );
+      // Send to all clients from room "limit is reached" -- no to the first user!-> doesnt work yet
+      io.to(room).emit('alertMessageRecipe', {
+        type: 'allUsers',
+        msg: `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`,
+
+        data: null,
+      });
 
       // Say to first joined user that he has to choose and give him a choice menu
-      socket.emit('menu', `user id = ${firstJoinedUser.id}`); //succeeded
+      io.to(firstJoinedUser.id).emit('alertMessageRecipe', {
+        type: 'firstUser',
+        msg: `There are already 5 recipes chosen. You, ${firstJoinedUser.username}, as first user has to choose one recipe you all are going to make!`,
+        data: roomData.likedRecipes,
+      });
     }
+
+    // catching chosen recipe iD
+    // fetch data
   });
 
   // // Won recipe (chosen) roomdata[roomID].likedRecipes = array with liked recipes, there is one chosen
@@ -200,16 +209,12 @@ io.on('connection', (socket) => {
     // Get data by id
     let dataRecipe = await getRecipeData(id);
 
+    return dataRecipe;
+
     // return emitted data for clientside handling for the other client
-    return socket.broadcast.emit('dataRecipe', dataRecipe);
+    // return socket.broadcast.emit('dataRecipe', dataRecipe);
   }
 });
-
-// app.get('/match/:id', async function (req, res) {
-//   let data = await getRecipeData(req.params.id);
-//   console.log(data);
-//   res.render('pages/match.ejs', { data: data[0] });
-// });
 
 http.listen(port, () => {
   console.log(`listening on port ${port}`);

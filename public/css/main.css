@@ -566,22 +566,6 @@ ul {
   background: #5c2581;
 }
 
-.msgContainerRecipeLimit {
-  position: absolute;
-  z-index: 2;
-  padding: 1em;
-  box-shadow: 0px 4px 10px 3px #404040;
-  background-color: black;
-  top: 6em;
-  width: 70%;
-  height: 60vh;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  display: block;
-  /* animation: fadeOut 3s ease-in-out alternate; */
-}
-
 @keyframes fadeOut {
   0% {
     top: -10vh;
@@ -601,6 +585,62 @@ ul {
 #room-info {
   /* background: red;
   width: 100vw; */
+}
+
+div.msgContainerRecipeLimitUser,
+div.msgContainerRecipeLimitAll {
+  background: #85593f;
+  box-shadow: 0px 4px 20px 6px #1c1c1c;
+  position: absolute;
+  z-index: 3;
+  padding: 1em;
+  top: 10vh;
+  width: 80%;
+  left: 0;
+  right: 0;
+  height: 65vh;
+  margin: 0 auto;
+  display: block;
+}
+
+div.msgContainerRecipeLimitUser ol {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0em;
+  width: 100%;
+}
+
+div.msgContainerRecipeLimitUser ol li.choose-recipes {
+  width: 17%;
+}
+
+div.msgContainerRecipeLimitUser ol li.choose-recipes img {
+  width: 100%;
+  /* width: 50%; */
+  border-radius: 10px;
+  height: auto;
+  transition: 0.2s;
+}
+
+/*  to all */
+.msgContainerRecipeLimitAll {
+  /* position: absolute;
+  z-index: 2;
+  padding: 1em;
+  box-shadow: 0px 4px 10px 3px #404040;
+  background-color: black;
+  top: 6em;
+  width: 70%;
+  height: 60vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: block; */
+  /* animation: fadeOut 3s ease-in-out alternate; */
 }
 
 /* ------------------------------------------- */

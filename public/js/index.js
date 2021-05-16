@@ -3,6 +3,7 @@ import {
   addRecipes,
   outputLikedRecipe,
   outputAlert,
+  outputRecipeAlert,
   outputUsers,
   addMessage,
   historyOutputChat,
@@ -148,8 +149,8 @@ socket.on('likedRecipesList', (data) => {
 });
 
 // Liked recipes - The limit is reached - alert msg
-socket.on('alertMessageRecipe', (msg) => {
-  outputAlert(msg, 'msgContainerRecipeLimit');
+socket.on('alertMessageRecipe', (type, msg, data) => {
+  outputRecipeAlert(type, msg, data);
 });
 
 // Message submit
@@ -179,8 +180,4 @@ socket.on('chatMessage', (message) => {
   addMessage(message);
 
   chatBox.scrollTop = chatBox.scrollHeight;
-});
-
-socket.on('menu', (msg) => {
-  console.log(msg);
 });

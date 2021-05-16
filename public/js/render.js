@@ -75,11 +75,99 @@ export function outputAlert(msg, className) {
   msgTxt.textContent = msg;
   msgContainer.appendChild(msgTxt);
 
-  if (!className == 'msgContainerRecipeLimit') {
-    // Removes HTML msg container after 1.5 s
-    setTimeout(function () {
-      msgContainer.remove();
-    }, 3000);
+  // Removes HTML msg container after 1.5 s
+  setTimeout(function () {
+    msgContainer.remove();
+  }, 3000);
+}
+
+// recipe alert limit for first joined user and clients
+export function outputRecipeAlert({ type, msg, data }) {
+  if (type == 'allUsers') {
+    console.log('data', data);
+    console.log(type);
+    let className = 'msgContainerRecipeLimitAll';
+
+    // universal
+    const header = document.querySelector('header');
+    let msgContainer = document.createElement('div');
+    msgContainer.setAttribute('class', className);
+    header.appendChild(msgContainer);
+
+    // static
+    let msgTxt = document.createElement('p');
+    msgTxt.textContent = msg;
+    msgContainer.appendChild(msgTxt);
+
+    let button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.textContent = 'Okay, I wait till the user chooses';
+    msgContainer.appendChild(button);
+  } else if (type == 'firstUser') {
+    console.log(type);
+    console.log('data', data);
+    let className = 'msgContainerRecipeLimitUser';
+
+    // universal
+    const header = document.querySelector('header');
+    let msgContainer = document.createElement('div');
+    msgContainer.setAttribute('class', className);
+    header.appendChild(msgContainer);
+
+    // static
+    let msgTxt = document.createElement('p');
+    msgTxt.textContent = msg;
+    msgContainer.appendChild(msgTxt);
+
+    let form = document.createElement('form');
+    msgContainer.appendChild(form);
+
+    let listContainer = document.createElement('ol');
+    listContainer.setAttribute('class', className);
+    form.appendChild(listContainer);
+
+    // data component
+    for (let i in data) {
+      let item = document.createElement('li');
+      item.setAttribute('class', 'choose-recipes');
+      listContainer.appendChild(item);
+
+      let label = document.createElement('label');
+      label.setAttribute('for', data[i].recipeId);
+      item.appendChild(label);
+
+      let input = document.createElement('input');
+      input.setAttribute('type', 'radio');
+      input.setAttribute('id', data[i].recipeId);
+      input.setAttribute('value', data[i].recipeId);
+      input.setAttribute('name', 'recipes');
+      label.appendChild(input);
+
+      let image = document.createElement('img');
+      image.setAttribute('src', data[i].recipeImage);
+      image.setAttribute('alt', data[i].recipeTitle);
+      label.appendChild(image);
+
+      let text = document.createElement('p');
+      text.textContent = data[i].recipeTitle;
+      label.appendChild(text);
+    }
+
+    let button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.textContent = 'Choose';
+    form.appendChild(button);
+
+    // delete other message for all clients
+    let msg = document.querySelector('.msgContainerRecipeLimitAll');
+    msg.style.display = 'block';
+
+    // if (!className == 'msgContainerRecipeLimit') {
+    //   // Removes HTML msg container after 1.5 s
+    //   setTimeout(function () {
+    //     msgContainer.remove();
+    //   }, 3000);
+    // }
   }
 }
 
