@@ -142,13 +142,13 @@ if (likeRecipesForm) {
 
 // Add liked recipe to container
 socket.on('likedRecipesList', (data) => {
-  outputLikedRecipe(data); // one recipe!
-  // historyOutputLikedRecipes(data);
+  outputLikedRecipe(data);
 });
 
 // --------------------------------
 // Liked recipes - The limit is reached - alert msg
 socket.on('alertMessageRecipe', (type, msg, data) => {
+  // new Audio('../assets/waiting.mp3').play();
   outputRecipeAlert(type, msg, data);
 });
 
@@ -220,16 +220,17 @@ const msgLimitAlertUsers = document.querySelector(
   '.msgContainerRecipeLimitAll'
 );
 const okayBtn = document.querySelector('.msgContainerRecipeLimitAll button');
+console.log('conatiner', msgLimitAlertUsers);
+console.log('button: ', okayBtn);
 
-okayBtn.addEventListener('clicked', function (e) {
+okayBtn.onclick = function (e) {
   e.preventDefault();
+  console.log('clicked');
 
   msgLimitAlertUsers.style.display = 'none';
-});
+};
 
 socket.on('wonRecipeData', (wonRecipeData) => {
-  console.log(
-    `${wonRecipeData.user} has chosen for the recipe ${wonRecipeData.recipe.id}`
-  );
+  new Audio('https://www.myinstants.com/media/sounds/msn-sound_1.mp3').play();
   outputWonRecipe(wonRecipeData);
 });

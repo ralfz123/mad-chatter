@@ -152,7 +152,6 @@ main#login a {
 main section:nth-child(1) {
   display: block;
   margin: 0 auto;
-  background: red;
 }
 
 main section:nth-child(1) form {
@@ -160,6 +159,7 @@ main section:nth-child(1) form {
   padding: 1.5em;
   background-color: #2b2b2b;
   color: #000000;
+  border-radius: 10px;
 }
 
 main section:nth-child(1) form input:nth-child(2) {
@@ -420,7 +420,7 @@ ul {
 
 @keyframes glow {
   0% {
-    box-shadow: 0 0 40px white;
+    box-shadow: 0 0 20px white;
   }
   90% {
     box-shadow: 0 0 5px white;
@@ -648,13 +648,55 @@ div.msgContainerRecipeLimitUser ol li.choose-recipes p {
 /*                  WON PAGE                   */
 /* ------------------------------------------- */
 
-#won-recipe{
+#won-recipe {
   width: 100vw;
-  padding: 0.5em;
-  height: 63vh;
+  /* padding: 0.5em; */
+  /* height: 63vh; */
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  position: relative;
+}
+#won-recipe > p:nth-of-type(1) {
+  background: #504c50;
+  color: white;
+  border-radius: 10px;
+  padding: 0.5em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+#won-recipe > p:nth-child(2) {
+  /* background: #504c50; */
+  background: #5d3e5d;
+  color: white;
+  border-radius: 10px;
+  padding: 0.5em;
+  text-transform: uppercase;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#won-recipe form {
+  padding: 1em;
+}
+
+#won-recipe ul {
+  list-style-type: disc;
+  text-transform: uppercase;
+}
+#won-recipe ol {
+  list-style-type: decimal;
+}
+
+#won-recipe img {
+  width: 15em;
+  margin: 0 auto;
+  border-radius: 10px;
+  position: absolute;
+  top: 7em;
+  right: 0;
 }
 
 #match {

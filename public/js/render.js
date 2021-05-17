@@ -57,9 +57,12 @@ export function addRecipes(data) {
 export function outputLikedRecipe({ preview }) {
   const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
-  recipesContainer.style.animation = 'glow 2s ease-in-out';
-  // let msg = document.querySelector('.recipesMsg');
-  // msg.style.display = 'none';
+  recipesContainer.setAttribute('style', 'animation:glow .5s ease-in-out');
+
+  // Removes HTML msg container after 1.5 s
+  setTimeout(function () {
+    recipesContainer.setAttribute('style', '');
+  }, 1200);
 
   const li = document.createElement('li');
   let recipeImage = document.createElement('img');
@@ -241,7 +244,7 @@ export function historyOutputLikedRecipes(recipesData) {
   // title.textContent = 'Liked recipes';
   // title.style.textDecoration = 'underline';
   // recipesContainer.appendChild(title);
-  recipesContainer.style.animation = 'glow 2s ease-in-out';
+  // recipesContainer.style.animation = 'glow 2s ease-in-out';
   if (recipesData.length) {
     recipesData.forEach((recipe) => {
       // let msg = document.querySelector('.recipesMsg');
@@ -309,9 +312,7 @@ export function outputWonRecipe(wonRecipe) {
   image.setAttribute('alt', title);
 
   // Category recipe
-  const categoryRecipe = document.querySelector(
-    '#won-recipe p:nth-of-type(2) span'
-  );
+  const categoryRecipe = document.querySelector('#won-recipe p:nth-of-type(2)');
   categoryRecipe.textContent = category;
 
   // Ingredients recipe

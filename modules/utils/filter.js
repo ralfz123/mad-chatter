@@ -49,8 +49,7 @@ function filterData(rawData) {
   return dataObject;
 }
 
-// check which ingredients are !null and
-// Or put all ingrdeins in a selfcfreated array and then filter over it and check if its null
+// check which ingredients are !null and // Or put all ingrdeins in a selfcfreated array and then filter over it and check if its null
 function filterIngredients(data) {
   let filteredIngredients = data[0].ingredients.filter((ingredient) => {
     return ingredient != '' && ingredient != null;
