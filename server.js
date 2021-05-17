@@ -8,12 +8,13 @@ const { getData, getRecipeData } = require('./modules/data/fetch.js');
 const {
   userJoin,
   userLeave,
-  getRoom,
+  getRoomData,
   addChatMsg,
   addLikedRecipe,
+  addLikedRecipesLimit,
   addWonRecipe,
   getCurrentUser,
-  getCurrentUserrr,
+  findCurrentRoom,
 } = require('./modules/utils/stateFunctions.js');
 
 const bodyParser = require('body-parser');
@@ -39,26 +40,25 @@ const rooms = [
 
 io.on('connection', (socket) => {
   console.log('user connected');
+
   // socket.emit('welcome', 'Hello welcome to Cooking on Remote!');
 
   socket.on('joinRoom', ({ room, user }) => {
-    const newUser = userJoin(room, user, socket.id); // remove the var decl?
-    // console.log(getRoom(room));
-    const roomData = getRoom(room);
+    const newUser = userJoin(room, user, socket.id);
 
     socket.join(room);
 
     if (rooms.includes(room)) {
       socket.join(room);
 
-      console.log('won recipe state: ', roomData.wonRecipe);
       // New user gets the history data of the room
       io.to(socket.id).emit('roomData', {
-        room: roomData.id,
-        users: roomData.users,
-        chat: roomData.chat,
-        likedRecipes: roomData.likedRecipes,
-        wonRecipe: roomData.wonRecipe,
+        room: newUser.id,
+        users: newUser.users,
+        chat: newUser.chat,
+        likedRecipes: newUser.likedRecipes,
+        likedRecipeLimit: newUser.likedRecipeLimit,
+        wonRecipe: newUser.wonRecipe,
       });
 
       // Welcome message
@@ -69,11 +69,9 @@ io.on('connection', (socket) => {
 
       // All users gets info about the roomUsers that has updated because of a new user joined
       socket.to(room).emit('roomUsers', {
-        room: roomData.id,
-        users: roomData.users,
+        room: newUser.id,
+        users: newUser.users,
       });
-
-      // io.to(firstJoinedUser.id).emit('alertMessageRecipe', {}
 
       return (
         socket.emit(
@@ -100,8 +98,12 @@ io.on('connection', (socket) => {
   });
 
   // Ingredient id handler
-  socket.on('query', ({ query }) => {
-    getQueryData(query);
+  socket.on('query', async ({ query }) => {
+    // 1. Fetch data on query
+    let recipesData = await getData(query);
+
+    // 2. Send socket with data to user
+    socket.emit('queryData', recipesData);
   });
 
   // Liked recipe handler
@@ -113,32 +115,21 @@ io.on('connection', (socket) => {
     // 2. Fetch data
     let recipeData = await getRecipeData(recipeID);
 
-    // 4. Add recipe to server global state
-    const recipesCount = addLikedRecipe(recipeData[0], room, currentUser);
+    // check limit, then add recipe
+    const roomData = getRoomData(room);
+    const firstJoinedUser = roomData.users[0];
+    const value = roomData.likedRecipeLimit;
+    // console.log(`lengteee= ${roomData.likedRecipes.length + 1}`);
 
-    // 1b. which room
-    // const roomData = getRoom(room);
-    // const recipesState = roomData.likedRecipes;
-    // console.log(recipesState);
-
-    // if limit is not reached, add recipe to object
-    if (recipesCount == true) {
-      // 3. Add recipe to all clients
-      io.to(room).emit('likedRecipesList', recipeData[0]);
-    } else {
-      // limit is reached, not add recipe
-      const roomData = getRoom(room);
-      const firstJoinedUser = roomData.users[0];
-
-      // push recipe ID to wonRecipe object key in state
-
-      // !push to global state so when new user joins, he gets alert that the limit is reached
+    console.log('limit: ', value);
+    if (value === true) {
+      console.log('limit: ', value);
+      console.log(roomData);
 
       // Send to all clients from room "limit is reached" -- no to the first user!-> doesnt work yet
       io.to(room).emit('alertMessageRecipe', {
         type: 'allUsers',
         msg: `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`,
-
         data: null,
       });
 
@@ -148,24 +139,54 @@ io.on('connection', (socket) => {
         msg: `There are already 5 recipes chosen. You, ${firstJoinedUser.username}, as first user has to choose one recipe you all are going to make!`,
         data: roomData.likedRecipes,
       });
+    } else {
+      // console.log('Nieuwe recipe!');
+      // Add recipe to all clients
+      addLikedRecipe(recipeData[0], room, currentUser);
+      console.log('pause en dan ');
+      io.to(room).emit('likedRecipesList', recipeData[0]);
+      // 3. Add recipe to server global state
     }
 
-    // catching chosen recipe iD
-    // fetch data
+    // 4. If limit is not reached, add recipe to object
+    // if (recipesCount == true) {
+    //   // Add recipe to all clients
+    //   io.to(room).emit('likedRecipesList', recipeData[0]);
+    // } else {
+    //   // limit is reached, not add recipe
+    //   const roomData = getRoomData(room);
+
+    //   // !push to global state so when new user joins, he gets alert that the limit is reached
+    //   const limit = addLikedRecipesLimit(true, room);
+    //   // console.log(limit);
+
+    //   // Send to all clients from room "limit is reached" -- no to the first user!-> doesnt work yet
+    //   io.to(room).emit('alertMessageRecipe', {
+    //     type: 'allUsers',
+    //     msg: `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`,
+    //     data: null,
+    //   });
+
+    // //   // Say to first joined user that he has to choose and give him a choice menu
+    // //   io.to(firstJoinedUser.id).emit('alertMessageRecipe', {
+    // //     type: 'firstUser',
+    // //     msg: `There are already 5 recipes chosen. You, ${firstJoinedUser.username}, as first user has to choose one recipe you all are going to make!`,
+    // //     data: roomData.likedRecipes,
+    // //   });
+    // }
   });
 
-  // Won recipe (chosen) roomdata[roomID].likedRecipes = array with liked recipes, there is one chosen
+  // Won recipe (chosen)
   socket.on('wonRecipe', async ({ recipeID, room }) => {
     // 1. Which user
     const currentUser = getCurrentUser(socket.id, room);
+    // console.log(currentUser);
     const currentUserName = currentUser.username;
-    console.log('gekozen door: ', currentUserName);
 
-    // 2. fetch data by recipe id
+    // 2. Fetch data by recipe id
     let wonRecipeData = await getRecipeData(recipeID);
-    console.log('won recipe data: ', wonRecipeData[0].id);
 
-    // 3.   add recipe to Clients -- add msg to clients that one recipe is chosen
+    // 3. Add recipe to Clients -- add msg to clients that one recipe is chosen
     io.to(room).emit('wonRecipeData', {
       user: currentUserName,
       recipe: wonRecipeData[0],
@@ -173,62 +194,33 @@ io.on('connection', (socket) => {
 
     // 4. Add recipe to server global state
     addWonRecipe(wonRecipeData[0], room, currentUserName);
-
-    // message to all clients (io.emit) "John Doe has chosen for Creame Cheese Cake"
-    // render display with recipe data
-    // Add to state, chosen: recipeiD + title
   });
 
   // Detects when user has disconnected
   socket.on('disconnect', () => {
     // 1. Which room + user
-    const currentRoom = findCurrentRoom(socket.id);
-    let room = `room${currentRoom}`;
-
-    // 2. user leaves
+    const currentRoomId = findCurrentRoom(socket.id);
+    let room = `room${currentRoomId}`;
 
     // 2. Delete user from array
     const user = userLeave(room, socket.id);
 
-    // 3. Render clientside the room userslist
-    socket
-      .in(currentRoom)
-      .emit('roomUsers', { room: currentRoom, users: user });
+    if (user) {
+      // message that user left
+      // io.to(room).emit('userLeaved', `${user.username} leaved this room`);
 
-    // if (user) {
-    //   // message that user left
-    //   // io.to(user.room).emit(
-    //   //   'message',
-    //   //   formatMessage(botName, `${user.username} has left the chat`)
-    //   // );
+      const roomData = getRoomData(room);
+      const roomUsers = roomData.users;
 
-    //   // Send users and room info
-    //   io.to(user.room).emit('roomUsers', {
-    //     room: user.room,
-    //     users: getRoomUsers(user.room),
-    //   });
+      // Send users and room info
+      io.to(room).emit('roomUsers', {
+        room: currentRoomId,
+        users: roomUsers,
+      });
 
-    //   socket.to(newUser.room).emit('userJoined', `${user} joined this room`);
-    // }
+      // socket.to(newUser.room).emit('userJoined', `${user} joined this room`);
+    }
   });
-
-  async function getQueryData(query) {
-    // Get data by query
-    let dataQuery = await getData(query);
-
-    // return emitted data for clientside handling
-    return socket.emit('queryData', dataQuery);
-  }
-
-  async function getDataOfRecipe(id) {
-    // Get data by id
-    let dataRecipe = await getRecipeData(id);
-
-    return dataRecipe;
-
-    // return emitted data for clientside handling for the other client
-    // return socket.broadcast.emit('dataRecipe', dataRecipe);
-  }
 });
 
 http.listen(port, () => {

@@ -2,13 +2,14 @@ import { loader } from './loader.js';
 import {
   addRecipes,
   outputLikedRecipe,
-  outputWonRecipe, // make function
+  outputWonRecipe,
   outputAlert,
   outputRecipeAlert,
   outputUsers,
   addMessage,
   historyOutputChat,
   historyOutputLikedRecipes,
+  checkOutputLikedRecipesLimit,
   historyOutputWonRecipe,
 } from './render.js';
 
@@ -49,7 +50,6 @@ loginForm.addEventListener('submit', function (e) {
 
       socket.emit('joinRoom', {
         room: roomID,
-        // room: roomInputs[i].value,
         user: nickname.value,
       });
       loginSection.style.display = 'none';
@@ -74,18 +74,26 @@ socket.on('userJoined', (msg) => {
   outputAlert(msg, 'msgContainerUser');
 });
 
+// User has leaved
+socket.on('userLeaved', (msg) => {
+  outputAlert(msg, 'msgContainerUser');
+});
+
 // --------------------------------
 
 // Get room and users -- Render this state when new client is joined
-socket.on('roomData', ({ room, users, chat, likedRecipes, wonRecipe }) => {
-  outputUsers(room, users);
-  historyOutputChat(chat);
-  historyOutputLikedRecipes(likedRecipes);
-  historyOutputWonRecipe(wonRecipe);
-});
+socket.on(
+  'roomData',
+  ({ room, users, chat, likedRecipes, likedRecipeLimit, wonRecipe }) => {
+    outputUsers(room, users);
+    historyOutputChat(chat);
+    historyOutputLikedRecipes(likedRecipes);
+    checkOutputLikedRecipesLimit(likedRecipeLimit, users[0].username);
+    historyOutputWonRecipe(wonRecipe);
+  }
+);
 
 socket.on('roomUsers', ({ room, users }) => {
-  console.log('test room users');
   outputUsers(room, users);
 });
 
@@ -148,7 +156,6 @@ socket.on('likedRecipesList', (data) => {
 // --------------------------------
 // Liked recipes - The limit is reached - alert msg
 socket.on('alertMessageRecipe', (type, msg, data) => {
-  // new Audio('../assets/waiting.mp3').play();
   outputRecipeAlert(type, msg, data);
 });
 
@@ -220,8 +227,6 @@ const msgLimitAlertUsers = document.querySelector(
   '.msgContainerRecipeLimitAll'
 );
 const okayBtn = document.querySelector('.msgContainerRecipeLimitAll button');
-console.log('conatiner', msgLimitAlertUsers);
-console.log('button: ', okayBtn);
 
 okayBtn.onclick = function (e) {
   e.preventDefault();
@@ -231,6 +236,6 @@ okayBtn.onclick = function (e) {
 };
 
 socket.on('wonRecipeData', (wonRecipeData) => {
-  new Audio('https://www.myinstants.com/media/sounds/msn-sound_1.mp3').play();
+  new Audio('../assets/cookingTime.mp3').play();
   outputWonRecipe(wonRecipeData);
 });

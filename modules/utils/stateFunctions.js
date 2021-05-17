@@ -1,33 +1,32 @@
+const { Socket } = require('socket.io');
 const { roomsState } = require('./state.js');
 
 function userJoin(roomID, user, userID) {
   const assignRoom = roomsState[roomID];
+  const roomUsers = assignRoom.users;
 
   const userObj = {
     username: user,
     id: userID,
   };
 
-  const addUser = roomsState[roomID].users.push(userObj); // remove console.log and the var name declaration above -- return nothing?
-
-  return assignRoom;
+  roomUsers.push(userObj);
+  return assignRoom; // returns room data
 }
-
+// Removes user object when user leaves
 function userLeave(roomID, userID) {
   let users = roomsState[roomID].users;
   const index = users.findIndex((user) => user.id === userID);
 
   if (index !== -1) {
-    return users.splice(index, 1)[0];
+    return users.splice(index, 1);
   }
   return users;
-  // console.log('overige users: ', users);
 }
 
-function getRoom(roomID) {
-  const test = roomsState[roomID];
-  // console.log('test:::: ', test);
-  return test;
+// Get data of room
+function getRoomData(roomID) {
+  return roomsState[roomID];
 }
 
 // Add chat
@@ -40,23 +39,42 @@ function addChatMsg(message, roomID, user) {
     message: message,
   };
 
-  const addMsg = roomsState[roomID].chat.push(chatObj);
+  assignMsg.push(chatObj);
 
   // return console.log('NEW Message: ', assignMsg);
 }
 
-// Get chat history
-// function getChatHistory(userID, roomID) {
-//   const users = roomsState[roomID].users;
-//   return users.find((user) => user.id === userID);
-// }
-
 // Add recipe
 function addLikedRecipe(recipe, roomID, user) {
   // when there are 5 recipes chosen, there must be choose by (first user/random user) for the recipe
-  if (roomsState[roomID].likedRecipes.length === 5) {
-    return false;
-  } else {
+  let length = roomsState[roomID].likedRecipes.length;
+  // console.log('lengtee: ', length);
+  // checks if length = 5
+  if (length >= 5) {
+    console.log(length);
+    // set limit
+    addLikedRecipesLimit(true, roomID);
+
+    // send alert
+  }
+  // else if (length == 3) {
+  //   console.log('5? === ', length);
+  //   // push recipe
+  //   const assignRecipe = roomsState[roomID].likedRecipes;
+
+  //   const recipeObj = {
+  //     user: user.username,
+  //     recipeTitle: recipe.title,
+  //     recipeId: recipe.id,
+  //     recipeImage: recipe.preview,
+  //   };
+  //   assignRecipe.push(recipeObj);
+  //   // set limit
+  //   addLikedRecipesLimit(length, roomID);
+  // }
+  else {
+    // console.log('lengte', length);
+    // console.log(`Maakt ${length + 1}-de recipe aan`);
     const assignRecipe = roomsState[roomID].likedRecipes;
 
     const recipeObj = {
@@ -65,34 +83,38 @@ function addLikedRecipe(recipe, roomID, user) {
       recipeId: recipe.id,
       recipeImage: recipe.preview,
     };
-
-    const addRecipe = roomsState[roomID].likedRecipes.push(recipeObj);
-
-    // return console.log('NEW recipe: ', assignRecipe); // remove console.log and the var name declaration above
-    return true;
+    assignRecipe.push(recipeObj);
   }
   // return;
 }
 
+//!check--- add liked recipes limit to state
+function addLikedRecipesLimit(value, roomID) {
+  // let assignLimit = roomsState[roomID].likedRecipeLimit;
+
+  // const recipeObj = {
+  //   recipe: wonRecipe,
+  //   user: user,
+  // };
+
+  roomsState[roomID].likedRecipeLimit = value;
+
+  // return console.log('limit: ', assignLimit);
+}
+
 // add won recipe to state
 function addWonRecipe(wonRecipe, roomID, user) {
-  const assignWonRecipe = roomsState[roomID].wonRecipe;
+  let assignWonRecipe = roomsState[roomID].wonRecipe;
 
   const recipeObj = {
     recipe: wonRecipe,
     user: user,
   };
 
-  const addWonRecipe = (roomsState[roomID].wonRecipe = recipeObj);
+  assignWonRecipe = recipeObj;
 
-  return console.log('WON recipe: ', addWonRecipe);
+  // return console.log('WON recipe: ', assignWonRecipe);
 }
-
-// Get liked recipes
-// function getLikedRecipes(userID, roomID) {
-//   const users = roomsState[roomID].users;
-//   return users.find((user) => user.id === userID);
-// }
 
 // Get current user
 function getCurrentUser(userID, roomID) {
@@ -144,7 +166,12 @@ function getCurrentUser(userID, roomID) {
 // }
 
 // finds roomID where userID is in
-function getCurrentUserrr(userID) {
+
+// 1. find id in whole obj (obj.users)
+// 2. return the room where the id is in
+// server: delete the id in that room
+// server: update state by deleting state and render in clientside
+function findCurrentRoom(userID) {
   for (const [key, value] of Object.entries(roomsState)) {
     let userId = roomsState[key].users;
     let roomId = roomsState[key].id;
@@ -196,25 +223,16 @@ function getCurrentUserrr(userID) {
   //     // }
   //   }
   // }
-
-  // 1. find id in whole obj (obj.users)
-  // 2. return the room where the id is in
-  // server: delete the id in that room
-  // server: update state by deleting state and render in clientside
 }
-
-// Get room users
-// function getRoomUsers(roomID) {
-//   return users.filter((user) => user.room === room);
-// }
 
 module.exports = {
   userJoin,
   userLeave,
-  getRoom,
+  getCurrentUser,
+  getRoomData,
+  findCurrentRoom,
   addChatMsg,
   addLikedRecipe,
+  addLikedRecipesLimit,
   addWonRecipe,
-  getCurrentUser,
-  getCurrentUserrr,
 };

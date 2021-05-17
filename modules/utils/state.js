@@ -4,6 +4,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room2: {
@@ -11,6 +12,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room3: {
@@ -18,6 +20,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room4: {
@@ -25,6 +28,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room5: {
@@ -32,6 +36,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room6: {
@@ -39,6 +44,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room7: {
@@ -46,6 +52,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room8: {
@@ -53,6 +60,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room9: {
@@ -60,6 +68,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
   room10: {
@@ -67,6 +76,7 @@ const roomsState = {
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
     wonRecipe: null,
   },
 };

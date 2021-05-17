@@ -406,8 +406,8 @@ ul {
 #chat-query .likedRecipes li {
   background: #8e37371a;
   border: 1px solid #706f70;
-  /* padding: 0.3em; */
-  width: 50px;
+  padding: 0.3em;
+  /* width: 50px; */
   /* height: 5em; */
   margin: 0em 0.3em;
   border-radius: 6px;
@@ -454,6 +454,7 @@ ul {
 #recipes ol li {
   position: relative;
 }
+
 #recipes input[type='radio'] {
   display: none;
 }
@@ -474,12 +475,14 @@ ul {
 #recipes ol li div {
   opacity: 0;
   transition: 0.2s;
+  cursor: pointer;
   position: absolute;
   top: 0;
   padding: 0.3em;
   background-image: linear-gradient(to top, rgba(245, 246, 252, 0), #450057d8);
   border-radius: 10px;
   height: 40%;
+  height: 90%;
   width: 100%;
 }
 
@@ -539,15 +542,16 @@ ul {
 
 #recipes ol li.recipes-response img {
   position: relative;
-  /* width: 100%; */
-  width: 50%;
+  width: 100%;
+  /* width: 50%; */
   border-radius: 10px;
   height: auto;
   transition: 0.2s;
 }
 
-#recipes ol li.recipes-response p {
-  width: 100%;
+#recipes ol li.recipes-response p:nth-of-type(2) {
+  /* width: 100%; */
+  text-transform: uppercase;
 }
 
 /*  alert msg  */
@@ -623,7 +627,6 @@ div.msgContainerRecipeLimitUser ol {
   flex-direction: row;
   align-content: center;
   justify-content: space-around;
-  align-items: center;
   padding: 0em;
   width: 100%;
 }
@@ -657,6 +660,26 @@ div.msgContainerRecipeLimitUser ol li.choose-recipes p {
   flex-direction: column;
   position: relative;
 }
+
+#won-recipe h2 span {
+  animation: glowingShadow 2s linear infinite alternate;
+  display: inline-block;
+}
+
+@keyframes glowingShadow {
+  0% {
+    text-shadow: 0 0 30px yellow;
+  }
+
+  50% {
+    text-shadow: 0 0 10px yellow;
+  }
+
+  100% {
+    text-shadow: 0 0 20px yellow;
+  }
+}
+
 #won-recipe > p:nth-of-type(1) {
   background: #504c50;
   color: white;
@@ -697,124 +720,6 @@ div.msgContainerRecipeLimitUser ol li.choose-recipes p {
   position: absolute;
   top: 7em;
   right: 0;
-}
-
-#match {
-  display: block;
-  justify-content: center;
-}
-
-/* ------------------------------------------- */
-/*                  RECIPES DATA               */
-/* ------------------------------------------- */
-
-#match #recipedata {
-  padding: 1em 2em;
-  /* width: 60%; */
-  margin: 0 auto;
-  background: #2b272d;
-}
-
-/* #match #recipedata img,
-#match #recipedata ul {
-  width: 50%;
-} */
-
-#match #recipedata article:nth-child(2) {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  justify-content: space-between;
-  align-content: stretch;
-  align-items: flex-start;
-}
-
-#match #recipedata img {
-  width: 30%;
-  height: 50%;
-  display: block;
-  margin: 0;
-  border-radius: 5px;
-  box-shadow: 0 0 10px black;
-  transition: 0.2s;
-}
-
-#match #recipedata ul li {
-  padding: 0.05em;
-}
-
-#match #recipedata iframe {
-  /* width: 13em; */
-  width: 30%;
-  /* height: 7em; */
-  /* height: auto; */
-}
-
-/* #match #recipedata article:nth-child(2) p {
-  width: 25%;
-} */
-
-#match > WINNER {
-  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-@keyframes shake {
-  10%,
-  90% {
-    transform: translate3d(-10px, 0, 0);
-  }
-
-  20%,
-  80% {
-    transform: translate3d(20px, 0, 0);
-  }
-
-  30%,
-  50%,
-  70% {
-    transform: translate3d(-40px, 0, 0);
-  }
-
-  40%,
-  60% {
-    transform: translate3d(40px, 0, 0);
-  }
-}
-
-/* ------------------------------------------- */
-/*                PLAYER DATA                  */
-/* ------------------------------------------- */
-
-#match #playerdata {
-  /* display: flex; */
-}
-
-#match #playerdata #player-one {
-  position: relative;
-  border: 5px solid rgba(241, 241, 241, 0.074);
-  padding: 1em;
-  border-radius: 10px;
-}
-
-#match #playerdata #player-two {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: rgb(170, 170, 170);
-  border-radius: 5px;
-  padding: 0.5em;
-  /* width: 40%;
-  height: 30vh; */
-}
-
-#match input[type='checkbox']:checked ~ label {
-  text-decoration: line-through;
-  font-style: italic;
-}
-
-#match .recipe-instructions {
-  list-style-type: decimal;
 }
 
 /* ------------------------------------------- */

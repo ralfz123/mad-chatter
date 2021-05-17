@@ -1,6 +1,6 @@
 import { loader } from './loader.js';
 
-// function that makes all response from the data
+// Make recipes as list items of the data
 export function addRecipes(data) {
   if (data !== null) {
     loader('hide');
@@ -11,7 +11,6 @@ export function addRecipes(data) {
     const list = document.querySelector('#recipes ol');
 
     // Update-pattern: removes recipes from old query
-    // ! Not finished yet
     let oldRecipes = document.querySelector('.recipes-response');
     if (oldRecipes) {
       oldRecipes.parentNode.removeChild(oldRecipes);
@@ -41,11 +40,14 @@ export function addRecipes(data) {
         let text = document.createElement('p');
         text.textContent = data[i].title;
         imageText.appendChild(text);
+        let categoryText = document.createElement('p');
+        categoryText.textContent = data[i].category;
+        imageText.appendChild(categoryText);
         label.appendChild(imageText);
       }
     }
   } else {
-    // ! Remove all old recipes
+    // Remove all old recipes
     loader('hide');
     let stateText = document.querySelector('#recipes ol p');
     stateText.textContent = 'Incorrect ingredient';
@@ -152,10 +154,23 @@ export function outputRecipeAlert(data) {
   }
 }
 
+export function checkOutputLikedRecipesLimit(state, firstUser) {
+  if (state == true) {
+    const dataObj = {
+      type: 'allUsers',
+      msg: `There are already 5 recipes chosen. ${firstUser} has to choose one recipe you all are going to make!`,
+      data: null,
+    };
+    console.log(state);
+
+    outputRecipeAlert(dataObj);
+  }
+  // else if (state == false) {
+  // }
+}
+
 // Add users to DOM
 export function outputUsers(room, users) {
-  // console.log('room: ', room);
-  // console.log('users: ', users);
   const userList = document.querySelector('.users');
   userList.textContent = '';
   let roomName = document.createElement('h3');
@@ -276,11 +291,16 @@ export function historyOutputLikedRecipes(recipesData) {
 }
 
 export function outputWonRecipe(wonRecipe) {
-  // set display to 'block' and render data in it (for all users) io.to(room).emit
-  //  1. Make Display
-  // 2. Render data so all users can watch it make the dish
+  const homeSecOne = document.querySelector('#chat-query');
+  const homeSecTwo = document.querySelector('#recipes');
+  const wonSec = document.querySelector('#won-recipe');
+  const msgAllUsers = document.querySelector('.msgContainerRecipeLimitAll');
 
-  console.log(wonRecipe);
+  homeSecOne.style.display = 'none';
+  homeSecTwo.style.display = 'none';
+  wonSec.style.display = 'flex';
+  msgAllUsers.style.display = 'none';
+
   let username = wonRecipe.user;
   let title = wonRecipe.recipe.title;
   let category = wonRecipe.recipe.category;
@@ -288,15 +308,6 @@ export function outputWonRecipe(wonRecipe) {
   let instructions = wonRecipe.recipe.instructions;
   let preview = wonRecipe.recipe.preview;
   let video = wonRecipe.recipe.video;
-
-  // console.log('make el, chosen by: ', user);
-  const homeSecOne = document.querySelector('#chat-query');
-  const homeSecTwo = document.querySelector('#recipes');
-  const wonSec = document.querySelector('#won-recipe');
-
-  homeSecOne.style.display = 'none';
-  homeSecTwo.style.display = 'none';
-  wonSec.style.display = 'flex';
 
   // Username
   let user = document.querySelector('#won-recipe span');
@@ -377,8 +388,5 @@ export function historyOutputWonRecipe(wonRecipe) {
   if (wonRecipe != null || wonRecipe != undefined) {
     console.log('history data: ', wonRecipe);
     outputWonRecipe(wonRecipe);
-  } else {
-    // nothing to do
-    console.log('history no data: ', wonRecipe);
   }
 }
