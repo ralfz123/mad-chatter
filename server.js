@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
   // socket.emit('welcome', 'Hello welcome to Cooking on Remote!');
 
   socket.on('joinRoom', ({ room, user }) => {
-    const newUser = userJoin(room, user, socket.id);
+    const newUser = userJoin(room, user, socket.id); // remove the var decl?
     // console.log(getRoom(room));
     const roomData = getRoom(room);
 
@@ -50,20 +50,21 @@ io.on('connection', (socket) => {
     if (rooms.includes(room)) {
       socket.join(room);
 
-      // which one has to be gone?
-      socket.in(room).emit('roomData', {
+      // New user gets the history data of the room
+      io.to(socket.id).emit('roomData', {
         room: roomData.id,
         users: roomData.users,
         chat: roomData.chat,
         likedRecipes: roomData.likedRecipes,
       });
 
-      io.in(room).emit('roomData', {
+      // All users gets info about the roomUsers that has updated because of a new user joined
+      socket.to(room).emit('roomUsers', {
         room: roomData.id,
         users: roomData.users,
-        chat: roomData.chat,
-        likedRecipes: roomData.likedRecipes,
       });
+
+      // io.to(firstJoinedUser.id).emit('alertMessageRecipe', {
 
       return (
         socket.emit(
@@ -107,19 +108,20 @@ io.on('connection', (socket) => {
     const recipesCount = addLikedRecipe(recipeData[0], room, currentUser);
 
     // 1b. which room
-    const roomData = getRoom(room);
-    const recipesState = roomData.likedRecipes;
+    // const roomData = getRoom(room);
+    // const recipesState = roomData.likedRecipes;
     // console.log(recipesState);
 
+    // if limit is not reached, add recipe to object
     if (recipesCount == true) {
       // 3. Add recipe to all clients
-      io.to(room).emit('likedRecipesList', {
-        // user: currentUserName,
-        recipes: recipesState,
-      });
+      io.to(room).emit('likedRecipesList', recipeData[0]);
     } else {
+      // limit is reached, not add recipe
       const roomData = getRoom(room);
       const firstJoinedUser = roomData.users[0];
+
+      // push recipe ID to wonRecipe object key in state
 
       // !push to global state so when new user joins, he gets alert that the limit is reached
 

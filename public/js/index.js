@@ -74,9 +74,9 @@ socket.on('userJoined', (msg) => {
 
 // --------------------------------
 
-// Get room and users
+// Get room and users -- Render this state when new client is joined
 socket.on('roomData', ({ room, users, chat, likedRecipes }) => {
-  // Render this state when new client is joined and then go over to "real life" experience?
+  console.log('roomData: ', likedRecipes);
   // console.log('room id: ', room);
   // console.log('users: ', users);
   // console.log('chat: ', chat);
@@ -87,6 +87,7 @@ socket.on('roomData', ({ room, users, chat, likedRecipes }) => {
 });
 
 socket.on('roomUsers', ({ room, users }) => {
+  console.log('test room users');
   outputUsers(room, users);
 });
 
@@ -143,8 +144,8 @@ if (likeRecipesForm) {
 
 // Add liked recipe to container
 socket.on('likedRecipesList', (data) => {
-  // outputLikedRecipe(data); // one recipe!
-  historyOutputLikedRecipes(data);
+  outputLikedRecipe(data); // one recipe!
+  // historyOutputLikedRecipes(data);
 });
 
 // --------------------------------

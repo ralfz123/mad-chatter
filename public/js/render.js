@@ -54,15 +54,19 @@ export function addRecipes(data) {
 }
 
 // Add liked recipes to DOM
-export function outputLikedRecipe({ recipe }) {
+export function outputLikedRecipe({ preview }) {
   const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
   recipesContainer.style.animation = 'glow 2s ease-in-out';
+  // let msg = document.querySelector('.recipesMsg');
+  // msg.style.display = 'none';
 
   const li = document.createElement('li');
-  let recipeId = document.createElement('p');
-  recipeId.textContent = recipe;
-  li.appendChild(recipeId);
+  let recipeImage = document.createElement('img');
+
+  recipeImage.setAttribute('src', preview);
+
+  li.appendChild(recipeImage);
   recipesList.appendChild(li);
 }
 
@@ -147,15 +151,15 @@ export function outputRecipeAlert(data) {
 
 // Add users to DOM
 export function outputUsers(room, users) {
-  console.log('room: ', room);
-  console.log('users: ', users);
+  // console.log('room: ', room);
+  // console.log('users: ', users);
   const userList = document.querySelector('.users');
   userList.textContent = '';
   let roomName = document.createElement('h3');
   roomName.textContent = `Room ${room}`;
   userList.appendChild(roomName);
   users.forEach((user) => {
-    console.log('userdata: ', user);
+    // console.log('userdata: ', user);
     const li = document.createElement('li');
     li.textContent = user.username;
     userList.appendChild(li);
@@ -206,18 +210,21 @@ export function historyOutputChat(chatMessages) {
 }
 
 // Add liked recipes to DOM
-export function historyOutputLikedRecipes(recipes) {
-  let data = recipes.recipes;
+export function historyOutputLikedRecipes(recipesData) {
+  // let data = recipes.recipes;
+  console.log('history recipes: ', recipesData);
   const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
-  recipesList.textContent = '';
+  // recipesList.textContent = '';
   // let title = document.createElement('h3');
   // title.textContent = 'Liked recipes';
   // title.style.textDecoration = 'underline';
   // recipesContainer.appendChild(title);
   recipesContainer.style.animation = 'glow 2s ease-in-out';
-  if (data.length) {
-    data.forEach((recipe) => {
+  if (recipesData.length) {
+    recipesData.forEach((recipe) => {
+      // let msg = document.querySelector('.recipesMsg');
+      // msg.style.display = 'none';
       // console.log('recipe data Obj: ', recipe.data);
       const li = document.createElement('li');
       // let recipeTitle = document.createElement('p');
@@ -234,10 +241,12 @@ export function historyOutputLikedRecipes(recipes) {
       recipesList.appendChild(li);
     });
   } else {
-    const li = document.createElement('li');
-    const text = document.createElement('p');
-    text.textContent = 'No liked recipes yet';
-    li.appendChild(text);
-    recipesList.appendChild(li);
+    null;
+    // const li = document.createElement('li');
+    // li.setAttribute('class', 'recipesMsg');
+    // const text = document.createElement('p');
+    // text.textContent = 'No liked recipes yet';
+    // li.appendChild(text);
+    // recipesList.appendChild(li);
   }
 }
