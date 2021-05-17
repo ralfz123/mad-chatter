@@ -171,16 +171,20 @@ export function addMessage({ user, message }) {
   const chatBox = document.querySelector('#messages');
 
   let item = document.createElement('li');
-  item.setAttribute('class', 'newMsg');
+
+  let className;
+  // Detects if message is from bot or real user
+  if (user == 'chatBot') {
+    className = 'newMsgBot';
+  } else {
+    className = 'newMsg';
+  }
+
+  item.setAttribute('class', className);
   let itemText = document.createElement('p');
   item.appendChild(itemText);
 
   let username = document.createElement('span');
-  // Converts chatbot - another styling
-  // if (user == "Chatbot"){
-
-  // }else{
-
   username.textContent = `${user}: `;
   username.style.fontWeight = 'bold';
   itemText.appendChild(username);
@@ -191,20 +195,37 @@ export function addMessage({ user, message }) {
 
   chatBox.appendChild(item);
   chatBox.scrollTop = chatBox.scrollHeight;
-  setTimeout(() => {
-    item.removeAttribute('class', 'newMsg');
-  }, 1500);
+
+  if (user !== 'chatBot') {
+    setTimeout(() => {
+      item.removeAttribute('class', 'newMsg');
+    }, 1500);
+  }
+  //  else {
+  //   null;
+  // }
 }
 
-// History chat
+// Add History chat to DOM
 export function historyOutputChat(chatMessages) {
   const chatBox = document.querySelector('#messages');
-  chatBox.textContent = '';
+  // chatBox.textContent = '';
 
   chatMessages.forEach((msg) => {
-    const li = document.createElement('li');
-    li.textContent = `!!!${msg.user}: ${msg.message}`;
-    chatBox.appendChild(li);
+    let item = document.createElement('li');
+    let itemText = document.createElement('p');
+    item.appendChild(itemText);
+
+    let username = document.createElement('span');
+    username.textContent = `${msg.user}: `;
+    username.style.fontWeight = 'bold';
+    itemText.appendChild(username);
+
+    let messageText = document.createElement('span');
+    messageText.textContent = msg.message;
+    itemText.appendChild(messageText);
+
+    chatBox.appendChild(item);
     chatBox.scrollTop = chatBox.scrollHeight;
   });
 }
@@ -249,4 +270,10 @@ export function historyOutputLikedRecipes(recipesData) {
     // li.appendChild(text);
     // recipesList.appendChild(li);
   }
+}
+
+export function outputWonRecipe() {
+  // set display to 'block' and render data in it (for all users) io.to(room).emit
+  //  1. Make Display
+  // 2. Render data so all users can watch it make the dish
 }

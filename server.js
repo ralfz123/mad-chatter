@@ -58,13 +58,19 @@ io.on('connection', (socket) => {
         likedRecipes: roomData.likedRecipes,
       });
 
+      // Welcome message
+      io.to(socket.id).emit('chatMessage', {
+        user: 'chatBot',
+        message: `Welcome ${user} to this chat!`,
+      });
+
       // All users gets info about the roomUsers that has updated because of a new user joined
       socket.to(room).emit('roomUsers', {
         room: roomData.id,
         users: roomData.users,
       });
 
-      // io.to(firstJoinedUser.id).emit('alertMessageRecipe', {
+      // io.to(firstJoinedUser.id).emit('alertMessageRecipe', {}
 
       return (
         socket.emit(
@@ -163,7 +169,7 @@ io.on('connection', (socket) => {
     });
 
     // 4. Add recipe to server global state
-    // addLikedRecipe(recipeData, room, currentUser);
+    // addWonRecipe(recipeData, room, currentUser);
 
     // message to all clients (io.emit) "John Doe has chosen for Creame Cheese Cake"
     // render display with recipe data

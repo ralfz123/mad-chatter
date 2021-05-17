@@ -2,6 +2,7 @@ import { loader } from './loader.js';
 import {
   addRecipes,
   outputLikedRecipe,
+  outputWonRecipe, // make function
   outputAlert,
   outputRecipeAlert,
   outputUsers,
@@ -218,11 +219,9 @@ if (chosenRecipeForm) {
   null;
 }
 
-socket.on('wonRecipeData', ({ recipe }) => {
-  console.log('won recipe datais hier: ', recipe);
-  // outputWonRecipe(recipe)
-  //  1. Make Display
-  // 2. Render data so all users can make the dish
+socket.on('wonRecipeData', ({ user, recipe }) => {
+  console.log(`${user} has chosen for the recipe ${recipe}`);
+  outputWonRecipe(user, recipe);
 });
 
 const msgLimitAlertUsers = document.querySelector(
