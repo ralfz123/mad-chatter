@@ -645,8 +645,17 @@ div.msgContainerRecipeLimitUser ol li.choose-recipes p {
 }
 
 /* ------------------------------------------- */
-/*                  MATCH                      */
+/*                  WON PAGE                   */
 /* ------------------------------------------- */
+
+#won-recipe{
+  width: 100vw;
+  padding: 0.5em;
+  height: 63vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
 
 #match {
   display: block;

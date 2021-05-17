@@ -272,8 +272,104 @@ export function historyOutputLikedRecipes(recipesData) {
   }
 }
 
-export function outputWonRecipe() {
+export function outputWonRecipe(user, wonRecipe) {
   // set display to 'block' and render data in it (for all users) io.to(room).emit
   //  1. Make Display
   // 2. Render data so all users can watch it make the dish
+
+  if (wonRecipe !== null || wonRecipe !== undefined) {
+    console.log(wonRecipe);
+    let title = wonRecipe.title;
+    let category = wonRecipe.category;
+    let ingredients = wonRecipe.ingredients;
+    let instructions = wonRecipe.instructions;
+    let preview = wonRecipe.preview;
+    let video = wonRecipe.video;
+
+    console.log('make el, chosen by: ', user);
+    const homeSecOne = document.querySelector('#chat-query');
+    const homeSecTwo = document.querySelector('#recipes');
+    const wonSec = document.querySelector('#won-recipe');
+
+    homeSecOne.style.display = 'none';
+    homeSecTwo.style.display = 'none';
+    wonSec.style.display = 'flex';
+
+    const titleRecipe = document.querySelector('#won-recipe h2 span');
+    titleRecipe.textContent = title;
+
+    const image = document.querySelector('#won-recipe img');
+    image.setAttribute('src', preview);
+    image.setAttribute('alt', title);
+
+    const categoryRecipe = document.querySelector(
+      '#won-recipe p:nth-of-type(1) span'
+    );
+    categoryRecipe.textContent = category;
+
+    // ingredients
+    const ingredientsRecipe = document.querySelector(
+      '#won-recipe form:nth-of-type(1) ul'
+    );
+    console.log(ingredientsRecipe);
+
+    ingredients.forEach((ingredient) => {
+      const item = document.createElement('li');
+      const itemText = document.createElement('p');
+      itemText.textContent = ingredient;
+      item.appendChild(itemText);
+
+      ingredientsRecipe.appendChild(item);
+    });
+
+    // instructions
+    const instructionsRecipe = document.querySelector(
+      '#won-recipe form:nth-of-type(2) ol'
+    );
+
+    instructions.forEach((step) => {
+      const item = document.createElement('li');
+      const itemText = document.createElement('p');
+      itemText.textContent = step;
+      item.appendChild(itemText);
+
+      instructionsRecipe.appendChild(item);
+    });
+
+    // video
+    if (!video) {
+      // youtubue.com/q=title
+      let link = document.createElement('a');
+      link.setAttribute(
+        'href',
+        `https://www.youtube.com/results?search_query=${title}`
+      );
+      wonSec.appendChild(link);
+    } else {
+      const videoRecipe = document.createElement('iframe');
+      videoRecipe.setAttribute('id', 'ytplayer');
+      videoRecipe.setAttribute('type', 'text/html');
+      videoRecipe.setAttribute('width', '360');
+      videoRecipe.setAttribute('height', '360');
+      videoRecipe.setAttribute('src', video);
+      videoRecipe.setAttribute('frameborder', '0');
+
+      wonSec.appendChild(videoRecipe);
+    }
+  }
 }
+
+// export function historyOutputWonRecipe(wonRecipe) {
+//   console.log(wonRecipe);
+//   if (wonRecipe !== null) {
+//     // const homeSecOne = document.querySelector('#chat-query');
+//     // const homeSecTwo = document.querySelector('#recipes');
+//     // const wonSec = document.querySelector('#won-recipe');
+
+//     // homeSecOne.style.display = 'none';
+//     // homeSecTwo.style.display = 'none';
+//     // wonSec.style.display = 'flex';
+//     let user = 'jan';
+//     outputWonRecipe(user, wonRecipe);
+//   }
+// }

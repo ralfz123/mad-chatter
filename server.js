@@ -11,6 +11,7 @@ const {
   getRoom,
   addChatMsg,
   addLikedRecipe,
+  addWonRecipe,
   getCurrentUser,
   getCurrentUserrr,
 } = require('./modules/utils/stateFunctions.js');
@@ -56,6 +57,7 @@ io.on('connection', (socket) => {
         users: roomData.users,
         chat: roomData.chat,
         likedRecipes: roomData.likedRecipes,
+        wonRecipe: roomData.wonRecipe,
       });
 
       // Welcome message
@@ -165,11 +167,11 @@ io.on('connection', (socket) => {
     // 3.   add recipe to Clients -- add msg to clients that one recipe is chosen
     io.to(room).emit('wonRecipeData', {
       user: currentUserName,
-      recipe: wonRecipeData[0].preview,
+      recipe: wonRecipeData[0],
     });
 
     // 4. Add recipe to server global state
-    // addWonRecipe(recipeData, room, currentUser);
+    addWonRecipe(wonRecipeData[0], room, currentUserName);
 
     // message to all clients (io.emit) "John Doe has chosen for Creame Cheese Cake"
     // render display with recipe data

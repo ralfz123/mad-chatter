@@ -74,6 +74,20 @@ function addLikedRecipe(recipe, roomID, user) {
   // return;
 }
 
+// add won recipe to state
+function addWonRecipe(wonRecipe, roomID, user) {
+  const assignWonRecipe = roomsState[roomID].wonRecipe;
+
+  const recipeObj = {
+    wonRecipe: wonRecipe,
+    user: user,
+  };
+
+  const addWonRecipe = (roomsState[roomID].wonRecipe = recipeObj);
+
+  return console.log('WON recipe: ', addWonRecipe);
+}
+
 // Get liked recipes
 // function getLikedRecipes(userID, roomID) {
 //   const users = roomsState[roomID].users;
@@ -200,6 +214,7 @@ module.exports = {
   getRoom,
   addChatMsg,
   addLikedRecipe,
+  addWonRecipe,
   getCurrentUser,
   getCurrentUserrr,
 };

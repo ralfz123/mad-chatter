@@ -9,6 +9,7 @@ import {
   addMessage,
   historyOutputChat,
   historyOutputLikedRecipes,
+  // historyOutputWonRecipe,
 } from './render.js';
 
 // var socket = io();
@@ -28,10 +29,11 @@ socket.on('welcome', (msg) => {
 // login
 const homeSecOne = document.querySelector('#chat-query');
 const homeSecTwo = document.querySelector('#recipes');
-// const homeSecThree = document.querySelector('#room-info');
+const wonSec = document.querySelector('#won-recipe');
+
 homeSecOne.style.display = 'none';
 homeSecTwo.style.display = 'none';
-// homeSecThree.style.display = 'none';
+wonSec.style.display = 'none';
 
 const loginSection = document.querySelector('main > section');
 const loginForm = document.querySelector('main > section form');
@@ -53,7 +55,6 @@ loginForm.addEventListener('submit', function (e) {
       loginSection.style.display = 'none';
       homeSecOne.style.display = 'flex';
       homeSecTwo.style.display = 'block';
-      // homeSecThree.style.display = 'block';
     }
   }
 });
@@ -76,8 +77,8 @@ socket.on('userJoined', (msg) => {
 // --------------------------------
 
 // Get room and users -- Render this state when new client is joined
-socket.on('roomData', ({ room, users, chat, likedRecipes }) => {
-  console.log('roomData: ', likedRecipes);
+socket.on('roomData', ({ room, users, chat, likedRecipes, wonRecipe }) => {
+  console.log('roomData: ', wonRecipe);
   // console.log('room id: ', room);
   // console.log('users: ', users);
   // console.log('chat: ', chat);
@@ -85,6 +86,7 @@ socket.on('roomData', ({ room, users, chat, likedRecipes }) => {
   outputUsers(room, users);
   historyOutputChat(chat);
   historyOutputLikedRecipes(likedRecipes);
+  outputWonRecipe(wonRecipe);
 });
 
 socket.on('roomUsers', ({ room, users }) => {
@@ -219,11 +221,6 @@ if (chosenRecipeForm) {
   null;
 }
 
-socket.on('wonRecipeData', ({ user, recipe }) => {
-  console.log(`${user} has chosen for the recipe ${recipe}`);
-  outputWonRecipe(user, recipe);
-});
-
 const msgLimitAlertUsers = document.querySelector(
   '.msgContainerRecipeLimitAll'
 );
@@ -233,4 +230,9 @@ okayBtn.addEventListener('clicked', function (e) {
   e.preventDefault();
 
   msgLimitAlertUsers.style.display = 'none';
+});
+
+socket.on('wonRecipeData', ({ user, recipe }) => {
+  console.log(`${user} has chosen for the recipe ${recipe}`);
+  outputWonRecipe(user, recipe);
 });
