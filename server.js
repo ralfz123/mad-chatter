@@ -51,6 +51,7 @@ io.on('connection', (socket) => {
     if (rooms.includes(room)) {
       socket.join(room);
 
+      console.log('won recipe state: ', roomData.wonRecipe);
       // New user gets the history data of the room
       io.to(socket.id).emit('roomData', {
         room: roomData.id,
@@ -162,7 +163,7 @@ io.on('connection', (socket) => {
 
     // 2. fetch data by recipe id
     let wonRecipeData = await getRecipeData(recipeID);
-    console.log('won recipe data: ', wonRecipeData[0]);
+    console.log('won recipe data: ', wonRecipeData[0].id);
 
     // 3.   add recipe to Clients -- add msg to clients that one recipe is chosen
     io.to(room).emit('wonRecipeData', {
@@ -181,7 +182,7 @@ io.on('connection', (socket) => {
   // Detects when user has disconnected
   socket.on('disconnect', () => {
     // 1. Which room + user
-    const currentRoom = getCurrentUserrr(socket.id);
+    const currentRoom = findCurrentRoom(socket.id);
     let room = `room${currentRoom}`;
 
     // 2. user leaves

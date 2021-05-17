@@ -79,7 +79,7 @@ function addWonRecipe(wonRecipe, roomID, user) {
   const assignWonRecipe = roomsState[roomID].wonRecipe;
 
   const recipeObj = {
-    wonRecipe: wonRecipe,
+    recipe: wonRecipe,
     user: user,
   };
 

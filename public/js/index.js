@@ -9,7 +9,7 @@ import {
   addMessage,
   historyOutputChat,
   historyOutputLikedRecipes,
-  // historyOutputWonRecipe,
+  historyOutputWonRecipe,
 } from './render.js';
 
 // var socket = io();
@@ -78,15 +78,10 @@ socket.on('userJoined', (msg) => {
 
 // Get room and users -- Render this state when new client is joined
 socket.on('roomData', ({ room, users, chat, likedRecipes, wonRecipe }) => {
-  console.log('roomData: ', wonRecipe);
-  // console.log('room id: ', room);
-  // console.log('users: ', users);
-  // console.log('chat: ', chat);
-  // console.log('likedRecipes: ', likedRecipes);
   outputUsers(room, users);
   historyOutputChat(chat);
   historyOutputLikedRecipes(likedRecipes);
-  outputWonRecipe(wonRecipe);
+  historyOutputWonRecipe(wonRecipe);
 });
 
 socket.on('roomUsers', ({ room, users }) => {
@@ -232,7 +227,9 @@ okayBtn.addEventListener('clicked', function (e) {
   msgLimitAlertUsers.style.display = 'none';
 });
 
-socket.on('wonRecipeData', ({ user, recipe }) => {
-  console.log(`${user} has chosen for the recipe ${recipe}`);
-  outputWonRecipe(user, recipe);
+socket.on('wonRecipeData', (wonRecipeData) => {
+  console.log(
+    `${wonRecipeData.user} has chosen for the recipe ${wonRecipeData.recipe.id}`
+  );
+  outputWonRecipe(wonRecipeData);
 });

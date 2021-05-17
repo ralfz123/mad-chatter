@@ -99,14 +99,14 @@ export function outputRecipeAlert(data) {
   addRecipeBtn.setAttribute('disabled', 'disabled');
 
   if (type == 'allUsers') {
-    console.log('data all users: ', recipe);
+    // console.log('data all users: ', recipe);
     msgAllUsers.style.display = 'block';
 
     let msgTxt = document.querySelector('.msgContainerRecipeLimitAll p');
     msgTxt.textContent = `${msg}`;
   } else if (type == 'firstUser') {
     msgUser.style.display = 'block';
-    console.log('data first user:', recipe);
+    // console.log('data first user:', recipe);
 
     let message = data.msg;
 
@@ -233,7 +233,7 @@ export function historyOutputChat(chatMessages) {
 // Add liked recipes to DOM
 export function historyOutputLikedRecipes(recipesData) {
   // let data = recipes.recipes;
-  console.log('history recipes: ', recipesData);
+  // console.log('history recipes: ', recipesData);
   const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
   // recipesList.textContent = '';
@@ -272,104 +272,112 @@ export function historyOutputLikedRecipes(recipesData) {
   }
 }
 
-export function outputWonRecipe(user, wonRecipe) {
+export function outputWonRecipe(wonRecipe) {
   // set display to 'block' and render data in it (for all users) io.to(room).emit
   //  1. Make Display
   // 2. Render data so all users can watch it make the dish
 
-  if (wonRecipe !== null || wonRecipe !== undefined) {
-    console.log(wonRecipe);
-    let title = wonRecipe.title;
-    let category = wonRecipe.category;
-    let ingredients = wonRecipe.ingredients;
-    let instructions = wonRecipe.instructions;
-    let preview = wonRecipe.preview;
-    let video = wonRecipe.video;
+  console.log(wonRecipe);
+  let username = wonRecipe.user;
+  let title = wonRecipe.recipe.title;
+  let category = wonRecipe.recipe.category;
+  let ingredients = wonRecipe.recipe.ingredients;
+  let instructions = wonRecipe.recipe.instructions;
+  let preview = wonRecipe.recipe.preview;
+  let video = wonRecipe.recipe.video;
 
-    console.log('make el, chosen by: ', user);
-    const homeSecOne = document.querySelector('#chat-query');
-    const homeSecTwo = document.querySelector('#recipes');
-    const wonSec = document.querySelector('#won-recipe');
+  // console.log('make el, chosen by: ', user);
+  const homeSecOne = document.querySelector('#chat-query');
+  const homeSecTwo = document.querySelector('#recipes');
+  const wonSec = document.querySelector('#won-recipe');
 
-    homeSecOne.style.display = 'none';
-    homeSecTwo.style.display = 'none';
-    wonSec.style.display = 'flex';
+  homeSecOne.style.display = 'none';
+  homeSecTwo.style.display = 'none';
+  wonSec.style.display = 'flex';
 
-    const titleRecipe = document.querySelector('#won-recipe h2 span');
-    titleRecipe.textContent = title;
+  // Username
+  let user = document.querySelector('#won-recipe span');
+  user.textContent = username;
 
-    const image = document.querySelector('#won-recipe img');
-    image.setAttribute('src', preview);
-    image.setAttribute('alt', title);
+  // Title recipe
+  const titleRecipe = document.querySelector('#won-recipe h2 span');
+  titleRecipe.textContent = title;
 
-    const categoryRecipe = document.querySelector(
-      '#won-recipe p:nth-of-type(1) span'
+  // Image recipe
+  const image = document.querySelector('#won-recipe img');
+  image.setAttribute('src', preview);
+  image.setAttribute('alt', title);
+
+  // Category recipe
+  const categoryRecipe = document.querySelector(
+    '#won-recipe p:nth-of-type(2) span'
+  );
+  categoryRecipe.textContent = category;
+
+  // Ingredients recipe
+  const ingredientsRecipe = document.querySelector(
+    '#won-recipe form:nth-of-type(1) ul'
+  );
+
+  ingredients.forEach((ingredient) => {
+    const item = document.createElement('li');
+    const itemText = document.createElement('p');
+    itemText.textContent = ingredient;
+    item.appendChild(itemText);
+
+    ingredientsRecipe.appendChild(item);
+  });
+
+  // Instructions recipe
+  const instructionsRecipe = document.querySelector(
+    '#won-recipe form:nth-of-type(2) ol'
+  );
+
+  instructions.forEach((step) => {
+    const item = document.createElement('li');
+    const itemText = document.createElement('p');
+    itemText.textContent = step;
+    item.appendChild(itemText);
+
+    instructionsRecipe.appendChild(item);
+  });
+
+  // Video recipe
+  if (!video || video == '') {
+    // Text
+    let text = document.createElement('p');
+    text.textContent = `No video available from the food API, but you can check the available YouTube video's about ${title} `;
+
+    // Link
+    let link = document.createElement('a');
+    link.setAttribute(
+      'href',
+      `https://www.youtube.com/results?search_query=${title}`
     );
-    categoryRecipe.textContent = category;
+    link.setAttribute('target', '_blank');
+    link.textContent = 'here';
+    text.appendChild(link);
+    wonSec.appendChild(text);
+  } else {
+    // makes link to YouTube with as query the recipe title
+    const videoRecipe = document.createElement('iframe');
+    videoRecipe.setAttribute('id', 'ytplayer');
+    videoRecipe.setAttribute('type', 'text/html');
+    videoRecipe.setAttribute('width', '360');
+    videoRecipe.setAttribute('height', '360');
+    videoRecipe.setAttribute('src', video);
+    videoRecipe.setAttribute('frameborder', '0');
 
-    // ingredients
-    const ingredientsRecipe = document.querySelector(
-      '#won-recipe form:nth-of-type(1) ul'
-    );
-    console.log(ingredientsRecipe);
-
-    ingredients.forEach((ingredient) => {
-      const item = document.createElement('li');
-      const itemText = document.createElement('p');
-      itemText.textContent = ingredient;
-      item.appendChild(itemText);
-
-      ingredientsRecipe.appendChild(item);
-    });
-
-    // instructions
-    const instructionsRecipe = document.querySelector(
-      '#won-recipe form:nth-of-type(2) ol'
-    );
-
-    instructions.forEach((step) => {
-      const item = document.createElement('li');
-      const itemText = document.createElement('p');
-      itemText.textContent = step;
-      item.appendChild(itemText);
-
-      instructionsRecipe.appendChild(item);
-    });
-
-    // video
-    if (!video) {
-      // youtubue.com/q=title
-      let link = document.createElement('a');
-      link.setAttribute(
-        'href',
-        `https://www.youtube.com/results?search_query=${title}`
-      );
-      wonSec.appendChild(link);
-    } else {
-      const videoRecipe = document.createElement('iframe');
-      videoRecipe.setAttribute('id', 'ytplayer');
-      videoRecipe.setAttribute('type', 'text/html');
-      videoRecipe.setAttribute('width', '360');
-      videoRecipe.setAttribute('height', '360');
-      videoRecipe.setAttribute('src', video);
-      videoRecipe.setAttribute('frameborder', '0');
-
-      wonSec.appendChild(videoRecipe);
-    }
+    wonSec.appendChild(videoRecipe);
   }
 }
 
-// export function historyOutputWonRecipe(wonRecipe) {
-//   console.log(wonRecipe);
-//   if (wonRecipe !== null) {
-//     // const homeSecOne = document.querySelector('#chat-query');
-//     // const homeSecTwo = document.querySelector('#recipes');
-//     // const wonSec = document.querySelector('#won-recipe');
-
-//     // homeSecOne.style.display = 'none';
-//     // homeSecTwo.style.display = 'none';
-//     // wonSec.style.display = 'flex';
-//     let user = 'jan';
-//     outputWonRecipe(user, wonRecipe);
-//   }
-// }
+export function historyOutputWonRecipe(wonRecipe) {
+  if (wonRecipe != null || wonRecipe != undefined) {
+    console.log('history data: ', wonRecipe);
+    outputWonRecipe(wonRecipe);
+  } else {
+    // nothing to do
+    console.log('history no data: ', wonRecipe);
+  }
+}
