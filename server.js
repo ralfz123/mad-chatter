@@ -41,8 +41,6 @@ const rooms = [
 io.on('connection', (socket) => {
   console.log('user connected');
 
-  // socket.emit('welcome', 'Hello welcome to Cooking on Remote!');
-
   socket.on('joinRoom', ({ room, user }) => {
     //has to be username
     const newUser = userJoin(room, user, socket.id);
@@ -119,22 +117,22 @@ io.on('connection', (socket) => {
     // check limit, then add recipe
     const roomData = getRoomData(room);
     const firstJoinedUser = roomData.users[0];
-    // let value = roomData.likedRecipeLimit;
 
     // array length
     const dataRecipes = roomData.likedRecipes;
-    // console.log(dataRecipes);
 
     if (dataRecipes.length === 5) {
+      // Set limit state to true
       addLikedRecipesLimit(true, room);
-      // Send to all clients from room "limit is reached" -- no to the first user!-> doesnt work yet
-      // io.to(room).emit("alertMessageRecipe", {
-      //     type: "allUsers",
-      //     msg: `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`,
-      //     data: null,
-      // });
-      // console.log(dataRecipes);
-      // Say to first joined user that he has to choose and give him a choice menu
+
+      // Send message that limit is reached and firstUser has to choose recipe
+      io.to(room).emit('alertMessageRecipe', {
+        type: 'allUsers',
+        msg: `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`,
+        data: null,
+      });
+
+      // Send message to firstUser that he has to choose one recipe
       return io.to(firstJoinedUser.id).emit('alertMessageRecipe', {
         type: 'firstUser',
         msg: `There are already 5 recipes chosen. You, ${firstJoinedUser.username}, as first user has to choose one recipe you all are going to make!`,
@@ -142,47 +140,8 @@ io.on('connection', (socket) => {
       });
     }
 
-    addLikedRecipe(recipeData[0], room, currentUser);
+    addLikedRecipe(recipeData[0], room, currentUser.username);
     io.to(room).emit('likedRecipesList', recipeData[0]);
-
-    // console.log(dataRecipes);
-    // console.log(dataRecipes.length);
-
-    // } else {
-    //     // console.log('Nieuwe recipe!');
-    //     // Add recipe to all clients
-    //     addLikedRecipe(recipeData[0], room, currentUser);
-    //     // console.log(recipeData[0]);
-    //     io.to(room).emit("likedRecipesList", recipeData[0]);
-    //     // 3. Add recipe to server global state
-    // }
-
-    // 4. If limit is not reached, add recipe to object
-    // if (recipesCount == true) {
-    //   // Add recipe to all clients
-    //   io.to(room).emit('likedRecipesList', recipeData[0]);
-    // } else {
-    //   // limit is reached, not add recipe
-    //   const roomData = getRoomData(room);
-
-    //   // !push to global state so when new user joins, he gets alert that the limit is reached
-    //   const limit = addLikedRecipesLimit(true, room);
-    //   // console.log(limit);
-
-    //   // Send to all clients from room "limit is reached" -- no to the first user!-> doesnt work yet
-    //   io.to(room).emit('alertMessageRecipe', {
-    //     type: 'allUsers',
-    //     msg: `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`,
-    //     data: null,
-    //   });
-
-    // //   // Say to first joined user that he has to choose and give him a choice menu
-    // //   io.to(firstJoinedUser.id).emit('alertMessageRecipe', {
-    // //     type: 'firstUser',
-    // //     msg: `There are already 5 recipes chosen. You, ${firstJoinedUser.username}, as first user has to choose one recipe you all are going to make!`,
-    // //     data: roomData.likedRecipes,
-    // //   });
-    // }
   });
 
   // Won recipe (chosen)
@@ -215,9 +174,6 @@ io.on('connection', (socket) => {
     const user = userLeave(room, socket.id);
 
     if (user) {
-      // message that user left
-      // io.to(room).emit('userLeaved', `${user.username} leaved this room`);
-
       const roomData = getRoomData(room);
       const roomUsers = roomData.users;
 
@@ -226,8 +182,6 @@ io.on('connection', (socket) => {
         room: currentRoomId,
         users: roomUsers,
       });
-
-      // socket.to(newUser.room).emit('userJoined', `${user} joined this room`);
     }
   });
 });

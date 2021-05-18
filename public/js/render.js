@@ -104,14 +104,12 @@ export function outputRecipeAlert(data) {
   addRecipeBtn.setAttribute('disabled', 'disabled');
 
   if (type == 'allUsers') {
-    // console.log('data all users: ', recipe);
     msgAllUsers.style.display = 'block';
 
     let msgTxt = document.querySelector('.msgContainerRecipeLimitAll p');
     msgTxt.textContent = `${msg}`;
   } else if (type == 'firstUser') {
     msgUser.style.display = 'block';
-    // console.log('data first user:', recipe);
 
     let message = data.msg;
 
@@ -154,19 +152,16 @@ export function outputRecipeAlert(data) {
   }
 }
 
-export function checkOutputLikedRecipesLimit(state, firstUser) {
-  if (state == true) {
+export function checkOutputLikedRecipesLimit(length, firstUser) {
+  if (length == 5) {
     const dataObj = {
       type: 'allUsers',
       msg: `There are already 5 recipes chosen. ${firstUser} has to choose one recipe you all are going to make!`,
       data: null,
     };
-    console.log(state);
 
     outputRecipeAlert(dataObj);
   }
-  // else if (state == false) {
-  // }
 }
 
 // Add users to DOM
@@ -177,7 +172,6 @@ export function outputUsers(room, users) {
   roomName.textContent = `Room ${room}`;
   userList.appendChild(roomName);
   users.forEach((user) => {
-    // console.log('userdata: ', user);
     const li = document.createElement('li');
     li.textContent = user.username;
     userList.appendChild(li);
@@ -219,15 +213,11 @@ export function addMessage({ user, message }) {
       item.removeAttribute('class', 'newMsg');
     }, 1500);
   }
-  //  else {
-  //   null;
-  // }
 }
 
 // Add History chat to DOM
 export function historyOutputChat(chatMessages) {
   const chatBox = document.querySelector('#messages');
-  // chatBox.textContent = '';
 
   chatMessages.forEach((msg) => {
     let item = document.createElement('li');
@@ -250,43 +240,16 @@ export function historyOutputChat(chatMessages) {
 
 // Add liked recipes to DOM
 export function historyOutputLikedRecipes(recipesData) {
-  // let data = recipes.recipes;
-  // console.log('history recipes: ', recipesData);
-  const recipesContainer = document.querySelector('.likedRecipes');
   const recipesList = document.querySelector('.likedRecipes ul');
-  // recipesList.textContent = '';
-  // let title = document.createElement('h3');
-  // title.textContent = 'Liked recipes';
-  // title.style.textDecoration = 'underline';
-  // recipesContainer.appendChild(title);
-  // recipesContainer.style.animation = 'glow 2s ease-in-out';
+
   if (recipesData.length) {
     recipesData.forEach((recipe) => {
-      // let msg = document.querySelector('.recipesMsg');
-      // msg.style.display = 'none';
-      // console.log('recipe data Obj: ', recipe.data);
       const li = document.createElement('li');
-      // let recipeTitle = document.createElement('p');
-      // let recipeId = document.createElement('p');
       let recipeImage = document.createElement('img');
-
-      // recipeTitle.textContent = recipe.title;
-      // recipeId.textContent = recipe.recipe;
       recipeImage.setAttribute('src', recipe.recipeImage);
-
-      // li.appendChild(recipeTitle);
-      // li.appendChild(recipeId);
       li.appendChild(recipeImage);
       recipesList.appendChild(li);
     });
-  } else {
-    null;
-    // const li = document.createElement('li');
-    // li.setAttribute('class', 'recipesMsg');
-    // const text = document.createElement('p');
-    // text.textContent = 'No liked recipes yet';
-    // li.appendChild(text);
-    // recipesList.appendChild(li);
   }
 }
 
@@ -385,8 +348,7 @@ export function outputWonRecipe(wonRecipe) {
 }
 
 export function historyOutputWonRecipe(wonRecipe) {
-  if (wonRecipe != null || wonRecipe != undefined) {
-    console.log('history data: ', wonRecipe);
-    outputWonRecipe(wonRecipe);
+  if (wonRecipe.length !== 0) {
+    outputWonRecipe(wonRecipe[0]);
   }
 }
