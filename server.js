@@ -44,6 +44,7 @@ io.on('connection', (socket) => {
   // socket.emit('welcome', 'Hello welcome to Cooking on Remote!');
 
   socket.on('joinRoom', ({ room, user }) => {
+    //has to be username
     const newUser = userJoin(room, user, socket.id);
 
     socket.join(room);
@@ -118,35 +119,43 @@ io.on('connection', (socket) => {
     // check limit, then add recipe
     const roomData = getRoomData(room);
     const firstJoinedUser = roomData.users[0];
-    const value = roomData.likedRecipeLimit;
-    // console.log(`lengteee= ${roomData.likedRecipes.length + 1}`);
+    // let value = roomData.likedRecipeLimit;
 
-    console.log('limit: ', value);
-    if (value === true) {
-      console.log('limit: ', value);
-      console.log(roomData);
+    // array length
+    const dataRecipes = roomData.likedRecipes;
+    // console.log(dataRecipes);
 
+    if (dataRecipes.length === 5) {
+      addLikedRecipesLimit(true, room);
       // Send to all clients from room "limit is reached" -- no to the first user!-> doesnt work yet
-      io.to(room).emit('alertMessageRecipe', {
-        type: 'allUsers',
-        msg: `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`,
-        data: null,
-      });
-
+      // io.to(room).emit("alertMessageRecipe", {
+      //     type: "allUsers",
+      //     msg: `There are already 5 recipes chosen. ${firstJoinedUser.username} has to choose one recipe you all are going to make!`,
+      //     data: null,
+      // });
+      // console.log(dataRecipes);
       // Say to first joined user that he has to choose and give him a choice menu
-      io.to(firstJoinedUser.id).emit('alertMessageRecipe', {
+      return io.to(firstJoinedUser.id).emit('alertMessageRecipe', {
         type: 'firstUser',
         msg: `There are already 5 recipes chosen. You, ${firstJoinedUser.username}, as first user has to choose one recipe you all are going to make!`,
-        data: roomData.likedRecipes,
+        data: dataRecipes,
       });
-    } else {
-      // console.log('Nieuwe recipe!');
-      // Add recipe to all clients
-      addLikedRecipe(recipeData[0], room, currentUser);
-      console.log('pause en dan ');
-      io.to(room).emit('likedRecipesList', recipeData[0]);
-      // 3. Add recipe to server global state
     }
+
+    addLikedRecipe(recipeData[0], room, currentUser);
+    io.to(room).emit('likedRecipesList', recipeData[0]);
+
+    // console.log(dataRecipes);
+    // console.log(dataRecipes.length);
+
+    // } else {
+    //     // console.log('Nieuwe recipe!');
+    //     // Add recipe to all clients
+    //     addLikedRecipe(recipeData[0], room, currentUser);
+    //     // console.log(recipeData[0]);
+    //     io.to(room).emit("likedRecipesList", recipeData[0]);
+    //     // 3. Add recipe to server global state
+    // }
 
     // 4. If limit is not reached, add recipe to object
     // if (recipesCount == true) {

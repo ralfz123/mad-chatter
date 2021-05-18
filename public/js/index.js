@@ -75,9 +75,9 @@ socket.on('userJoined', (msg) => {
 });
 
 // User has leaved
-socket.on('userLeaved', (msg) => {
-  outputAlert(msg, 'msgContainerUser');
-});
+// socket.on('userLeaved', (msg) => {
+//   outputAlert(msg, 'msgContainerUser');
+// });
 
 // --------------------------------
 
@@ -127,6 +127,7 @@ socket.on('queryData', (data) => {
 
 // --------------------------------
 
+// submit of likedrecipe
 const likeRecipesForm = document.querySelector('#recipes form');
 if (likeRecipesForm) {
   let inputChosenRecipe = document.getElementsByName('recipes');
