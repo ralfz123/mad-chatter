@@ -1,9 +1,12 @@
 const { roomsState } = require('./state.js');
 
+let globalRoom;
+
 // Add user to their room in the state
 function userJoin(roomID, user, userID) {
   const assignRoom = roomsState[roomID];
   const roomUsers = assignRoom.users;
+  globalRoom = roomID;
 
   const userObj = {
     username: user,
@@ -15,14 +18,22 @@ function userJoin(roomID, user, userID) {
 }
 
 // Remove user from their room in the state
-function userLeave(roomID, userID) {
-  let users = roomsState[roomID].users;
-  const index = users.findIndex((user) => user.id === userID);
+function userLeave(userID) {
+  // if user had joined a room
 
-  if (index !== -1) {
-    return users.splice(index, 1);
+  if (globalRoom != undefined) {
+    roomID = globalRoom;
+
+    let users = roomsState[roomID].users;
+    const index = users.findIndex((user) => user.id === userID);
+
+    if (index !== -1) {
+      users.splice(index, 1);
+    }
+    return roomID;
+  } else {
+    return null;
   }
-  return users;
 }
 
 // Get data of room
@@ -80,11 +91,7 @@ function addWonRecipe(wonRecipe, roomID, user) {
     user: user,
   };
   roomsState[roomID].wonRecipe.push(recipeObj);
-  console.log(roomsState[roomID].wonRecipe);
-
-  // assignWonRecipe = recipeObj;
-
-  // return console.log('WON recipe: ', assignWonRecipe);
+  // console.log(roomsState[roomID].wonRecipe[0]);
 }
 
 /**
@@ -107,33 +114,32 @@ function getCurrentUser(userID, roomID) {
 // 2. return the room where the id is in
 // server: delete the id in that room
 // server: update state by deleting state and render in clientside
-function findCurrentRoom(userID) {
-  for (const [key, value] of Object.entries(roomsState)) {
-    let userId = roomsState[key].users;
-    let roomId = roomsState[key].id;
+// function findCurrentRoom(userID) {
+//   for (const [key, value] of Object.entries(roomsState)) {
+//     let userId = roomsState[key].users;
+//     let roomId = roomsState[key].id;
 
-    for (let i = 0; i < userId.length; i++) {
-      if (userId[i].id === userID) {
-        // roomId = `room${roomId}`;
-        return roomId;
+//     for (let i = 0; i < userId.length; i++) {
+//       if (userId[i].id === userID) {
+//         // roomId = `room${roomId}`;
+//         return roomId;
 
-        // console.log(
-        //   `Found user with id: ${userId[i].id} the user has the username: ${userId[i].username} and sits in room ${roomId}`
-        // );
-        // return true;
-      }
-    }
-    // else: null
-    // return false;
-  }
-}
+//         // console.log(
+//         //   `Found user with id: ${userId[i].id} the user has the username: ${userId[i].username} and sits in room ${roomId}`
+//         // );
+//         // return true;
+//       }
+//     }
+//     // else: null
+//     // return false;
+//   }
+// }
 
 module.exports = {
   userJoin,
   userLeave,
   getCurrentUser,
   getRoomData,
-  findCurrentRoom,
   addChatMsg,
   addLikedRecipe,
   addLikedRecipesLimit,

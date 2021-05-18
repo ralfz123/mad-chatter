@@ -14,7 +14,6 @@ const {
   addLikedRecipesLimit,
   addWonRecipe,
   getCurrentUser,
-  findCurrentRoom,
 } = require('./modules/utils/stateFunctions.js');
 
 const bodyParser = require('body-parser');
@@ -166,23 +165,22 @@ io.on('connection', (socket) => {
 
   // Detects when user has disconnected
   socket.on('disconnect', () => {
-    // 1. Which room + user
-    const currentRoomId = findCurrentRoom(socket.id);
-    let room = `room${currentRoomId}`;
-
-    // 2. Delete user from array
-    const user = userLeave(room, socket.id);
+    console.log('user disconnected');
+    // 1. Delete user from array
+    const user = userLeave(socket.id);
 
     if (user) {
-      const roomData = getRoomData(room);
+      socket.leave(user);
+      const roomData = getRoomData(user);
       const roomUsers = roomData.users;
 
       // Send users and room info
-      io.to(room).emit('roomUsers', {
-        room: currentRoomId,
+      io.to(user).emit('roomUsers', {
+        room: roomData.id,
         users: roomUsers,
       });
     }
+    // user leaves rooms login lobby
   });
 });
 
