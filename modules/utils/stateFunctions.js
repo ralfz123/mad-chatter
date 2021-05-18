@@ -108,33 +108,6 @@ function getCurrentUser(userID, roomID) {
   return users.find((user) => user.id === userID);
 }
 
-// finds roomID where userID is in
-
-// 1. find id in whole obj (obj.users)
-// 2. return the room where the id is in
-// server: delete the id in that room
-// server: update state by deleting state and render in clientside
-// function findCurrentRoom(userID) {
-//   for (const [key, value] of Object.entries(roomsState)) {
-//     let userId = roomsState[key].users;
-//     let roomId = roomsState[key].id;
-
-//     for (let i = 0; i < userId.length; i++) {
-//       if (userId[i].id === userID) {
-//         // roomId = `room${roomId}`;
-//         return roomId;
-
-//         // console.log(
-//         //   `Found user with id: ${userId[i].id} the user has the username: ${userId[i].username} and sits in room ${roomId}`
-//         // );
-//         // return true;
-//       }
-//     }
-//     // else: null
-//     // return false;
-//   }
-// }
-
 module.exports = {
   userJoin,
   userLeave,

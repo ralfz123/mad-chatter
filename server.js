@@ -40,9 +40,8 @@ const rooms = [
 io.on('connection', (socket) => {
   console.log('user connected');
 
-  socket.on('joinRoom', ({ room, user }) => {
-    //has to be username
-    const newUser = userJoin(room, user, socket.id);
+  socket.on('joinRoom', ({ room, username }) => {
+    const newUser = userJoin(room, username, socket.id);
 
     socket.join(room);
 
@@ -62,7 +61,7 @@ io.on('connection', (socket) => {
       // Welcome message
       io.to(socket.id).emit('chatMessage', {
         user: 'chatBot',
-        message: `Welcome ${user} to this chat!`,
+        message: `Welcome ${username} to this chat!`,
       });
 
       // All users gets info about the roomUsers that has updated because of a new user joined
@@ -74,8 +73,8 @@ io.on('connection', (socket) => {
       return (
         socket.emit(
           'joinSucces',
-          `${user}, You have succesfully joined ${room}`
-        ) && socket.to(room).emit('userJoined', `${user} joined this room`)
+          `${username}, You have succesfully joined ${room}`
+        ) && socket.to(room).emit('userJoined', `${username} joined this room`)
       );
     } else {
       return socket.emit('joinError', 'ERROR, No Room named ' + room);
@@ -108,7 +107,6 @@ io.on('connection', (socket) => {
   socket.on('likedRecipe', async ({ recipeID, room }) => {
     // 1. Which user
     const currentUser = getCurrentUser(socket.id, room);
-    // const currentUserName = currentUser.username;
 
     // 2. Fetch data
     let recipeData = await getRecipeData(recipeID);
@@ -147,7 +145,6 @@ io.on('connection', (socket) => {
   socket.on('wonRecipe', async ({ recipeID, room }) => {
     // 1. Which user
     const currentUser = getCurrentUser(socket.id, room);
-    // console.log(currentUser);
     const currentUserName = currentUser.username;
 
     // 2. Fetch data by recipe id

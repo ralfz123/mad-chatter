@@ -124,7 +124,7 @@ function submitAddMember(e) {
 
       socket.emit('joinRoom', {
         room: roomID,
-        user: nickname.value,
+        username: nickname.value,
       });
       loginSection.style.display = 'none';
       homeSecOne.style.display = 'flex';
