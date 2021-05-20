@@ -88,14 +88,14 @@ io.on('connection', (socket) => {
     const currentUserName = currentUser.username;
 
     // 2. Send msg to clients
-    io.to(room).emit('chatMessage', { user: currentUserName, message: msg });
+    io.to(room).emit('addChatMessage', { user: currentUserName, message: msg });
 
     // 3. Add msg to chat global state for later users
     addChatMsg(msg, room, currentUser);
   });
 
   // Ingredient id handler
-  socket.on('query', async ({ query }) => {
+  socket.on('inputQuery', async ({ query }) => {
     // 1. Fetch data on query
     let recipesData = await getData(query);
 
@@ -107,9 +107,6 @@ io.on('connection', (socket) => {
   socket.on('likedRecipe', async ({ recipeID, room }) => {
     // 1. Which user
     const currentUser = getCurrentUser(socket.id, room);
-
-    // 2. Fetch data
-    let recipeData = await getRecipeData(recipeID);
 
     // check limit, then add recipe
     const roomData = getRoomData(room);
@@ -137,8 +134,11 @@ io.on('connection', (socket) => {
       });
     }
 
+    // 2. Fetch data
+    let recipeData = await getRecipeData(recipeID);
+
     addLikedRecipe(recipeData[0], room, currentUser.username);
-    io.to(room).emit('likedRecipesList', recipeData[0]);
+    io.to(room).emit('addLlikedRecipe', recipeData[0]);
   });
 
   // Won recipe (chosen)

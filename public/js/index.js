@@ -52,7 +52,7 @@ socket.on('roomUsers', ({ room, users }) => {
 });
 
 // Message from server
-socket.on('chatMessage', (message) => {
+socket.on('addChatMessage', (message) => {
   new Audio('https://www.myinstants.com/media/sounds/msn-sound_1.mp3').play();
   addMessage(message);
 });
@@ -63,7 +63,7 @@ socket.on('queryData', (data) => {
 });
 
 // Add liked recipe to container
-socket.on('likedRecipesList', (data) => {
+socket.on('addLlikedRecipe', (data) => {
   outputLikedRecipe(data);
 });
 
@@ -139,7 +139,7 @@ function submitAddIngredient(e) {
   const inputQuery = document.querySelector('#query-ingredient');
   if (inputQuery.value) {
     loader('show');
-    socket.emit('query', { query: inputQuery.value });
+    socket.emit('inputQuery', { query: inputQuery.value });
   }
 }
 
@@ -147,7 +147,7 @@ function submitAddIngredient(e) {
 function submitLikedRecipe(e) {
   e.preventDefault();
   let inputChosenRecipe = document.getElementsByName('recipes');
-  for (var i = 0, length = inputChosenRecipe.length; i < length; i++) {
+  for (let i = 0, length = inputChosenRecipe.length; i < length; i++) {
     if (inputChosenRecipe[i].checked) {
       socket.emit('likedRecipe', {
         recipeID: inputChosenRecipe[i].value,
@@ -186,7 +186,7 @@ function submitChosenRecipe(e) {
     '.msgContainerRecipeLimitUser'
   );
 
-  for (var i = 0, length = inputRecipesChoices.length; i < length; i++) {
+  for (let i = 0, length = inputRecipesChoices.length; i < length; i++) {
     if (inputRecipesChoices[i].checked) {
       socket.emit('wonRecipe', {
         recipeID: inputRecipesChoices[i].value,

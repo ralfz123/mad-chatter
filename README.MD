@@ -261,7 +261,7 @@ With [map](https://github.com/ralfz123/real-time-web-2021/blob/main/modules/filt
 ```
 
 ### Data lifecycle diagram
-<img src="public/assets/readme/data-lifecycle-diagram-2.png" width="700px" />
+<img src="public/assets/readme/data-lifecycle-diagram-3.png" width="800px" />
 
 ## Challenges / Inventions / Learned
 <!-- ### SocketIO
