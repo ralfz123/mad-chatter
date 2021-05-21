@@ -30,7 +30,7 @@ The course Real-Time Web is about learning how to build a real-time application.
 
 >_This is the solution for cooking together in times of Corona :fork_and_knife:._
 
-This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can register in a room. Then you can search on recipes by entering some food ingredients that you have in your house. You can like the recipes to your liked recipes of the room. After that you can pick one recipe of the liked ones and that recipe you are going to make. Also you follow the instructions of the recipe and you can check them by the checkboxes. 
+This application is an app where you can cook with each other on distance (each person from his/her own house). You start the application where you can register in a room. Then you can search on recipes by entering some food ingredients that you have in your house. You can like the recipes to your liked recipes of the room. After that you (first joined user) can pick one recipe of the liked ones and that recipe you all are going to make. Also you follow the instructions of the recipe while enjoying good music.
 ### Sketch
 
 <figure>
@@ -40,7 +40,7 @@ This application is an app where you can cook with each other on distance (each 
 
 
 <figure>
-    <img alt="Second live version of the application" width=600px src="public/assets/readme/app-ss-v2.png" /> 
+    <img alt="Second live version of the application" width=600px src="public/assets/readme/app-ss-v3.png" /> 
     <figcaption>Screenshot live app</figcaption>
 </figure>
 
@@ -51,30 +51,39 @@ This application is an app where you can cook with each other on distance (each 
 
 **App**  
 - You can search through recipes by entering a ingredient
-- You can chat with each other to talk about which recipe you pick
-- You can see the details of the recipe, when it's chosen
-- You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: )
-- You can get an embedded YouTube video of how to make the recipe
+- You can chat with each other to talk about which recipe you are going to chose
+- You can add a recipe to the 5 liked recipes of the room
+- The first joined user can choose which recipe of the 5 likes ones wins
+- You all are going to the detailpage of the won recipe and then all of you are going to make the recipe
+- You can get an embedded YouTube video of how to make the recipe. Otherwise when the video isn't available, you get a link where you are redirected to YouTube with automatically the recipe title as query is passed with.
+<!-- - You can see the details of the recipe, when it's chosen
+- You can set a timer and follow the instructions of the recipe both on the same time (real-time :wink: ) -->
 
 ### Realtime events 
-Chat with each other
-> Messages are emitted to all clients
+[`joinSucces` & `userJoined`](https://github.com/ralfz123/real-time-web-2021/blob/main/server.js#L74-L77): Sending alerts from who is joining and succesfull joining
+> Sending alerts to all users and specific user by joining. Also alerts for chosing winning recipe.
 
-Recipe search on ingredient query
-> Query and data reponse are emitted to all clients
+[`chatMessage`](https://github.com/ralfz123/real-time-web-2021/blob/main/server.js#L85) : Chat with each other
+> Messages are emitted to all clients in the room
 
-Go to match page when recipe is chosen
-> All clients will be redirected to the match page (with the recipe data included) when a recipe is chosen by one person. 
+[`inputQuery`](https://github.com/ralfz123/real-time-web-2021/blob/main/server.js#L98): Recipe search on ingredient query
+> Query and data response are emitted to the user
 
-Extended timer indication (from you and the other one)
+[`likedRecipe`](https://github.com/ralfz123/real-time-web-2021/blob/main/server.js#L107): Like a recipe that adds that recipe to the "5 liked recipes of the room"
+> The recipe is added to the array of the room
+
+[`wonRecipe`](https://github.com/ralfz123/real-time-web-2021/blob/main/server.js#L145): Go to detail page when recipe is chosen (won)
+> All clients will be redirected to the detail page (with the recipe data included) when a recipe is chosen by the first joined user
+
+<!-- Extended timer indication (from you and the other one)
 > The timer-time will be emitted to all clients, so that everyone knows each other's timer-time.
 
 Winner result
-> The Result of the winner will b
+> The Result of the winner will b -->
 
 ### Spike
 #### Timer and Instructions challenge 
-I was thinking about whether to use the timer for when the recipe is ready or the real-time instruction checklist. So I was testing it myself and I discussed it with other students, and I came to the conclusion that I'm going to use both. In this app I am only going to build the timer, but the backlog has instruction checklist ready.
+I was thinking about whether to use the timer for when the recipe is ready or the real-time instruction checklist. So I was testing it myself and I discussed it with other students, and I came to the conclusion that I'm going to use both. In this app I am only going to build the timer, but the backlog has instruction checklist ready. 
 
 ## :nerd_face: TechStuff
 This app is built, using:
@@ -86,7 +95,6 @@ This app is built, using:
 - [Heroku deployment](https://www.heroku.com/nodejs)
 
 ### Packages
-
 [ejs](https://www.npmjs.com/package/ejs)  
 
 >Embedded JavaScript templates
@@ -103,6 +111,9 @@ This app is built, using:
 
 >Socket io enables real-time bidirectional event-based communication
 
+[node-fetch](https://www.npmjs.com/package/node-fetch)
+>Fetch data from an API on a regular way
+
 ## :lipstick: CodeStyle
 I prefer to work with these dev-rules for myself:
 - Use of semicolon at the end of the line
@@ -114,73 +125,99 @@ I prefer to work with these dev-rules for myself:
 - ES6 modules
 
 # :1234: Data
-## Datamanagement
-Because of 10 hardcoded rooms, here is a data managmentmodel of each room, with each objects within that can be manipulated by clients.
+## Data management model
+
+The data model on the server can be manipulated by the user. Such as the `likedRecipes`, `users`, `chat`, `likedRecipeLimit` and `wonRecipe`. The rooms are hardcoded, so there is already a state defined called `roomsState` where the data can be manipulated by the joined clients.
 
 ```js
 {
-  room1: {
+room1: {
     id: 1,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room2: {
     id: 2,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room3: {
     id: 3,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room4: {
     id: 4,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room5: {
     id: 5,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room6: {
     id: 6,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room7: {
     id: 7,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room8: {
     id: 8,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room9: {
     id: 9,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
   room10: {
     id: 10,
     likedRecipes: [],
     users: [],
     chat: [],
+    likedRecipeLimit: false,
+    wonRecipe: [],
   },
-}
+};
+
 ```
+
+
+## Data lifecycle diagram
+<img src="public/assets/readme/data-lifecycle-diagram-3.jpg" width="800px" />
 
 ## API Data
 ### API is
@@ -235,7 +272,7 @@ The data variables I used, are:
 ```
 
 #### CLEAN
-With [map](https://github.com/ralfz123/real-time-web-2021/blob/main/modules/filter.js#L9-L50)
+With [map](https://github.com/ralfz123/real-time-web-2021/blob/main/modules/utils/filter.js#L9-L50)
 
 ```js
 {
@@ -260,9 +297,6 @@ With [map](https://github.com/ralfz123/real-time-web-2021/blob/main/modules/filt
 },
 ```
 
-### Data lifecycle diagram
-<img src="public/assets/readme/data-lifecycle-diagram-3.png" width="800px" />
-
 ## Challenges / Inventions / Learned
 <!-- ### SocketIO
 What's it?
@@ -271,7 +305,9 @@ What's it in my app? -->
 ### Clientside data rendering
 I have rendered data from the recipes clientside so that the server is not overloaded by the serverside rendering.
 
-### State on the server (data model)
+### Serverside API data fetching
+The API recipes data will be fetched from the server in stead of the client. So is the client computer not overloaded with fetching data.
+
 ## :gear: Installation
 1. Clone the repository:  
 ```
@@ -298,42 +334,7 @@ http://localhost:5000/
 ```
 
 ## To-Do's :pencil:
-See [Backlog](https://github.com/ralfz123/real-time-web-2021/projects/1)
-<details>
-<summary>Expand</summary>
-
-#### App:
-
-- [ ] Create login
-    - [ ] Sign in as name and send messages
-- [ ] Create room
-- [x] Put words as queries for the recipes
-- [ ] Authentication (DB / login with name)
-- [ ] Handle incorrect queries
-    - [ ] Display under the input field, not in recipes box
-- [ ] Who's in the room?
-
-#### Code:
-- [x] Render data from querie data
-- [ ] Clear preview from new query data rendering
-- [ ] Search query through data.meals[i].strIngredient (==)
-- [ ] Getting alert when teamplayer has started the match, but you are yet on /home
-- [ ] Filter ingredients in one way instead of mentioning each ingr (filter null, '', duplicate values)
-- [x] Filter instructions in sentences -> split on each sentence
-- [ ] rename functions and variables to descriptive ones
-- [x] Style Recipe data layout
-- [ ] Emit data to the other client after getting NEW recipes data (2nd req)
-
-
-#### Readme:
-- [x] Data lifecycle diagram optimalise (columns?)
-- [x] 3 concepts describe in wiki
-    - sketch
-    - api
-    - why
-    - concept
-
-</details>
+See [Backlog](https://github.com/ralfz123/real-time-web-2021/projects/1) for much more ideas and features there can be built in the application :star:
 
 ## :file_folder: Sources
 Credits to [Justus](https://github.com/ju5tu5) && [Lukas van Driel](https://github.com/lukasvan3l) for giving interesting lectures about Real Time Webapps and how to deal with it.
@@ -347,7 +348,7 @@ Credits to [Justus](https://github.com/ju5tu5) && [Lukas van Driel](https://gith
 
 - Express (n.d.). Framework for Node.js - Express. Retrieved 6 April 2021 from https://expressjs.com/
 
-- socket.io (n.d.). Communicationtool between Browser and Server - socket.io. Retrieved 18 April 2021 from https://socket.io/
+- socket.io (n.d.). Communication tool between Browser and Server - socket.io. Retrieved 18 April 2021 from https://socket.io/
 
 ## :cop: License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
