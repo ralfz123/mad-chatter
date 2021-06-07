@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
       });
 
       // Welcome message
-      io.to(socket.id).emit('chatMessage', {
+      io.to(socket.id).emit('addChatMessage', {
         user: 'chatBot',
         message: `Welcome ${username} to this chat!`,
       });
